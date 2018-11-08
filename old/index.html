@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,600,600i,700&amp;subset=cyrillic" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,600,600i,700&amp;subset=cyrillic" rel="stylesheet">
+	<link rel="stylesheet" href="main.css">
+	<script src="common.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<header id="header" class="header">
+			<div class="container">
+				<div class="item-left">
+					<a href="#" class="header-logo">ukr.music</a>
+				</div>
+				<div class="item-left">
+					<ul class="header-nav">
+						<li><a href="#">Головна</a></li>
+						<li><a class="active" href="#">Музика</a></li>
+						<li><a href="#">Відео</a></li>
+						<li><a href="#">Контакти</a></li>
+					</ul>
+				</div>
+				<div class="item-right">
+					<div class="header-user-auth">
+						<a href="#">Вхід</a>
+						<a href="#">Реєстрація</a>
+					</div>
+				</div>
+				<div class="item-right">
+					<div class="header-lang">
+						<a href="#">EN</a>
+					</div>
+				</div>
+				<div class="item-right">
+					<div class="header-search">
+						<i class="icon icon-search"></i>
+						<input type="text" placeholder="Пошук" onfocus="this.parentNode.classList.add('focus')" onblur="this.parentNode.classList.remove('focus')">
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<main id="page" class="page clearfix">
+			<h2 class="section-title">Популярна музика</h2>
+
+			<div class="container clearfix">
+				<div class="section-links">
+					<a href="#">Популярне</a>
+					<a href="#">Нове</a>
+					<a href="#">Підбірки</a>
+				</div>
+
+				<div class="filters">
+					<div class="filter-dropdown">
+						<span class="bg"></span>
+						<a href="#" class="link">Жанр <i class="icon-dropdown"></i></a>
+						<div class="dropdown-content">
+							<ul>
+								<li><a href="#" class="filter-link">Classical</a></li>
+								<li><a href="#" class="filter-link">Country</a></li>
+								<li><a href="#" class="filter-link">Electronic</a></li>
+								<li><a href="#" class="filter-link">Metal</a></li>
+								<li><a href="#" class="filter-link">Pop</a></li>
+								<li><a href="#" class="filter-link">Piano</a></li>
+								<li><a href="#" class="filter-link">Rock</a></li>
+							</ul>
+							<ul>
+								<li><a href="#" class="filter-link">Metal</a></li>
+								<li><a href="#" class="filter-link">Pop</a></li>
+								<li><a href="#" class="filter-link">Piano</a></li>
+								<li><a href="#" class="filter-link">Rock</a></li>
+								<li><a href="#" class="filter-link">Classical</a></li>
+								<li><a href="#" class="filter-link">Country</a></li>
+								<li><a href="#" class="filter-link">Electronic</a></li>
+							</ul>
+							<ul>
+								<li><a href="#" class="filter-link">Pop</a></li>
+								<li><a href="#" class="filter-link">Piano</a></li>
+								<li><a href="#" class="filter-link">Classical</a></li>
+								<li><a href="#" class="filter-link">Country</a></li>
+								<li><a href="#" class="filter-link">Electronic</a></li>
+								<li><a href="#" class="filter-link">Rock</a></li>
+								<li><a href="#" class="filter-link">Metal</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="filter-dropdown">
+						<span class="bg"></span>
+						<a href="#" class="link">Країна <i class="icon-dropdown"></i></a>
+						<div class="dropdown-content">
+							<ul>
+								<li><a href="#" class="filter-link">Україна</a></li>
+								<li><a href="#" class="filter-link">США</a></li>
+								<li><a href="#" class="filter-link">Канада</a></li>
+								<li><a href="#" class="filter-link">Австралія</a></li>
+								<li><a href="#" class="filter-link">Польща</a></li>
+								<li><a href="#" class="filter-link">Австрія</a></li>
+								<li><a href="#" class="filter-link">Японія</a></li>
+							</ul>
+							<ul>
+								<li><a href="#" class="filter-link">Норвегія</a></li>
+								<li><a href="#" class="filter-link">Ірландія</a></li>
+								<li><a href="#" class="filter-link">Шотландія</a></li>
+								<li><a href="#" class="filter-link">Данія</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="filter-hr"></div>
+
+			<div class="content">
+				<div class="playlist clearfix">
+					<div class="audio-row">
+						<div class="audio-row-cover" style="background-image: url('song/2.jpg');">
+							<div class="bg">
+								<div class="bars">
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+								</div>
+							</div>
+						</div>
+						<div class="audio-row-desc">
+							<div class="singer"><a href="#">The Hardkiss</a></div>
+							<div class="song"><a href="#">Make-up</a></div>
+						</div>
+						<div class="audio-row-time">3:52</div>
+					</div>
+
+					<div class="audio-row current">
+						<div class="audio-row-cover" style="background-image: url('song/1.jpg');">
+							<div class="bg">
+								<div class="bars">
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+								</div>
+							</div>
+						</div>
+						<div class="audio-row-desc">
+							<div class="singer"><a href="#">Vivienne Mort</a></div>
+							<div class="song"><a href="#">Сліди маленьких рук</a></div>
+						</div>
+						<div class="audio-row-time">3:52</div>
+					</div>
+
+					<div class="audio-row">
+						<div class="audio-row-cover" style="background-image: url('song/3.jpg');">
+							<div class="bg">
+								<div class="bars">
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+								</div>
+							</div>
+						</div>
+						<div class="audio-row-desc">
+							<div class="singer"><a href="#">MILCK</a></div>
+							<div class="song"><a href="#">The World is Unravelling</a></div>
+						</div>
+						<div class="audio-row-time">3:52</div>
+					</div>
+
+					<div class="audio-row">
+						<div class="audio-row-cover" style="background-image: url('song/2.jpg');">
+							<div class="bg">
+								<div class="bars">
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+								</div>
+							</div>
+						</div>
+						<div class="audio-row-desc">
+							<div class="singer"><a href="#">Detach</a></div>
+							<div class="song"><a href="#">Afterglow</a></div>
+						</div>
+						<div class="audio-row-time">3:52</div>
+					</div>
+
+					<div class="audio-row current">
+						<div class="audio-row-cover" style="background-image: url('song/1.jpg');">
+							<div class="bg">
+								<div class="bars">
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+								</div>
+							</div>
+						</div>
+						<div class="audio-row-desc">
+							<div class="singer"><a href="#">Vivienne Mort</a></div>
+							<div class="song"><a href="#">Сліди маленьких рук</a></div>
+						</div>
+						<div class="audio-row-time">3:52</div>
+					</div>
+
+					<div class="audio-row">
+						<div class="audio-row-cover" style="background-image: url('song/3.jpg');">
+							<div class="bg">
+								<div class="bars">
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+									<div class="bar"></div>
+								</div>
+							</div>
+						</div>
+						<div class="audio-row-desc">
+							<div class="singer"><a href="#">MILCK</a></div>
+							<div class="song"><a href="#">The World is Unravelling</a></div>
+						</div>
+						<div class="audio-row-time">3:52</div>
+					</div>
+				</div>
+
+				<br><br><br><br><br><br><br><br>
+			</div>
+			<div class="sidebar"></div>
+
+		</main>
+	</div>
+</body>
+</html>

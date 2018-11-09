@@ -1,18 +1,18 @@
 // Libraries
 import React, { Component, Fragment } from 'react';
 
-import MyMusicListContainer from 'universal/containers/MyMusicListContainer';
+import UploadMusicContainer from 'universal/containers/UploadMusicContainer';
 import Header from 'universal/components/Header';
 
-class MyMusicListPage extends Component {
+class UploadMusicPage extends Component {
 	render() {
 		return (
 			<div className="wrapper">
 				<Header />
-				<MyMusicListContainer />
+				<UploadMusicContainer />
 			</div>
 		);
 	}
 }
 
-export default MyMusicListPage;
+export default UploadMusicPage;

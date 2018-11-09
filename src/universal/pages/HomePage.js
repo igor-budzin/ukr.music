@@ -1,7 +1,7 @@
 // Libraries
 import React, { Component, Fragment } from 'react';
 
-import Header from 'universal/components/Header/Header';
+import Header from 'universal/components/Header';
 
 class HomePage extends Component {
 	render () {

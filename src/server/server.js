@@ -1,7 +1,7 @@
 import fs from 'fs';
 import https from 'https';
-const privateKey  = fs.readFileSync('api/apache.key', 'utf8');
-const certificate = fs.readFileSync('api/apache.crt', 'utf8');
+const privateKey  = fs.readFileSync('api/ssl/apache.key', 'utf8');
+const certificate = fs.readFileSync('api/ssl/apache.crt', 'utf8');
 import express from 'express';
 import colors  from 'colors';
 import path    from 'path';

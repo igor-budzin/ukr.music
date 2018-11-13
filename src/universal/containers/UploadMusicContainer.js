@@ -41,7 +41,8 @@ class UploadMusicContainer extends Component {
 			data.append("files", item.file);
 		});
 
-		axios.post('https://localhost:8080/api/upload-music')
+		axios.post('https://localhost:8080/api/upload-music', data)
+
 		.then((response) => {
 			console.log(response.data);
 		})
@@ -69,9 +70,11 @@ class UploadMusicContainer extends Component {
 					</div>
 
 					<div className="dropzone-wrapper">
-						<Dropzone className="dropzone" onDrop={this.onDrop} maxSize={20000000} accept="audio/mp3">
-							<p>Щоб завантажити файл натисніть на синю зону або ж просто перетягніть на неї файл</p>
-						</Dropzone>
+						<form>
+							<Dropzone className="dropzone" onDrop={this.onDrop} maxSize={20000000} accept="audio/mp3">
+								<p>Щоб завантажити файл натисніть на синю зону або ж просто перетягніть на неї файл</p>
+							</Dropzone>
+						</form>
 					</div>
 
 					{

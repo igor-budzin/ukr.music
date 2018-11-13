@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors'); 
-const passport = require('passport');
+const mysql = require('mysql');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const privateKey  = fs.readFileSync('api/ssl/apache.key', 'utf8');
@@ -14,7 +14,6 @@ const credentials = {key: privateKey, cert: certificate, passphrase: 'local'};
 const routes = require('./routes');
 
 // Middlewares
-
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

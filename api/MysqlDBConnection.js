@@ -6,7 +6,7 @@ module.exports = () => {
 			host: 'localhost',
 			user: 'root',
 			password: '',
-			database: 'map-routes'
+			database: 'ukr-music'
 		};
 
 		let connection;

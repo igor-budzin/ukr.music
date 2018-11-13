@@ -45,9 +45,11 @@ class UploadMusicContainer extends Component {
 
 		.then((response) => {
 			console.log(response.data);
+			this.setState({uploadedFiles: []});
 		})
 		.catch((error) => {
 			console.log(error);
+			this.setState({uploadedFiles: []});
 		});
 
 		console.log(data.getAll('files'));
@@ -56,7 +58,7 @@ class UploadMusicContainer extends Component {
 	render() {
 		const files = this.state.uploadedFiles;
 		return (
-			<main id="page" className="page clearfix">
+			<main id="page" className="page upload-page clearfix">
 				<h2 className="section-title">Завантаження файлів</h2>
 
 				<div className="content">
@@ -65,7 +67,7 @@ class UploadMusicContainer extends Component {
 						<ul>
 							<li>Аудіофайл не повинен перевищувати 20 МБ і мусить бути в форматі MP3.</li>
 							<li>Аудiофайл не повинен порушувати авторськi та суміжні права.</li>
-							<li>Одночасно можна завантажитине більше 10 аудіофайлів.</li>
+							<li>Одночасно можна завантажити не більше 10 аудіофайлів.</li>
 						</ul>
 					</div>
 
@@ -77,15 +79,17 @@ class UploadMusicContainer extends Component {
 						</form>
 					</div>
 
-					{
-						files.map((item, index) => {
-							return (
-								<div key={index}>
-									{item.name} - {formatBytes(item.size)}
-								</div>
-							);
-						})
-					}
+					<div className="file-list">
+						{
+							files.map((item, index) => {
+								return (
+									<div key={index} className="item">
+										{item.name} - <span>{formatBytes(item.size)}</span>
+									</div>
+								);
+							})
+						}
+					</div>
 
 					{
 						files.length > 0 ?

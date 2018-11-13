@@ -463,3 +463,22 @@ a:hover {
 .dropzone:hover {
 	background-color: lighten(#00b0eb, 52%);
 }
+
+
+.upload-page {
+	.file-list {
+		margin-bottom: 20px;
+
+		.item {
+			height: 35px;
+			line-height: 35px;
+			margin-bottom: 2px;
+			border-radius: 3px;
+			padding: 0 10px;
+
+			&:nth-child(odd) {
+				background-color: lighten(#00b0eb, 52%);
+			}
+		}
+	}
+}

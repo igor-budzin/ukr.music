@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-
 import MusicItem from './MusicItem';
-
-import playlist from './playlist.json';
 
 export default class PlayList extends Component {
 	render() {
 		return (
 			<div className="playlist clearfix">
 				{
-					playlist.map((music, index) => {
+					this.props.playlist.map((music, index) => {
 						return (
 							<MusicItem
 								key={index}

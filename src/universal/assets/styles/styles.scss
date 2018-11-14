@@ -323,6 +323,15 @@ a:hover {
 	cursor: pointer;
 	position: relative;
 }
+.playlist {
+	.empty-playlist {
+		font-family: 'Open Sans', 'Roboto', sans-serif;
+		text-align: center;
+		line-height: 34px;
+		font-size: 20px;
+		font-weight: 400;
+	}
+}
 .playlist .audio-row:hover {
 	background-color: #e9f2ff;
 }

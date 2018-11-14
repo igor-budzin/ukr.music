@@ -5,11 +5,16 @@ import { bindActionCreators } from 'redux';
 // Components
 import MusicFilter from 'universal/components/MusicFilter';
 import PlayList from 'universal/components/PlayList/PlayList';
+import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 // Actions
-// import { getRoutesAction } from 'universal/redux/actions/getRoutesActions';
+import { getMusicAction } from 'universal/redux/actions/getMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class MyMusicListContainer extends Component {
+	componentDidMount() {
+		this.props.getMusic();
+	}
+
 	render() {
 		return (
 			<main id="page" className="page clearfix">
@@ -30,7 +35,11 @@ class MyMusicListContainer extends Component {
 				<div className="filter-hr"></div>
 
 				<div className="content">
-					<PlayList />
+					{
+						this.props.playlist.length > 0 ?
+						<PlayList playlist={this.props.playlist} /> :
+						<EmptyPlayList />
+					}
 
 					<br /><br /><br /><br /><br /><br /><br /><br />
 				</div>
@@ -41,14 +50,14 @@ class MyMusicListContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		// routes: state.getRoutesReducer.routes
+		playlist: state.getMusicReducer.music
 	};
 }
 
 
 function mapDispatchToProps(dispatch, props) {
 	return bindActionCreators({
-		// getRoutes: getRoutesAction
+		getMusic: getMusicAction
 	}, dispatch);
 }
 

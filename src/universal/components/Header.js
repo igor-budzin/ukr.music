@@ -12,7 +12,7 @@ class Header extends Component {
 					<div className="item-left">
 						<ul className="header-nav">
 							<li><a href="#">Головна</a></li>
-							<li><a className="active" href="#">Музика</a></li>
+							<li><Link className="active" to="/my-music">Музика</Link></li>
 							<li><a href="#">Відео</a></li>
 							<li><a href="#">Контакти</a></li>
 						</ul>

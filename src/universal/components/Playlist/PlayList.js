@@ -3,6 +3,7 @@ import MusicItem from './MusicItem';
 
 export default class PlayList extends Component {
 	render() {
+		console.log(this.props.playlist)
 		return (
 			<div className="playlist clearfix">
 				{
@@ -10,10 +11,10 @@ export default class PlayList extends Component {
 						return (
 							<MusicItem
 								key={index}
-								singer={music.singer}
-								song={music.song}
+								artist={music.artists[0]}
+								title={music.title}
 								time={music.duration}
-								bgUrl={music.bgUrl}
+								bgUrl={music.picture}
 							/>
 						);
 					})

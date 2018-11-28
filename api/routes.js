@@ -1,31 +1,27 @@
 const MysqlDBConnection = require('./MysqlDBConnection');
 const multer = require('multer');
 const NodeID3 = require('node-id3');
+const Editor = require('id3-editor');
+const fs = require('fs');
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
 		cb(null, 'files/audio')
 	},
 	filename: (req, file, cb) => {
-		// console.log(file);
-		// const connection = MysqlDBConnection()();
-		// 
+		let fileName = Date.now() + '_' + file.originalname;
 
+		const connection = MysqlDBConnection()();
+		const sql = `INSERT INTO audio (link) VALUES ('${fileName}')`;
 
-		// const query = `INSERT INTO audio (name) VALUES ('${Date.now() + '_' + file.originalname}')`;
-
-		// connection.query(query, (error, results, fields) => {
-		// 	if (error) throw error;
-			
-		// 	connection.destroy();
-		// });
-		cb(null, Date.now() + '_' + file.originalname);
-		let file2 = 'files/audio/1542206627112_Kalimba.mp3';
-		let tags = NodeID3.read(Buffer.from(file2), (err, tags2) => {
-			console.log('dddddddddddddddddddddddddddd');
-			console.log(err)
-			console.log(tags2)
+		connection.query(sql, (error, results, fields) => {
+			if (error) { console.log(error) }
+			connection.destroy();
 		});
+
+		cb(null, fileName);
+		
+
 	}
 });
 const upload = multer({storage: storage});
@@ -42,11 +38,32 @@ module.exports = (app, router) => {
 	router.get('/get-music', (req, res, next) => {
 		const connection = MysqlDBConnection()();
 
-		const query = `SELECT * FROM audio`;
+		const sql = `SELECT link FROM audio`;
 
-		connection.query(query, (error, results, fields) => {
+		connection.query(sql, (error, results, fields) => {
+			if (error) { console.log(error) }
+
+			const audioArr = [];
+			const editor = new Editor();
+
+			let promises = results.map((item) => {
+				const audioObj = {};
+				const fileBuffer = fs.readFileSync('./files/audio/' + item.link);
+
+				return editor.load(fileBuffer).then(() => {
+					audioObj.title = editor.get('title');
+					audioObj.artists = editor.get('artists');
+					audioObj.picture = editor.get('picture').data.toString('base64');
+					return audioObj;
+				});
 			
-			res.json(results);
+			});
+
+			Promise.all(promises).then(values => {
+				console.log(values);
+				res.json(values);
+			});
+
 			connection.destroy();
 		});
 

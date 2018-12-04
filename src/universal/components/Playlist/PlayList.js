@@ -11,7 +11,7 @@ export default class PlayList extends Component {
 						return (
 							<MusicItem
 								key={index}
-								artist={music.artists[0]}
+								artist={music.artists}
 								title={music.title}
 								time={music.duration}
 								bgUrl={music.picture}

@@ -477,7 +477,6 @@ a:hover {
 .upload-page {
 	.file-list {
 		margin-bottom: 20px;
-
 		.item {
 			height: 35px;
 			line-height: 35px;
@@ -487,6 +486,147 @@ a:hover {
 
 			&:nth-child(odd) {
 				background-color: lighten(#00b0eb, 52%);
+			}
+		}
+	}
+}
+
+
+.home {
+	.grid-row {
+		margin-bottom: 11px;
+		 @extend .clearfix;
+
+		.grid-item {
+			width: 200px;
+			height: 150px;
+			background-color: #ccc;
+			margin-right: 11px;
+			float: left;
+			position: relative;
+			overflow: hidden;
+			cursor: pointer;
+			
+			.bg {
+				position: absolute;
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: cover;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				transition: filter 500ms ease, transform 500ms ease, rotate 500ms ease;
+				z-index: 1;
+			}
+
+			.title {
+				background-color: rgba(0, 0, 0, 0.7);
+				padding: 10px 16px;
+				position: absolute;
+				color: #fff;
+				font-weight: 300;
+				z-index: 2;
+			}
+
+			&.grid-item--double-h {
+				width: 411px;
+				float: left;
+			}
+
+			&.grid-item--double-v {
+				height: 311px;
+			}
+
+			&.offset-0 {
+				margin-right: 0;
+			}
+
+			&.offset-b {
+				margin-bottom: 11px;
+			}
+
+			&.offset-r {
+				margin-bottom: 11px;
+			}
+
+			&.popular-singer {
+				.bg {
+					background-image: url('../img/1.jpg');
+					filter: blur(2px);
+				}
+
+				.title {
+					font-size: 28px;
+					bottom: 20px;
+					left: 20px;
+				}
+			}
+
+			&.album {
+				.bg {
+					background-image: url('../img/2.jpg');
+					filter: blur(1px);
+				}
+				.title {
+					font-size: 18px;
+					bottom: 10px;
+					right: 10px;
+				}
+			}
+
+			&.top-songs {
+				.bg {
+					background-size: 100%;
+					background-image: url('../img/4.jpg');
+					filter: blur(1px);
+				}
+				.title {
+					font-size: 18px;
+					bottom: 10px;
+					left: 10px;
+				}
+			}
+
+			&:hover .bg {
+				filter: blur(0);
+				transform: scale(1.1) rotate(1deg);
+			}
+		}
+	}
+}
+
+.player {
+	border: 1px solid #ccc;
+	width: 622px;
+	height: 46px;
+	float: left;
+
+	.controls {
+		.btn {
+			float: left;
+			width: 46px;
+			height: 46px;
+
+			&.prev {
+				background-image: url('../img/player/011-backward-button.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 32px;
+			}
+
+			&.play-control {
+				background-image: url('../img/player/001-play-button.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 28px;
+			}
+
+			&.next {
+				background-image: url('../img/player/010-fast-forward-button.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 32px;
 			}
 		}
 	}

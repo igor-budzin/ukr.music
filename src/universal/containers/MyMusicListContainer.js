@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import MusicFilter from 'universal/components/MusicFilter';
 import PlayList from 'universal/components/PlayList/PlayList';
 import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
+import MusicPlayerContainer from 'universal/containers/MusicPlayerContainer';
 // Actions
 import { getMusicAction } from 'universal/redux/actions/getMusicActions';
 
@@ -22,13 +23,9 @@ class MyMusicListContainer extends Component {
 
 				<div className="container clearfix">
 
-{/*					<div className="section-links">
-						<a href="#">Популярне</a>
-						<a href="#">Нове</a>
-						<a href="#">Підбірки</a>
-					</div>*/}
+					<MusicPlayerContainer />
 
-					<MusicFilter />
+					{/*<MusicFilter />*/}
 
 				</div>
 

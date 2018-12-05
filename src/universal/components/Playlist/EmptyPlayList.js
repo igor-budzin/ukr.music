@@ -8,7 +8,7 @@ export default class EmptyPlayList extends Component {
 				<div className="empty-playlist">
 					<p>
 						У вашому плейлисті відсутні аудіозаписи<br />
-						<b><Link to="/upload-music">Завантажте</Link></b><br />
+						<b><Link to="/upload">Завантажте</Link></b><br />
 						свій перший аудіозапис
 					</p>
 				</div>

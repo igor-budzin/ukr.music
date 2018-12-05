@@ -11,8 +11,8 @@ class Header extends Component {
 					</div>
 					<div className="item-left">
 						<ul className="header-nav">
-							<li><a href="#">Головна</a></li>
-							<li><Link className="active" to="/my-music">Музика</Link></li>
+							<li><Link to="/">Головна</Link></li>
+							<li><Link to="/music" className="active">Музика</Link></li>
 							<li><a href="#">Відео</a></li>
 							<li><a href="#">Контакти</a></li>
 						</ul>

@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
 
 export default class MusicItem extends Component {
+	onClick = () => {
+		this.props.handleChooseAudio(this.props.link);
+	}
+
 	render() {
-		const style ={
-			"backgroundImage": "url(data:image/png;base64," + this.props.bgUrl + ")"
-		};
+		let style = {};
+		if(this.props.bgUrl) {
+			style = { "backgroundImage": "url(data:image/png;base64," + this.props.bgUrl + ")" };
+		}
 
 		console.log(this.props.bgUrl);
 
 		return (
-			<div className="audio-row">
+			<div className="audio-row" onClick={this.onClick}>
 				<div className="audio-row-cover" style={style}>
-					<div className="bg">
-						<div className="bars">
-							<div className="bar"></div>
-							<div className="bar"></div>
-							<div className="bar"></div>
-							<div className="bar"></div>
-							<div className="bar"></div>
-						</div>
+					<div className="bars">
+						<div className="bar"></div>
+						<div className="bar"></div>
+						<div className="bar"></div>
+						<div className="bar"></div>
+						<div className="bar"></div>
 					</div>
 				</div>
 				<div className="audio-row-desc">

@@ -16,6 +16,10 @@ class MyMusicListContainer extends Component {
 		this.props.getMusic();
 	}
 
+	handleChooseAudio(link) {
+		console.log(link);
+	}
+
 	render() {
 		return (
 			<main id="page" className="page clearfix">
@@ -34,7 +38,10 @@ class MyMusicListContainer extends Component {
 				<div className="content">
 					{
 						this.props.playlist.length > 0 ?
-						<PlayList playlist={this.props.playlist} /> :
+						<PlayList
+							playlist={this.props.playlist}
+							handleChooseAudio={this.handleChooseAudio}
+						/> :
 						<EmptyPlayList />
 					}
 

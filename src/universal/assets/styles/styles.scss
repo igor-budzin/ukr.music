@@ -346,19 +346,9 @@ a:hover {
 	float: left;
 	margin-right: 10px;
 	position: relative;
-}
-.playlist .audio-row .audio-row-cover .bg {
-	display: none;
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.6);
 }
-.playlist .audio-row.current .audio-row-cover .bg {
-	display: block;
-}
+
 .playlist .audio-row-desc {
 	float: left;
 	margin: 7px 0;

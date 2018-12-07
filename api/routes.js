@@ -1,9 +1,8 @@
 const MysqlDBConnection = require('./MysqlDBConnection');
-// const multer = require('multer');
 const multipart = require('connect-multiparty');
-const NodeID3 = require('node-id3');
 const Editor = require('id3-editor');
 const fs = require('fs');
+const path = require('path');
 
 const multipartMiddleware = multipart();
 const filesPath = '/../files/audio/';
@@ -98,7 +97,11 @@ module.exports = (app, router) => {
 			connection.destroy();
 		});
 
-		
+	});
+
+	router.get('/get-music/:link', (req, res, next) => {
+		const filesPath = path.join(__dirname, '..', 'files', 'audio', req.params.link);
+		res.sendFile(filesPath);
 	});
 
 }

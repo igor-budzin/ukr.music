@@ -10,7 +10,7 @@ export default class PlayList extends Component {
 					this.props.playlist.map((music, index) => {
 						return (
 							<MusicItem
-								handleChooseAudio={this.props.handleChooseAudio}
+								handleChoseAudio={this.props.handleChoseAudio}
 								link={music.link}
 								key={index + music.link}
 								artist={music.artists}

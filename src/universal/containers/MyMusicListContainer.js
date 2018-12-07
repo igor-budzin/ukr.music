@@ -9,15 +9,12 @@ import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/containers/MusicPlayerContainer';
 // Actions
 import { getMusicAction } from 'universal/redux/actions/getMusicActions';
+import { choseMusicAction } from 'universal/redux/actions/controlMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class MyMusicListContainer extends Component {
 	componentDidMount() {
 		this.props.getMusic();
-	}
-
-	handleChooseAudio(link) {
-		console.log(link);
 	}
 
 	render() {
@@ -40,7 +37,7 @@ class MyMusicListContainer extends Component {
 						this.props.playlist.length > 0 ?
 						<PlayList
 							playlist={this.props.playlist}
-							handleChooseAudio={this.handleChooseAudio}
+							handleChoseAudio={this.props.choseMusic}
 						/> :
 						<EmptyPlayList />
 					}
@@ -61,7 +58,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
 	return bindActionCreators({
-		getMusic: getMusicAction
+		getMusic: getMusicAction,
+		choseMusic: choseMusicAction
 	}, dispatch);
 }
 

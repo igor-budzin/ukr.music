@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 
 export default class MusicItem extends Component {
 	onClick = () => {
-		this.props.handleChooseAudio(this.props.link);
+		this.props.handleChoseAudio({
+			link: this.props.link,
+			artist: this.props.artist,
+			title: this.props.title
+		});
 	}
 
 	render() {

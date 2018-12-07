@@ -23,6 +23,48 @@ class MusicPlayerContainer extends Component {
 		}
 	}
 
+	componentDidMount() {
+		
+
+	}
+
+	playMusic = () => {
+		let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+		// window.audio = new Audio();
+		// audio.src = 'https://localhost:8080/api/get-music/' + this.props.currentMusic.link;
+		// let source = audioCtx.createMediaElementSource(audio);
+		// source.connect(audioCtx.destination);
+		// source.start(0)
+
+		fetch('https://localhost:8080/api/get-music/' + this.props.currentMusic.link)
+
+		function fetch (url, resolve) {
+		  var request = new XMLHttpRequest();
+		  request.open('GET', url, true);
+		  request.responseType = 'arraybuffer';
+		  request.onload = function () { onSuccess(request) }
+		  request.send()
+		}
+
+		function onSuccess (request) {
+		  var audioData = request.response;
+		  audioCtx.decodeAudioData(audioData, onBuffer, onDecodeBufferError)
+		}
+
+		function onBuffer (buffer) {
+		  var source = audioCtx.createBufferSource();
+		  source.buffer = buffer;
+		  source.connect(audioCtx.destination);
+		  source.start()
+		}
+
+		function onDecodeBufferError (e) {
+		  console.log('Error decoding buffer: ' + e.message);
+		  console.log(e);
+		}
+
+	}
+
 	handleChange = (currentTime) => {
 		this.setState({
 			currentTime: currentTime
@@ -35,7 +77,7 @@ class MusicPlayerContainer extends Component {
 			<div className="player">
 				<div className="controls controls--play">
 					<div className="btn prev"></div>
-					<div className="btn play"></div>
+					<div className="btn play" onClick={this.playMusic}></div>
 					<div className="btn next"></div>
 				</div>
 
@@ -67,7 +109,7 @@ class MusicPlayerContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		// playlist: state.getMusicReducer.music
+		currentMusic: state.controlMusicReducer.currentMusic
 	};
 }
 

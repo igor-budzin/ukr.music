@@ -6,12 +6,10 @@ import {
 	REQUEST_GET_MUSIC_LIST_ERROR
 } from '../consts';
 
-
 const axiosInstance = axios.create({
 	baseURL: 'https://localhost:8080/api/',
 	headers: {'Access-Control-Allow-Origin': '*'}
 });
-
 
 export function requestGetMusic() {
 	return {

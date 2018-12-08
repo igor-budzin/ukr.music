@@ -15,8 +15,6 @@ export default class MusicItem extends Component {
 			style = { "backgroundImage": "url(data:image/png;base64," + this.props.bgUrl + ")" };
 		}
 
-		console.log(this.props.bgUrl);
-
 		return (
 			<div className="audio-row" onClick={this.onClick}>
 				<div className="audio-row-cover" style={style}>

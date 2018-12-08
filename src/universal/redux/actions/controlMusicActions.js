@@ -13,13 +13,15 @@ export function choseMusicAction(music) {
 
 export function playMusicAction() {
 	return {
-		type: PLAY_MUSIC
+		type: PLAY_MUSIC,
+		status: true
 	}
 }
 
 export function pauseMusicAction() {
 	return {
-		type: PAUSE_MUSIC
+		type: PAUSE_MUSIC,
+		status: false
 	}
 }
 

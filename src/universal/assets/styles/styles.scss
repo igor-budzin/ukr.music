@@ -623,6 +623,9 @@ a:hover {
 				background-image: url('../img/play-controls/play-button.svg');
 				background-position-x: 11px;
 			}
+			&.pause {
+				background-image: url('../img/play-controls/pause.svg');
+			}
 			&.prev {
 				background-image: url('../img/play-controls/previous.svg');
 			}

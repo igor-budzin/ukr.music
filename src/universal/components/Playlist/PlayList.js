@@ -3,7 +3,6 @@ import MusicItem from './MusicItem';
 
 export default class PlayList extends Component {
 	render() {
-		console.log(this.props.playlist)
 		return (
 			<div className="playlist clearfix">
 				{

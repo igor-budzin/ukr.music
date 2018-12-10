@@ -9,7 +9,7 @@ import isEqual from 'lodash.isequal';
 // Components
 
 // Actions
-import { playMusicAction, pauseMusicAction } from 'universal/redux/actions/controlMusicActions';
+import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class MusicPlayerContainer extends Component {
@@ -24,43 +24,28 @@ class MusicPlayerContainer extends Component {
 		}
 	}
 
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	return !isEqual(nextProps, this.props);
-	// }
-
-	componentDidUpdate = () => {
-		// console.log(this.audio);
-		if(this.props.currentStatus) {
-			if(!this.props.loaded) {
-				this.audio.loadAudio(this.props.currentMusic.link).then(() => {
-					this.audio.startAudio();
-				});
-			}
-			else {
-				this.audio.startAudio();
-			}
+	componentDidUpdate(prevProps, prevState) {
+		if(prevProps.currentMusic.link !== this.props.currentMusic.link) {
+			this.props.loadMusic(this.audio, this.props.currentMusic.link).then(() => {
+				this.props.playMusicAction(this.audio);
+			});
+	
 		}
-		else {
-			if(this.props.loaded) {
-				this.audio.stopAudio();
-				
-			}
-		}
+		// else {
+		// 	this.props.pauseMusicAction(this.audio);
+		// }
 	}
 
-	// playMusic = () => {
-	// 	this.props.playMusic();
-	// 	// const audio = new WebAudioWrapper();
-	// 	// audio.loadAudio(this.props.currentMusic.link).then(() => {
-	// 	// 	audio.startAudio();
-	// 	// });
-		
-	// }
+	shouldComponentUpdate(nextProps, nextState) {
 
-	handleChange = (currentTime) => {
-		this.setState({
-			currentTime: currentTime
-		})
+		return !isEqual(nextProps, this.props);
+	}
+
+
+
+
+	handleChangeCurrentTime = (currentTime) => {
+
 	}
 
 	render() {
@@ -70,8 +55,8 @@ class MusicPlayerContainer extends Component {
 					<div className="btn prev"></div>
 					{
 						this.props.currentStatus ?
-						<div className="btn pause" onClick={this.props.pauseMusic}></div> :
-						<div className="btn play" onClick={this.props.playMusic}></div>
+						<div className="btn pause" onClick={this.pauseMusic}></div> :
+						<div className="btn play" onClick={this.playMusic}></div>
 					}
 					<div className="btn next"></div>
 				</div>
@@ -88,7 +73,7 @@ class MusicPlayerContainer extends Component {
 						max={this.state.durationTime}
 						step={0.2}
 						value={this.state.currentTime}
-						onChange={this.handleChange}
+						onChange={this.handleChangeCurrentTime}
 					/>
 				</div>
 
@@ -110,12 +95,8 @@ function mapStateToProps(state, props) {
 	};
 }
 
-
 function mapDispatchToProps(dispatch, props) {
-	return bindActionCreators({
-		playMusic: playMusicAction,
-		pauseMusic: pauseMusicAction
-	}, dispatch);
+	return bindActionCreators(AudioActions, dispatch);
 }
 
 export default MusicPlayerContainer;

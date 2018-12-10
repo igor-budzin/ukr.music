@@ -7,8 +7,9 @@ import MusicFilter from 'universal/components/MusicFilter';
 import PlayList from 'universal/components/PlayList/PlayList';
 import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/containers/MusicPlayerContainer';
+import isEqual from 'lodash.isequal';
 // Actions
-import { getMusicAction } from 'universal/redux/actions/getMusicActions';
+import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 import { choseMusicAction } from 'universal/redux/actions/controlMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -16,6 +17,10 @@ class MyMusicListContainer extends Component {
 	componentDidMount() {
 		this.props.getMusic();
 	}
+
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	return !isEqual(nextProps.playlist, this.props.playlist);
+	// }
 
 	render() {
 		return (
@@ -58,7 +63,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
 	return bindActionCreators({
-		getMusic: getMusicAction,
+		getMusic: getMusicListAction,
 		choseMusic: choseMusicAction
 	}, dispatch);
 }

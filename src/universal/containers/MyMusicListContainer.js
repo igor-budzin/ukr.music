@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import MusicFilter from 'universal/components/MusicFilter';
 import PlayList from 'universal/components/PlayList/PlayList';
 import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
-import MusicPlayerContainer from 'universal/containers/MusicPlayerContainer';
+import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import isEqual from 'lodash.isequal';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
@@ -14,13 +14,22 @@ import { choseMusicAction } from 'universal/redux/actions/controlMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class MyMusicListContainer extends Component {
+	constructor(props, context) {
+		super(props, context)
+
+		this.state = {
+			audio: {}
+		}
+	}
+
 	componentDidMount() {
 		this.props.getMusic();
 	}
 
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	return !isEqual(nextProps.playlist, this.props.playlist);
-	// }
+
+	handleChoseAudio = (data) => {
+		this.setState({audio: data, setIsPlaying: true})
+	}
 
 	render() {
 		return (
@@ -29,7 +38,10 @@ class MyMusicListContainer extends Component {
 
 				<div className="container clearfix">
 
-					<MusicPlayerContainer />
+					<MusicPlayerContainer
+						chosenAudio={this.state.audio}
+						setIsPlaying={true}
+					/>
 
 					{/*<MusicFilter />*/}
 
@@ -42,7 +54,7 @@ class MyMusicListContainer extends Component {
 						this.props.playlist.length > 0 ?
 						<PlayList
 							playlist={this.props.playlist}
-							handleChoseAudio={this.props.choseMusic}
+							handleChoseAudio={this.handleChoseAudio}
 						/> :
 						<EmptyPlayList />
 					}

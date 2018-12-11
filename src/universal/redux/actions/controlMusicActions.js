@@ -1,80 +1,19 @@
-import { 
-	CHOSE_MUSIC,
-	PLAY_MUSIC,
-	PAUSE_MUSIC,
-	LOAD_MUSIC,
-	LOAD_MUSIC_SUCCESS,
-	LOAD_MUSIC_ERROR,
-} from '../consts';
+import * as consts from '../consts';
 
-export function choseMusicAction(music) {
+export function setCurrentAudioction(currentMusic) {
 	return {
-		type: CHOSE_MUSIC,
-		music
+		type: consts.SET_CURRENT_AUDIO,
+		currentMusic
 	}
 }
 
-export function playMusicAction(audio) {
-	audio.startAudio();
-	console.log('playMusicAction')
+export function playAudioAction() {
 	return {
-		type: PLAY_MUSIC,
-		status: true
+		type: consts.PLAY_AUDIO
 	}
 }
-
-export function pauseMusicAction(audio) {
-	audio.startAudio();
-	console.log('pauseMusicAction')
+export function pauseAudioAction() {
 	return {
-		type: PAUSE_MUSIC,
-		status: false
+		type: consts.PAUSE_AUDIO
 	}
 }
-
-export function loadMusicAction() {
-	return {
-		type: LOAD_MUSIC,
-		loadProcess: true,
-		loaded: false
-	}
-}
-
-export function loadMusicSuccessAction() {
-	return {
-		type: LOAD_MUSIC_SUCCESS,
-		loadProcess: false,
-		loaded: true
-	}
-}
-
-export function loadMusicErrorAction() {
-	return {
-		type: LOAD_MUSIC_ERROR,
-		loadProcess: false,
-		loaded: false
-	}
-}
-
-export function loadMusic(audio, link) {
-
-	return (dispatch) => {
-		dispatch(loadMusicAction());
-
-		return new Promise((resolve, reject) => {
-			audio.loadAudio(link)
-			.then(() => {
-				dispatch(loadMusicSuccessAction());
-				resolve()
-			})
-			.catch((error) => {
-				dispatch(loadMusicErrorAction());
-				resolve()
-				console.log(error);
-			});
-		})
-
-	}
-}
-
-

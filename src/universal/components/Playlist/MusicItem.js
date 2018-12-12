@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import isEqual from 'lodash.isequal';
 
 export default class MusicItem extends Component {
 	onClick = () => {
@@ -7,6 +8,10 @@ export default class MusicItem extends Component {
 			artist: this.props.artist,
 			title: this.props.title
 		});
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return !isEqual(nextProps, this.props);
 	}
 
 	render() {

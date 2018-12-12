@@ -28,7 +28,7 @@ class MyMusicListContainer extends Component {
 
 
 	handleChoseAudio = (data) => {
-		this.setState({audio: data, setIsPlaying: true})
+		this.setState({audio: data})
 	}
 
 	render() {
@@ -40,7 +40,6 @@ class MyMusicListContainer extends Component {
 
 					<MusicPlayerContainer
 						chosenAudio={this.state.audio}
-						setIsPlaying={true}
 					/>
 
 					{/*<MusicFilter />*/}

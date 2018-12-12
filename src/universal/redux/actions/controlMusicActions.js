@@ -1,15 +1,9 @@
 import * as consts from '../consts';
 
-export function setCurrentAudioction(currentMusic) {
+export function playAudioAction(currentMusic) {
 	return {
-		type: consts.SET_CURRENT_AUDIO,
+		type: consts.PLAY_AUDIO,
 		currentMusic
-	}
-}
-
-export function playAudioAction() {
-	return {
-		type: consts.PLAY_AUDIO
 	}
 }
 export function pauseAudioAction() {

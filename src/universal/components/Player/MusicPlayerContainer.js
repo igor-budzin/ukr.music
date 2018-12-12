@@ -20,29 +20,63 @@ class MusicPlayerContainer extends Component {
 		};
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if(Object.keys(this.props.currentMusic).length === 0 &&
-		 prevProps.currentMusic.link !== this.props.currentMusic.link) {
-			this.audio.src = 'https://localhost:8080/api/get-music/' + this.props.currentMusic.link;
-			this.props.setCurrentAudioAction(this.props.chosenAudio)
-		}
-		if(this.props.setIsPlaying) {
-			this.audio.play();
-			this.props.playAudioAction();
-		}
 
-		if(this.props.isPlaying) {
-			this.audio.play();
-			this.props.playAudioAction();
+	componentDidUpdate(prevProps) {
+		// console.log(prevProps, this.props)
+		if(this.props.currentMusic.link) {
+			console.log('прийшла лінка ' + this.props.chosenAudio.link);
+			if(prevProps.chosenAudio.link !== this.props.chosenAudio.link) {
+				console.log('1')
+				this.playAudio(this.props.chosenAudio);
+			}
+			else {
+				console.log('2 -')
+				if(prevProps.isPlaying && !this.props.isPlaying) {
+					console.log('3')
+					this.pauseAudio();
+				}
+				else {
+					console.log('4')
+					this.playAudio(this.props.chosenAudio);
+				}
+			}
 		}
 		else {
-			this.audio.pause();
-			this.props.pauseAudioAction();
+			console.log('5')
+			this.playAudio(this.props.chosenAudio);
 		}
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return !isEqual(nextProps, this.props) && !isEqual(nextState, this.state);
+	playAudio = (currentMusic) => {
+		this.audio.src = 'https://localhost:8080/api/get-music/' + currentMusic.link;
+		this.audio.play().then(() => {
+			this.props.playAudioAction(currentMusic);
+		});
+	};
+
+	pauseAudio = () => {
+		this.props.pauseAudioAction();
+		this.audio.play();
+	};
+
+	shouldComponentUpdate(nextProps) {
+		if(Object.keys(this.props.currentMusic).length > 0 &&
+			this.props.currentMusic.link === nextProps.currentMusic.link) {
+			return false;
+		}
+		return true;
 	}
 
 	render() {

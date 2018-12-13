@@ -10,25 +10,35 @@ import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContain
 import isEqual from 'lodash.isequal';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
-import { choseMusicAction } from 'universal/redux/actions/controlMusicActions';
+import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class MyMusicListContainer extends Component {
 	constructor(props, context) {
 		super(props, context)
-
-		this.state = {
-			audio: {}
-		}
 	}
 
 	componentDidMount() {
 		this.props.getMusic();
 	}
 
-
-	handleChoseAudio = (data) => {
-		this.setState({audio: data})
+	handleChoseAudio = (audioData) => {
+		if(this.props.currentMusic.link.length === 0) {
+			this.props.playAudio(audioData);
+		}
+		else {
+			if(this.props.currentMusic.link === audioData.link) {
+				if(this.props.isPlaying) {
+					this.props.pauseAudio();
+				}
+				else {
+					this.props.playAudio();
+				}
+			}
+			else {
+				this.props.playAudio(audioData);
+			}
+		}
 	}
 
 	render() {
@@ -38,9 +48,7 @@ class MyMusicListContainer extends Component {
 
 				<div className="container clearfix">
 
-					<MusicPlayerContainer
-						chosenAudio={this.state.audio}
-					/>
+					<MusicPlayerContainer />
 
 					{/*<MusicFilter />*/}
 
@@ -52,8 +60,10 @@ class MyMusicListContainer extends Component {
 					{
 						this.props.playlist.length > 0 ?
 						<PlayList
+							currentId={this.props.currentMusic.id}
 							playlist={this.props.playlist}
 							handleChoseAudio={this.handleChoseAudio}
+							isPlaying={this.props.isPlaying}
 						/> :
 						<EmptyPlayList />
 					}
@@ -67,15 +77,17 @@ class MyMusicListContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		playlist: state.getMusicReducer.music
+		playlist: state.getMusicReducer.music,
+		currentMusic: state.controlMusicReducer.currentMusic,
+		isPlaying: state.controlMusicReducer.isPlaying
 	};
 }
 
 
 function mapDispatchToProps(dispatch, props) {
 	return bindActionCreators({
-		getMusic: getMusicListAction,
-		choseMusic: choseMusicAction
+		...AudioActions,
+		getMusic: getMusicListAction
 	}, dispatch);
 }
 

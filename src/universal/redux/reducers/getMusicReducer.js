@@ -1,4 +1,4 @@
-import { 
+	import { 
 	REQUEST_GET_MUSIC_LIST,
 	REQUEST_GET_MUSIC_LIST_SUCCESS,
 	REQUEST_GET_MUSIC_LIST_ERROR
@@ -16,7 +16,6 @@ export default function getMusicReducer(state = initialState, action) {
 				music: []
 			};
 		case REQUEST_GET_MUSIC_LIST_SUCCESS:
-			// console.log('REQUEST_GET_ROUTES_SUCCESS', action, music)
 			return {
 				music
 			};

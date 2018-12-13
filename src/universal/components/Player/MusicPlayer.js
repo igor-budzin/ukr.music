@@ -10,8 +10,8 @@ export default class MusicPlayer extends Component {
 					<div className="btn prev"></div>
 					{
 						this.props.isPlaying ?
-						<div className="btn pause"></div> :
-						<div className="btn play"></div>
+						<div className="btn pause" onClick={this.props.handlePauseAudio}></div> :
+						<div className="btn play" onClick={this.props.handlePlayAudio}></div>
 					}
 					<div className="btn next"></div>
 				</div>
@@ -26,9 +26,9 @@ export default class MusicPlayer extends Component {
 						tooltip={false}
 						min={0}
 						max={this.props.durationTime}
-						step={0.2}
+						step={1}
 						value={this.props.currentTime}
-						onChange={this.handleChangeCurrentTime}
+						onChange={this.props.handleChangeCurrentTime}
 					/>
 				</div>
 

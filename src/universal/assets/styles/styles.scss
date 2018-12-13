@@ -322,6 +322,10 @@ a:hover {
 	border-radius: 4px;
 	cursor: pointer;
 	position: relative;
+
+	&.isPlay {
+		background-color: lighten(#e9f2ff, 2%);
+	}
 }
 .playlist {
 	.empty-playlist {

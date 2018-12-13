@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import isEqual from 'lodash.isequal';
+import { formatSeconds } from 'universal/utils';
 
 export default class MusicItem extends Component {
 	onClick = () => {
 		this.props.handleChoseAudio({
+			id: this.props.id,
 			link: this.props.link,
 			artist: this.props.artist,
-			title: this.props.title
+			title: this.props.title,
+			duration: this.props.duration
 		});
 	}
 
@@ -21,21 +24,25 @@ export default class MusicItem extends Component {
 		}
 
 		return (
-			<div className="audio-row" onClick={this.onClick}>
+			<div className={'audio-row' + (this.props.isPlay ? ' isPlay' : '')} onClick={this.onClick}>
 				<div className="audio-row-cover" style={style}>
-					<div className="bars">
-						<div className="bar"></div>
-						<div className="bar"></div>
-						<div className="bar"></div>
-						<div className="bar"></div>
-						<div className="bar"></div>
-					</div>
+					{
+						this.props.isPlay ? 
+						<div className="bars">
+							<div className="bar"></div>
+							<div className="bar"></div>
+							<div className="bar"></div>
+							<div className="bar"></div>
+							<div className="bar"></div>
+						</div> : null
+					}
+
 				</div>
 				<div className="audio-row-desc">
-					<div className="singer"><a href="#">{this.props.artist}</a></div>
-					<div className="song"><a href="#">{this.props.title}</a></div>
+					<div className="singer"><a href="javascript:void(0);">{this.props.artist}</a></div>
+					<div className="song"><a href="javascript:void(0);">{this.props.title}</a></div>
 				</div>
-				<div className="audio-row-time">{this.props.duration}</div>
+				<div className="audio-row-time">{formatSeconds(this.props.duration)}</div>
 			</div>
 		);
 	}

@@ -11,72 +11,57 @@ import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 @connect(mapStateToProps, mapDispatchToProps)
 class MusicPlayerContainer extends Component {
 	constructor(props, context) {
-		super(props, context)
-
-		this.audio = new Audio();
+		super(props, context);
 
 		this.state = {
 			currentTime: 0
 		};
 	}
 
-
-	componentDidUpdate(prevProps) {
-		// console.log(prevProps, this.props)
-		if(this.props.currentMusic.link) {
-			console.log('прийшла лінка ' + this.props.chosenAudio.link);
-			if(prevProps.chosenAudio.link !== this.props.chosenAudio.link) {
-				console.log('1')
-				this.playAudio(this.props.chosenAudio);
-			}
-			else {
-				console.log('2 -')
-				if(prevProps.isPlaying && !this.props.isPlaying) {
-					console.log('3')
-					this.pauseAudio();
-				}
-				else {
-					console.log('4')
-					this.playAudio(this.props.chosenAudio);
-				}
-			}
-		}
-		else {
-			console.log('5')
-			this.playAudio(this.props.chosenAudio);
-		}
-
-
-
-
-
-
-
-
-
-
-
-
+	componentDidMount() {
+		window.audioInstance.addEventListener('timeupdate', this.handleUpdateCurrentTime);
+		window.audioInstance.addEventListener('ended', this.handleEndedAudio);
 	}
 
-	playAudio = (currentMusic) => {
-		this.audio.src = 'https://localhost:8080/api/get-music/' + currentMusic.link;
-		this.audio.play().then(() => {
-			this.props.playAudioAction(currentMusic);
+	componentWillUnmount() {
+		window.audioInstance.removeEventListener('timeupdate', this.handleUpdateCurrentTime);
+		window.audioInstance.removeEventListener('ended', this.handleEndedAudio);
+	}
+
+	handleUpdateCurrentTime = () => {
+		this.setState({
+			currentTime: window.audioInstance.currentTime
 		});
 	};
 
-	pauseAudio = () => {
-		this.props.pauseAudioAction();
-		this.audio.play();
+	handleEndedAudio = () => {
+		this.setState({
+			currentTime: 0
+		});
+		this.props.pauseAudio();
+	}
+
+	handlePlayAudio = () => {
+		if(this.props.currentMusic.link.length > 0) {
+			this.props.playAudio();
+		}
 	};
 
-	shouldComponentUpdate(nextProps) {
-		if(Object.keys(this.props.currentMusic).length > 0 &&
-			this.props.currentMusic.link === nextProps.currentMusic.link) {
-			return false;
+	handlePauseAudio = () => {
+		if(this.props.currentMusic.link.length > 0) {
+			this.props.pauseAudio();
 		}
-		return true;
+	}
+
+	handleChangeCurrentTime = (time) => {
+		this.setState({
+			currentTime: time
+		}, () => {
+			window.audioInstance.currentTime = time;
+			if(!this.props.isPlaying) {
+				this.handlePlayAudio();
+			}
+		});
 	}
 
 	render() {
@@ -84,8 +69,12 @@ class MusicPlayerContainer extends Component {
 			<MusicPlayer
 				atrist={this.props.currentMusic.atrist}
 				title={this.props.currentMusic.title}
-				durationTime={this.props.currentMusic.durationTime}
+				durationTime={this.props.currentMusic.duration}
 				currentTime={this.state.currentTime}
+				isPlaying={this.props.isPlaying}
+				handlePlayAudio={this.handlePlayAudio}
+				handlePauseAudio={this.handlePauseAudio}
+				handleChangeCurrentTime={this.handleChangeCurrentTime}
 			/>
 		);
 	}

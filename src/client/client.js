@@ -11,6 +11,8 @@ import createHistory from 'history/createBrowserHistory';
 const history = createHistory();
 const store = createStore(history);
 
+window.audioInstance = new Audio();
+
 const renderApp = (Component) => {
 	render(
 		<AppContainer>

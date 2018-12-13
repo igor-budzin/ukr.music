@@ -1,6 +1,7 @@
 const MysqlDBConnection = require('./MysqlDBConnection');
 const multipart = require('connect-multiparty');
 const Editor = require('id3-editor');
+const mp3Duration = require('mp3-duration');
 const fs = require('fs');
 const path = require('path');
 
@@ -32,30 +33,36 @@ module.exports = (app, router) => {
 					const buffer = Buffer.from(data);
 					const fileName = Date.now() + '_' + item.originalFilename.replace(/ /g, '_');
 
-					editor.load(buffer).then(() => {
-						const title = editor.get('title') ? editor.get('title') : null;
-						const artists = editor.get('artists') ? editor.get('artists') : null;
-						const album = editor.get('album') ? editor.get('album') : null;
-						const year = editor.get('year') ? editor.get('year') : null;
-						const genre = editor.get('genre') ? editor.get('genre') : null;
-						const picture = editor.get('picture') ? editor.get('picture').data.toString('base64') : null;
+					mp3Duration(buffer, function (err, durationTime) {
+						if (err) throw err;
 
-						const connection = MysqlDBConnection()();
- 
-						const sql = `INSERT INTO audio (link, title, artists, album, year, genre) 
-									 VALUES ('${fileName}', '${title}', '${artists}', '${album}', '${year}', '${genre}')`;
+						editor.load(buffer).then(() => {
+							const title = editor.get('title') ? editor.get('title') : null;
+							const artists = editor.get('artists') ? editor.get('artists') : null;
+							const album = editor.get('album') ? editor.get('album') : null;
+							const year = editor.get('year') ? editor.get('year') : null;
+							const genre = editor.get('genre') ? editor.get('genre') : null;
+							const duration = durationTime;
+							const picture = editor.get('picture') ? editor.get('picture').data.toString('base64') : null;
 
-						connection.query(sql, (error, results, fields) => {
-							if (error) throw err;
+							const connection = MysqlDBConnection()();
+						
+							const sql = `INSERT INTO audio (link, title, artists, album, year, genre, duration, picture) 
+										 VALUES ('${fileName}', '${title}', '${artists}', '${album}', '${year}', '${genre}', '${duration}', '${picture}')`;
 
-							fs.writeFile(__dirname + filesPath + fileName, buffer, (err) => {
-								if (err) throw err;
-								resolve("ok");
+							connection.query(sql, (error, results, fields) => {
+								if (error) throw error;
+
+								fs.writeFile(__dirname + filesPath + fileName, buffer, (err) => {
+									if (err) throw err;
+									resolve("ok");
+								});
+								connection.destroy();
 							});
-							connection.destroy();
+
+							resolve("ok");
 						});
 
-						resolve("ok");
 					});
 				});
 			});
@@ -75,7 +82,7 @@ module.exports = (app, router) => {
 	router.get('/get-music', (req, res, next) => {
 		const connection = MysqlDBConnection()();
 
-		const sql = `SELECT link, artists, title FROM audio`;
+		const sql = `SELECT id, link, artists, title, duration, picture FROM audio`;
 
 		connection.query(sql, (error, results, fields) => {
 			if (error) throw err;
@@ -85,9 +92,12 @@ module.exports = (app, router) => {
 			results.map((item) => {
 				const obj = {};
 				
+				obj.id = item.id;
 				obj.link = item.link;
 				obj.title = item.title;
 				obj.artists = item.artists;
+				obj.duration = item.duration;
+				obj.picture = item.picture;
 
 				audioArr.push(obj)
 			});

@@ -93,7 +93,7 @@ class UploadMusicContainer extends Component {
 
 					{
 						files.length > 0 ?
-						<button type="button" onClick={this.filesUpload}>Завантажити</button> :
+						<button type="button"className="button" onClick={this.filesUpload}>Завантажити</button> :
 						null
 					}
 

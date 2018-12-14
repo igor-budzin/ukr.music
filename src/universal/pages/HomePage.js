@@ -1,7 +1,7 @@
 // Libraries
 import React, { Component, Fragment } from 'react';
 
-import HomeContainer from 'universal/containers/HomeContainer';
+import HomeContainer from 'universal/components/Home/HomeContainer';
 import Header from 'universal/components/Header';
 
 class HomePage extends Component {

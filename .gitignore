@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
 build
-npm-debug.log
+files
+*.log.*
 map-routes.sublime-workspace

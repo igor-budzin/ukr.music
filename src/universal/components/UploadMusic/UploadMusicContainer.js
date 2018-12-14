@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropzone from 'react-dropzone';
-import axios from 'axios';
 import { formatBytes } from 'universal/utils';
+import { NotificationContainer, NotificationManager } from "react-light-notifications";
 // Components
+import Button from 'universal/components/Commons/Button';
 // Actions
-// import { getRoutesAction } from 'universal/redux/actions/getRoutesActions';
+import * as uploadMusicActions from './uploadMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class UploadMusicContainer extends Component {
@@ -31,8 +32,7 @@ class UploadMusicContainer extends Component {
 		});
 
 		this.setState({uploadedFiles: arr});
-		console.log(acceptedFiles);
-	}
+	};
 
 	filesUpload = () => {
 		const data = new FormData();
@@ -41,18 +41,22 @@ class UploadMusicContainer extends Component {
 			data.append("files", item.file);
 		});
 
-		axios.post('https://localhost:8080/api/upload-music', data)
-
-		.then((response) => {
-			console.log(response.data);
+		this.props.requestUploadMusic(data, (response) => {
 			this.setState({uploadedFiles: []});
+
+			if(response.status) {
+				NotificationManager.success({
+					message: 'Аудіофайли успішно завантажено'
+				});
+			}
+			else {
+				NotificationManager.error({
+					title: 'Помилка',
+					message: 'На жаль під час завантаження аудіофайлів сталася помилка',
+					timeOut: 10000
+				});
+			}
 		})
-		.catch((error) => {
-			console.log(error);
-			this.setState({uploadedFiles: []});
-		});
-
-		console.log(data.getAll('files'));
 	}
 
 	render() {
@@ -73,7 +77,12 @@ class UploadMusicContainer extends Component {
 
 					<div className="dropzone-wrapper">
 						<form>
-							<Dropzone className="dropzone" onDrop={this.onDrop} maxSize={20000000} accept="audio/mp3">
+							<Dropzone
+								className="dropzone"
+								onDrop={this.onDrop}
+								maxSize={20000000}
+								accept="audio/mp3"
+							>
 								<p>Щоб завантажити файл натисніть на синю зону або ж просто перетягніть на неї файл</p>
 							</Dropzone>
 						</form>
@@ -90,15 +99,23 @@ class UploadMusicContainer extends Component {
 							})
 						}
 					</div>
+					
 
 					{
-						files.length > 0 ?
-						<button type="button"className="button" onClick={this.filesUpload}>Завантажити</button> :
-						null
+						files.length > 0 && (
+							<Button
+								isLoading={this.props.isUploading}
+								className="upload"
+								onClick={this.filesUpload}
+							>
+								Завантажити
+							</Button>
+						)
 					}
 
 					<br /><br /><br /><br /><br /><br /><br /><br />
 				</div>
+				<NotificationContainer />
 			</main>
 		);
 	}
@@ -106,15 +123,13 @@ class UploadMusicContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		// routes: state.getRoutesReducer.routes
+		isUploading: state.uploadMusicReducer.isUploading
 	};
 }
 
 
 function mapDispatchToProps(dispatch, props) {
-	return bindActionCreators({
-		// getRoutes: getRoutesAction
-	}, dispatch);
+	return bindActionCreators(uploadMusicActions, dispatch);
 }
 
 export default UploadMusicContainer;

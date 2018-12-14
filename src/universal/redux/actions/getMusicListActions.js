@@ -30,7 +30,7 @@ export function requestGetMusicListError() {
 	}
 }
 
-export function getMusicListAction() {
+export function getMusicListAction(callback) {
 	return (dispatch) => {
 		dispatch(requestGetListMusic());
 
@@ -41,11 +41,13 @@ export function getMusicListAction() {
 			}
 			else {
 				dispatch(requestGetMusicListError());
+				callback({status: false});
 			}
 		})
 		.catch((error) => {
 			dispatch(requestGetMusicListError());
 			console.log(error);
+			callback({status: false});
 		});
 	}
 }

@@ -1,7 +1,7 @@
 // Libraries
 import React, { Component, Fragment } from 'react';
 
-import UploadMusicContainer from 'universal/containers/UploadMusicContainer';
+import UploadMusicContainer from 'universal/components/UploadMusic/UploadMusicContainer';
 import Header from 'universal/components/Header';
 
 class UploadMusicPage extends Component {

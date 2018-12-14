@@ -13,6 +13,11 @@ export function formatBytes(bytes, decimals) {
 	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
+/**
+ * [formatSeconds description]
+ * @param  {[Integer]} seconds [description]
+ * @return {[String]}         [formated string]
+ */
 export function formatSeconds(seconds) {
 	let string = '';
 	let sec_num = parseInt(seconds, 10);

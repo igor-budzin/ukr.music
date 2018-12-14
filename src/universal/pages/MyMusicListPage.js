@@ -1,7 +1,7 @@
 // Libraries
 import React, { Component, Fragment } from 'react';
 
-import MyMusicListContainer from 'universal/containers/MyMusicListContainer';
+import MyMusicListContainer from 'universal/components/MyMusicListContainer';
 import Header from 'universal/components/Header';
 
 class MyMusicListPage extends Component {

@@ -35,7 +35,19 @@ export default class MusicPlayer extends Component {
 				<div className="controls controls--more">
 					<div className="btn repeat"></div>
 					<div className="btn shuffle"></div>
-					<div className="btn volume"></div>
+					<div className="btn volume">
+						<div className="volume-seeker">
+							<Slider
+								orientation="vertical"
+								tooltip={false}
+								min={0}
+								max={1}
+								step={0.02}
+								value={this.props.volume}
+								onChange={this.props.handleChangeVolume}
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

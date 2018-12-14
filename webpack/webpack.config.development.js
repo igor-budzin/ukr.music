@@ -7,8 +7,9 @@ const src  = path.join(root, 'src');
 
 const clientSrc    = path.join(src, 'client');
 const universalSrc = path.join(src, 'universal');
+const nodeModules = path.join(root, 'node_modules');
 
-const clientInclude = [clientSrc, universalSrc];
+const clientInclude = [clientSrc, universalSrc, nodeModules];
 
 const babelQuery = {
   "presets": [
@@ -16,6 +17,7 @@ const babelQuery = {
     ["es2015", { "modules": false }],
     "stage-0"
   ],
+  "compact" : false,
   "plugins": [
     "transform-decorators-legacy",
     "react-hot-loader/babel"
@@ -81,6 +83,7 @@ export default {
             root: src,
             modules: true,
             importLoaders: 1,
+            query: {compact: false},
             localIdentName: '[name]_[local]_[hash:base64:5]'
           }}
        ]

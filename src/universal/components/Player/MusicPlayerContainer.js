@@ -14,7 +14,8 @@ class MusicPlayerContainer extends Component {
 		super(props, context);
 
 		this.state = {
-			currentTime: 0
+			currentTime: 0,
+			volume: 0.5
 		};
 	}
 
@@ -51,7 +52,7 @@ class MusicPlayerContainer extends Component {
 		if(this.props.currentMusic.link.length > 0) {
 			this.props.pauseAudio();
 		}
-	}
+	};
 
 	handleChangeCurrentTime = (time) => {
 		this.setState({
@@ -62,7 +63,14 @@ class MusicPlayerContainer extends Component {
 				this.handlePlayAudio();
 			}
 		});
-	}
+	};
+
+	handleChangeVolume = (volume) => {
+		this.setState({
+			volume
+		});
+		window.audioInstance.volume = volume;
+	};
 
 	render() {
 		return (
@@ -71,10 +79,12 @@ class MusicPlayerContainer extends Component {
 				title={this.props.currentMusic.title}
 				durationTime={this.props.currentMusic.duration}
 				currentTime={this.state.currentTime}
+				volume={this.state.volume}
 				isPlaying={this.props.isPlaying}
 				handlePlayAudio={this.handlePlayAudio}
 				handlePauseAudio={this.handlePauseAudio}
 				handleChangeCurrentTime={this.handleChangeCurrentTime}
+				handleChangeVolume={this.handleChangeVolume}
 			/>
 		);
 	}

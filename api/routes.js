@@ -70,19 +70,16 @@ module.exports = (app, router) => {
 
 		Promise.all(promises).then(values => {
 			setTimeout(() => {
-				console.log("the end");
 				res.send(JSON.stringify({status: "true"}));
 			}, 5000);
 		});
-
-		
 	});
 
 
 	router.get('/get-music', (req, res, next) => {
 		const connection = MysqlDBConnection()();
 
-		const sql = `SELECT id, link, artists, title, duration, picture FROM audio`;
+		const sql = `SELECT id, link, artists, title, duration, picture FROM audio ORDER BY id DESC LIMIT 15`;
 
 		connection.query(sql, (error, results, fields) => {
 			if (error) throw err;

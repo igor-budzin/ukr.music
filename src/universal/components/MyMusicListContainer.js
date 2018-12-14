@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { NotificationContainer, NotificationManager } from "react-light-notifications";
 // Components
 import MusicFilter from 'universal/components/MusicFilter';
 import PlayList from 'universal/components/PlayList/PlayList';
 import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
-import isEqual from 'lodash.isequal';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
@@ -19,7 +19,15 @@ class MyMusicListContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getMusic();
+		this.props.getMusic((response) => {
+			if(!response.status) {
+				NotificationManager.error({
+					title: 'Помилка',
+					message: 'На жаль під час завантаження аудіофайлів сталася помилка',
+					timeOut: 10000
+				});
+			}
+		});
 	}
 
 	handleChoseAudio = (audioData) => {
@@ -58,7 +66,7 @@ class MyMusicListContainer extends Component {
 
 				<div className="content">
 					{
-						this.props.playlist.length > 0 ?
+						this.props.playlist && this.props.playlist.length > 0 ?
 						<PlayList
 							currentId={this.props.currentMusic.id}
 							playlist={this.props.playlist}
@@ -70,6 +78,7 @@ class MyMusicListContainer extends Component {
 
 					<br /><br /><br /><br /><br /><br /><br /><br />
 				</div>
+				<NotificationContainer />
 			</main>
 		);
 	}

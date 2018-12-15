@@ -40,6 +40,11 @@ a:hover {
 .content {
 	width: 622px;
 	float: left;
+	margin-right: 26px;
+}
+.sidebar {
+	width: 330px;
+	float: left;
 }
 .item-left {
 	float: left;
@@ -273,6 +278,17 @@ a:hover {
 
 	&.isPlay {
 		background-color: lighten(#e9f2ff, 2%);
+
+		.bg {
+			display: block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.8);
+			z-index: 1;
+		}
 	}
 }
 .playlist {
@@ -336,6 +352,7 @@ a:hover {
 	height: 16px;
 	margin-top: -9px;
 	margin-left: -11px;
+	z-index: 2;
 }
 .bar {
    background: #fff;
@@ -569,6 +586,10 @@ a:hover {
 			&.volume {
 				background-image: url('../img/play-controls/speaker-3.svg');
 
+				&.muted {
+					background-image: url('../img/play-controls/speaker-4.svg');
+				}
+
 				&:hover {
 					box-shadow: 0px -1px 3px 1px rgba(4, 4, 4, 0.08);
 				}
@@ -641,5 +662,24 @@ a:hover {
 	}
 	60% {
 		opacity: 1;
+	}
+}
+
+.button-add-music {
+	background-color: #e9f2ff;
+	background-image: url('../img/play-controls/quaver-1.svg');
+	background-repeat: no-repeat;
+	background-size: 32px;
+	background-position: right 20px center;
+	height: 44px;
+	line-height: 44px;
+	padding: 0 20px;
+	display: block;
+	border-radius: 3px;
+	font-family: 'Roboto';
+	color: #0297ca;
+
+	&:hover {
+		background-color: darken(#e9f2ff, 2%);
 	}
 }

@@ -15,11 +15,13 @@ class MusicPlayerContainer extends Component {
 
 		this.state = {
 			currentTime: 0,
-			volume: 0.5
+			volume: 0.5,
+			isMuted: false
 		};
 	}
 
 	componentDidMount() {
+		window.audioInstance.volume = this.state.volume;
 		window.audioInstance.addEventListener('timeupdate', this.handleUpdateCurrentTime);
 		window.audioInstance.addEventListener('ended', this.handleEndedAudio);
 	}
@@ -72,6 +74,14 @@ class MusicPlayerContainer extends Component {
 		window.audioInstance.volume = volume;
 	};
 
+	handleMuteVolume = () => {
+		this.setState({
+			isMuted: !this.state.isMuted
+		}, () => {
+			window.audioInstance.muted = this.state.isMuted;
+		});
+	};
+
 	render() {
 		return (
 			<MusicPlayer
@@ -81,10 +91,12 @@ class MusicPlayerContainer extends Component {
 				currentTime={this.state.currentTime}
 				volume={this.state.volume}
 				isPlaying={this.props.isPlaying}
+				isMuted={this.state.isMuted}
 				handlePlayAudio={this.handlePlayAudio}
 				handlePauseAudio={this.handlePauseAudio}
 				handleChangeCurrentTime={this.handleChangeCurrentTime}
 				handleChangeVolume={this.handleChangeVolume}
+				handleMuteVolume={this.handleMuteVolume}
 			/>
 		);
 	}

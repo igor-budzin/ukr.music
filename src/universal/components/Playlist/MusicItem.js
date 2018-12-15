@@ -27,16 +27,17 @@ export default class MusicItem extends Component {
 			<div className={'audio-row' + (this.props.isPlay ? ' isPlay' : '')} onClick={this.onClick}>
 				<div className="audio-row-cover" style={style}>
 					{
-						this.props.isPlay ? 
-						<div className="bars">
-							<div className="bar"></div>
-							<div className="bar"></div>
-							<div className="bar"></div>
-							<div className="bar"></div>
-							<div className="bar"></div>
-						</div> : null
+						this.props.isPlay && (
+							<div className="bars">
+								<div className="bar"></div>
+								<div className="bar"></div>
+								<div className="bar"></div>
+								<div className="bar"></div>
+								<div className="bar"></div>
+							</div>
+						)
 					}
-
+					<div className="bg"></div>
 				</div>
 				<div className="audio-row-desc">
 					<div className="singer"><a href="javascript:void(0);">{this.props.artist}</a></div>

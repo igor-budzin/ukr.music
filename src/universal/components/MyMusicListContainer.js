@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 // Components
 import MusicFilter from 'universal/components/MusicFilter';
@@ -77,6 +78,9 @@ class MyMusicListContainer extends Component {
 					}
 
 					<br /><br /><br /><br /><br /><br /><br /><br />
+				</div>
+				<div className="sidebar">
+					<Link to="/upload" className="button-add-music">Завантажити аудіозаписи</Link>
 				</div>
 				<NotificationContainer />
 			</main>

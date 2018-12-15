@@ -37,8 +37,8 @@ module.exports = (app, router) => {
 						if (err) throw err;
 
 						editor.load(buffer).then(() => {
-							const title = editor.get('title') ? editor.get('title') : null;
-							const artists = editor.get('artists') ? editor.get('artists') : null;
+							const title = editor.get('title') ? editor.get('title') : item.originalFilename.replace('.mp3', '');
+							const artists = editor.get('artists') ? editor.get('artists') : 'Невідомий виконавець';
 							const album = editor.get('album') ? editor.get('album') : null;
 							const year = editor.get('year') ? editor.get('year') : null;
 							const genre = editor.get('genre') ? editor.get('genre') : null;

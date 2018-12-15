@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Slider from 'react-rangeslider';
 import { formatSeconds } from 'universal/utils';
+import classNames from 'classnames';
 
 export default class MusicPlayer extends Component {
+
+
 	render() {
 		return (
 			<div className="player">
@@ -35,8 +38,8 @@ export default class MusicPlayer extends Component {
 				<div className="controls controls--more">
 					<div className="btn repeat"></div>
 					<div className="btn shuffle"></div>
-					<div className="btn volume">
-						<div className="volume-seeker">
+					<div className={classNames('btn', 'volume', {'muted': this.props.isMuted})} onClick={this.props.handleMuteVolume}>
+						<div className="volume-seeker" onClick={(e) => {e.stopPropagation()}}>
 							<Slider
 								orientation="vertical"
 								tooltip={false}

@@ -28,7 +28,6 @@ router.get('/', function(req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });
 });
 
-
 routes(app, router);
 
 const httpsServer = https.createServer(credentials, app);

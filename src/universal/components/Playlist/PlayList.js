@@ -15,8 +15,8 @@ export default class PlayList extends Component {
 						return (
 							<MusicItem
 								handleChoseAudio={this.props.handleChoseAudio}
-								isPlay={this.props.currentId === music.id && this.props.isPlaying}
-								id={music.id}
+								isPlay={this.props.currentId === music._id && this.props.isPlaying}
+								_id={music._id}
 								link={music.link}
 								key={index + music.link}
 								artist={music.artists}

@@ -5,7 +5,7 @@ import { formatSeconds } from 'universal/utils';
 export default class MusicItem extends Component {
 	onClick = () => {
 		this.props.handleChoseAudio({
-			id: this.props.id,
+			id: this.props._id,
 			link: this.props.link,
 			artist: this.props.artist,
 			title: this.props.title,

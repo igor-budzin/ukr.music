@@ -21,7 +21,8 @@ class Routes extends Component {
 					<Route exact location={location} path='/' component={RouteMap.HomePage} />
 					<Route exact location={location} path='/music' component={RouteMap.MyMusicListPage} />
 					<Route exact location={location} path='/upload' component={RouteMap.UploadMusicPage} />
-					<Route component={RouteMap.NotFoundPage} />
+					<Route exact location={location} path='/auth' component={RouteMap.AuthPage} />
+					<Route location={location} component={RouteMap.NotFoundPage} />
 				</Switch>
 			</Fragment>
 		);

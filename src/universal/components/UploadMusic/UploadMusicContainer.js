@@ -56,8 +56,8 @@ class UploadMusicContainer extends Component {
 					timeOut: 10000
 				});
 			}
-		})
-	}
+		});
+	};
 
 	render() {
 		const files = this.state.uploadedFiles;
@@ -82,6 +82,7 @@ class UploadMusicContainer extends Component {
 								onDrop={this.onDrop}
 								maxSize={20000000}
 								accept="audio/mp3"
+								disabled={this.props.isUploading}
 							>
 								<p>Щоб завантажити файл натисніть на синю зону або ж просто перетягніть на неї файл</p>
 							</Dropzone>

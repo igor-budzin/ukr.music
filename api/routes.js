@@ -10,12 +10,32 @@ mongoose.connect('mongodb://localhost/musicDB', { useNewUrlParser: true }, (err)
 });
 
 
-module.exports = (app, router) => {
+module.exports = (router, passport) => {
 
-	uploadAudio(app, router);
-	getAllMusic(app, router);
-	getMusic(app, router);
+	uploadAudio(router);
+	getAllMusic(router);
+	getMusic(router);
 
+	router.get('/auth/facebook', passport.authenticate('facebook', { 
+		scope: ['public_profile', 'email']
+	}));
+
+	router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+		successRedirect: 'https://localhost:3000/music',
+		failureRedirect: '/'
+	}));
+
+	router.get('/logout', (req, res) => {
+		req.logout();
+		res.redirect('/');
+	});
+
+};
+
+function isLoggedIn(req, res, next) {
+	if(req.isAuthenticated())
+		return next();
+
+	res.redirect('/');
 }
-
 

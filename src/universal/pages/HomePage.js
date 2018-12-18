@@ -4,7 +4,7 @@ import React, { Component, Fragment } from 'react';
 import HomeContainer from 'universal/components/Home/HomeContainer';
 import Header from 'universal/components/Header';
 
-class HomePage extends Component {
+export default class HomePage extends Component {
 	render () {
 		return (
 			<div className="wrapper">
@@ -15,4 +15,3 @@ class HomePage extends Component {
 	}
 }
 
-export default HomePage;

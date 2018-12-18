@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 
 import Header from 'universal/components/Header/Header';
 
-class NotFound extends Component {
+export default class NotFound extends Component {
 	render() {
 		return (
 			<Fragment>
@@ -15,5 +15,3 @@ class NotFound extends Component {
 		);
 	}
 }
-
-export default NotFound;

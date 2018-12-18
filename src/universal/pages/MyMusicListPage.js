@@ -4,7 +4,7 @@ import React, { Component, Fragment } from 'react';
 import MyMusicListContainer from 'universal/components/MyMusicListContainer';
 import Header from 'universal/components/Header';
 
-class MyMusicListPage extends Component {
+export default class MyMusicListPage extends Component {
 	render() {
 		return (
 			<div className="wrapper">
@@ -15,4 +15,3 @@ class MyMusicListPage extends Component {
 	}
 }
 
-export default MyMusicListPage;

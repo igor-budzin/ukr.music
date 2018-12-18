@@ -9,7 +9,7 @@ const AudioModel = require('../models/uploadAudio.model');
 const multipartMiddleware = multipart();
 const filesPath = '/../../files/audio/'; 
 
-module.exports = (app, router) => {
+module.exports = (router) => {
 	router.post('/upload-music', multipartMiddleware, (req, res, next) => {
 		const filesArr = [];
 		const editor = new Editor();

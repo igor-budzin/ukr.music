@@ -3,16 +3,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { NotificationContainer, NotificationManager } from "react-light-notifications";
-import axios from 'axios';
 // Components
-import MusicFilter from 'universal/components/MusicFilter';
-import PlayList from 'universal/components/PlayList/PlayList';
-import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
-import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
+
 // Actions
-import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
-import * as AudioActions from 'universal/redux/actions/controlMusicActions';
+import * as AuthAction from './AuthActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
 class AuthContainer extends Component {
@@ -21,21 +15,8 @@ class AuthContainer extends Component {
 	}
 
 	handleAuthFacebook = () => {
-		// const axiosInstance = axios.create({
-		// 	baseURL: 'https://localhost:8080/api/',
-		// 	headers: {
-		// 		'Access-Control-Allow-Origin': '*',
-		// 		"Access-Control-Allow-Methods": "POST, GET, PUT, UPDATE, OPTIONS",
-		// 		'Content-Type': 'application/json',
-		// 		withCredentials: true
-		// 	}
-		// });
-
-		// axiosInstance.get('auth/facebook').then(() => {
-		// 	console.log('handleAuthFacebook');
-		// })
-		window.location.href = 'https://localhost:8080/api/auth/facebook';
-	};
+		this.props.requestLogin();
+	}
 
 	render() {
 		return (
@@ -60,10 +41,7 @@ function mapStateToProps(state, props) {
 
 
 function mapDispatchToProps(dispatch, props) {
-	return bindActionCreators({
-		// ...AudioActions,
-		// getMusic: getMusicListAction
-	}, dispatch);
+	return bindActionCreators(AuthAction, dispatch);
 }
 
 export default AuthContainer;

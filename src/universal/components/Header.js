@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
+	handleLogout = () => {
+		window.location.href = 'https://localhost:8080/api/logout';
+	}
+
 	render () {
 		return (
 			<header id="header" className="header">
@@ -19,9 +23,8 @@ class Header extends Component {
 					</div>
 					<div className="item-right">
 						<div className="header-user-auth">
-							<a href="#">Вхід</a>
-							<a href="#">Реєстрація</a>
-						</div>
+							<a href="javascript:void(0)" onClick={this.handleLogout}>Вихід</a>
+						</div> 
 					</div>
 					<div className="item-right">
 						<div className="header-lang">

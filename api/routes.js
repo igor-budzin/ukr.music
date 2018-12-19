@@ -12,30 +12,41 @@ mongoose.connect('mongodb://localhost/musicDB', { useNewUrlParser: true }, (err)
 
 module.exports = (router, passport) => {
 
-	uploadAudio(router);
-	getAllMusic(router);
-	getMusic(router);
+	// auth middleware
+	function isAuth(req, res, next) {
+		if(!req.isAuthenticated()) {
+			console.log('Не авторизований');
+			return res.status(401).end();
+		}
+		console.log('Авторизований');
+		next();
+	}
 
-	router.get('/auth/facebook', passport.authenticate('facebook', { 
-		scope: ['public_profile', 'email']
-	}));
+	router.get('/auth', (req, res) => {
+		if(!req.isAuthenticated())
+		return res.status(401).end()
 
-	router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-		successRedirect: 'https://localhost:3000/music',
-		failureRedirect: '/'
-	}));
+		res.json(req.user)
+	});
 
-	router.get('/logout', (req, res) => {
+	router.get('/auth/facebook', passport.authenticate('facebook'));
+
+	router.get('/auth/facebook/callback', passport.authenticate(
+		'facebook', 
+		{ failureRedirect: 'https://localhost:3000/auth' }),
+		(req, res) => {
+			console.log('auth/facebook/callback')
+			res.redirect('https://localhost:3000/music')
+		}
+	);
+
+	router.get('/auth/logout', (req, res) => {
 		req.logout();
 		res.redirect('/');
 	});
 
+
+	uploadAudio(router);
+	getAllMusic(router, isAuth);
+	getMusic(router);
 };
-
-function isLoggedIn(req, res, next) {
-	if(req.isAuthenticated())
-		return next();
-
-	res.redirect('/');
-}
-

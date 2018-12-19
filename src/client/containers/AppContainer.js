@@ -9,9 +9,9 @@ import { Provider } from 'react-redux';
 import Routes from 'universal/routes/Routes.js';
 
 class AppContainer extends Component {
-	render () {
+	render() {
 		const { history } = this.props;
-
+		
 		return (
 			<ConnectedRouter history={history} >
 				<Route render={({location}) => {

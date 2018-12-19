@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
+const MongoStore = require('connect-mongodb-session')(session)
 
 const privateKey  = fs.readFileSync('api/ssl/apache.key', 'utf8');
 const certificate = fs.readFileSync('api/ssl/apache.crt', 'utf8');
@@ -26,7 +27,19 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // required for passport
-app.use(session({ secret: 'cabineofpilot' }));
+app.use(session({
+	store: new MongoStore({
+		uri: 'mongodb://localhost/musicDB',
+		collection: 'sessions',
+		expires: 1000 * 60 * 60 * 24 // 1
+	},
+	(error) => {
+		console.log(error);
+	}),
+	secret: 'CabineOfPilot',
+	resave: true,
+	saveUninitialized: true
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 

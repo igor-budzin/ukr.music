@@ -1,44 +1,21 @@
+import {SET_CURRENT_USER} from '../../redux/consts';
+
+import isEmpty from '../../utils/isEmpty';
+
 const initialState = {
-	status: null,
-	userId: null,
-	username: "",
-	isLogged: false
+	isAuthenticated: false,
+	user: {}
 }
 
-export default function AuthReducer(state = initialState, action) {
+export default function(state = initialState, action ) {
 	switch(action.type) {
-		case 'LOGIN_REQUEST':
+		case SET_CURRENT_USER:
 			return {
-				status: "pending",
-				isLogged: false
+				...state,
+				isAuthenticated: !isEmpty(action.payload),
+				user: action.payload
 			}
-
-		case 'LOGIN_SUCCESS':
-			return {
-				status: 'fulfilled',
-				isLogged: true,
-				username: action.response.username,
-				userId: action.response.id
-			}
-
-		case 'LOGIN_FAILURE':
-			return {
-				status: 'rejected',
-				isLogged: false,
-				errors: action.error.response.body
-			}
-
-		case 'LOGIN_CLIENT_FAILURE':
-			return {
-				status: 'rejected',
-				isLogged: false,
-				errors: action.errors
-			}
-
-		case 'LOGOUT':
-			return initialState
-
-		default:
-			return state
+		default: 
+			return state;
 	}
 }

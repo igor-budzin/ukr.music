@@ -3,6 +3,7 @@
 @import "./notification.css";
 @import "./rangeSlider.scss";
 @import "./commons/button.scss";
+@import "./commons/form.scss";
 
 body {
 	margin: 0;
@@ -686,66 +687,3 @@ a:hover {
 
 
 
-.auth-wrapper {
-	width: 100vw;
-	height: 100vh;
-	position: relative;
-
-	.form-wrapper {
-		width: 420px;
-		padding: 30px;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translateX(-50%) translateY(-50%);
-		background-color: #fff;
-	}
-
-	.btn {
-		height: 40px;
-		line-height: 40px;
-		color: #fff;
-		margin-bottom: 20px;
-		border-radius: 3px;
-		background-repeat: no-repeat;
-		background-size: 30px;
-		padding-left: 60px;
-		cursor: pointer;
-
-		&:last-child {
-			margin-bottom: 0;
-		}
-
-
-		&.google {
-			background-position: right 85px center;
-			background-image: url('../img/social/googleplus.svg');
-			background-color: #DC4E41;
-
-			&:hover {
-				background-color: darken(#DC4E41, 2%);
-			}
-		}
-
-		&.facebook {
-			background-position: right 75px center;
-			background-size: 25px;
-			background-image: url('../img/social/facebook.svg');
-			background-color: #3B5998;
-
-			&:hover {
-				background-color: darken(#3B5998, 2%);
-			}
-		}
-
-		&.telegram {
-			background-position: right 75px center;
-			background-image: url('../img/social/telegram.svg');
-			background-color: #2CA5E0;
-
-			&:hover {
-				background-color: darken(#2CA5E0, 2%);
-			}
-		}
-	}
-}

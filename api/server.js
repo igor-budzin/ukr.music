@@ -17,7 +17,9 @@ const credentials = {key: privateKey, cert: certificate, passphrase: 'local'};
 
 const routes = require('./routes');
 
-require('./config/passport')(passport);
+// required for passport
+app.use(passport.initialize());
+require('./auth/passport')(passport);
 
 // Middlewares
 app.use(morgan('dev'));
@@ -26,22 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// required for passport
-app.use(session({
-	store: new MongoStore({
-		uri: 'mongodb://localhost/musicDB',
-		collection: 'sessions',
-		expires: 1000 * 60 * 60 * 24 // 1
-	},
-	(error) => {
-		console.log(error);
-	}),
-	secret: 'CabineOfPilot',
-	resave: true,
-	saveUninitialized: true
-}))
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 const port = process.env.PORT || 8080;
 const router = express.Router();

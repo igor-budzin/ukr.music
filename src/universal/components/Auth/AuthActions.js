@@ -1,49 +1,47 @@
 import axios from 'axios';
+import setAuthToken from './setAuthToken';
+import jwt_decode from 'jwt-decode';
 
-import {
-	REQUEST_LOGIN,
-	REQUEST_LOGIN_SUCCESS,
-	REQUEST_LOGIN_ERROR
-} from '../../redux/consts';
+import {GET_ERRORS} from '../../redux/consts';
 
 const axiosInstance = axios.create({
 	baseURL: 'https://localhost:8080/api/',
 	headers: {'Access-Control-Allow-Origin': '*'}
 });
 
-function requestLoginAction() {
-	return {
-		type: REQUEST_LOGIN
-	}
+export const registerUser = (user, history) => dispatch => {
+	axiosInstance.post('/register', user)
+			.then(res => {
+				console.log('success', res);
+			})
+			.catch(err => {
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				});
+			});
 }
 
-function requestLoginActionSuccess() {
-	return {
-		type: REQUEST_LOGIN_SUCCESS
-	}
+export const loginUser = (user) => dispatch => {
+	axiosInstance.post('/login', user)
+			.then(res => {
+				const { token } = res.data;
+				localStorage.setItem('jwtToken', token);
+				setAuthToken(token);
+				const decoded = jwt_decode(token);
+				dispatch(setCurrentUser(decoded));
+			})
+			.catch(err => {
+				dispatch({
+					type: GET_ERRORS,
+					payload: err.response.data
+				});
+			});
 }
 
-function requestLoginActionError() {
+export const setCurrentUser = decoded => {
 	return {
-		type: REQUEST_LOGIN_ERROR
-	}
-}
-
-export function requestLogin(callback) {
-	return (dispatch) => {
-		dispatch(requestLoginAction());
-
-		const type = 'facebook';
-
-		axiosInstance.get(`/auth/${type}`)
-		.then((response) => {
-			console.log(response)
-			
-			dispatch(requestLoginActionSuccess());
-		})
-		.catch((error) => {
-			dispatch(requestLoginActionError());
-			console.log(error);
-		});
+		type: consts.SET_CURRENT_USER,
+		payload: decoded
 	}
 }

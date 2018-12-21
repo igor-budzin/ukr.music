@@ -50,6 +50,7 @@
 	},
 	"dependencies": {
 		"bcrypt-nodejs": "0.0.3",
+		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.18.3",
 		"browser-cookies": "^1.2.0",
 		"classnames": "^2.2.6",
@@ -61,8 +62,11 @@
 		"cors": "^2.8.4",
 		"express": "^4.15.2",
 		"express-session": "^1.15.6",
+		"gravatar": "^1.8.0",
 		"history": "^4.6.1",
 		"id3-editor": "^1.0.0",
+		"jsonwebtoken": "^8.4.0",
+		"jwt-decode": "^2.2.0",
 		"lodash.isequal": "^4.5.0",
 		"mongoose": "^5.4.0",
 		"morgan": "^1.9.1",
@@ -71,10 +75,12 @@
 		"passport": "^0.4.0",
 		"passport-facebook": "^2.1.1",
 		"passport-google-oauth": "^1.0.0",
+		"passport-jwt": "^4.0.0",
 		"passport-local": "^1.0.0",
 		"react": "^16.4.2",
 		"react-dom": "^16.4.2",
 		"react-dropzone": "^7.0.1",
+		"react-google-login": "^4.0.0",
 		"react-light-notifications": "^1.0.6",
 		"react-rangeslider": "^2.2.0",
 		"react-redux": "^5.0.3",
@@ -83,6 +89,7 @@
 		"react-router-redux": "^5.0.0-alpha.4",
 		"redux": "^3.6.0",
 		"redux-logger": "^3.0.6",
-		"redux-thunk": "^2.3.0"
+		"redux-thunk": "^2.3.0",
+		"validator": "^10.9.0"
 	}
 }

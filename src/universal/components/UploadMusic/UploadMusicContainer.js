@@ -36,11 +36,12 @@ class UploadMusicContainer extends Component {
 
 	filesUpload = () => {
 		const data = new FormData();
+		data.append('userId', this.props.userId);
 
 		this.state.uploadedFiles.map((item) => {
 			data.append("files", item.file);
 		});
-
+		// console.log(data);
 		this.props.requestUploadMusic(data, (response) => {
 			this.setState({uploadedFiles: []});
 
@@ -114,7 +115,6 @@ class UploadMusicContainer extends Component {
 						)
 					}
 
-					<br /><br /><br /><br /><br /><br /><br /><br />
 				</div>
 				<NotificationContainer />
 			</main>
@@ -124,7 +124,8 @@ class UploadMusicContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		isUploading: state.uploadMusicReducer.isUploading
+		isUploading: state.uploadMusicReducer.isUploading,
+		userId: state.AuthReducer.user.id
 	};
 }
 

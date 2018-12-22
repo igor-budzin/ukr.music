@@ -20,7 +20,7 @@ class MyMusicListContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getMusic((response) => {
+		this.props.getMusic(this.props.userId, (response) => {
 			if(!response.status) {
 				NotificationManager.error({
 					title: 'Помилка',
@@ -92,7 +92,8 @@ function mapStateToProps(state, props) {
 	return {
 		playlist: state.getMusicReducer.music,
 		currentMusic: state.controlMusicReducer.currentMusic,
-		isPlaying: state.controlMusicReducer.isPlaying
+		isPlaying: state.controlMusicReducer.isPlaying,
+		userId: state.AuthReducer.user.id
 	};
 }
 

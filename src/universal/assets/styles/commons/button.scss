@@ -27,14 +27,8 @@ input[type='submit'].button {
 		outline: 0;
 	}
 	&[disabled] {
-		background-color: $color-disabled;
 		cursor: default;
-		opacity: 0.5;
-		&:focus,
-		&:hover {
-			background-color: $color-primary;
-			border-color: $color-primary;
-		}
+		opacity: 0.8;
 	}
 	&.button-outline {
 		background-color: transparent;

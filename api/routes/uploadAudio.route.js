@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const AudioModel = require('../models/uploadAudio.model');
+const UserModel = require('../models/user.model');
 
 const multipartMiddleware = multipart();
 const filesPath = '/../../files/audio/'; 
@@ -36,9 +37,11 @@ module.exports = (router) => {
 						if (err) throw err;
 
 						editor.load(buffer).then(() => {
+							const audioID = new mongoose.Types.ObjectId();
 
 							const audio = new AudioModel({
-								_id: new mongoose.Types.ObjectId(),
+								_id: audioID,
+								userId: req.body.userId,
 								link: fileName,
 								title: editor.get('title') ? editor.get('title') : item.originalFilename.replace('.mp3', ''),
 								artists: editor.get('artists') ? editor.get('artists') : 'Невідомий виконавець',
@@ -50,10 +53,18 @@ module.exports = (router) => {
 							});
 
 							audio.save().then(result => {
-								fs.writeFile(__dirname + filesPath + fileName, buffer, (err) => {
-									if (err) throw err;
-									resolve("ok");
-								});
+								UserModel.findOneAndUpdate(
+									{ _id: req.body.userId }, 
+									{ $push: { audio: audioID } },
+									(error, success) => {
+										if (error) throw error;
+										
+										fs.writeFile(__dirname + filesPath + fileName, buffer, (err) => {
+											if (err) throw err;
+											resolve("ok");
+										});
+									}
+								);
 							})
 							.catch(err => {
 								console.log(err)

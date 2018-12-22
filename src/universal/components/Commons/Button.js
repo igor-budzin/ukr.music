@@ -15,7 +15,7 @@ export default class Button extends Component {
 	render() {
 		return (
 			<button
-				type="button"
+				type={this.props.typeButton !== undefined ? this.props.typeButton : "button"}
 				className={classNames('button', this.props.className)}
 				onClick={this.props.onClick}
 				disabled={this.props.isLoading ? "disabled" : false}

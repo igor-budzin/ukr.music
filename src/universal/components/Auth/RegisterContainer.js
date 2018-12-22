@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 // Components
-
+import Button from '../Commons/Button';
 // Actions
 import * as AuthAction from './AuthActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class AuthContainer extends Component {
+export default class RegisterContainer extends Component {
 	constructor(props, context) {
 		super(props, context);
 
@@ -19,10 +20,7 @@ export default class AuthContainer extends Component {
 			reg_password: '',
 			reg_password_confirm: '',
 			reg_errors: {},
-			
-			log_email: '',
-			log_password: '',
-			log_errors: {}
+			redirect: false
 		}
 	}
 
@@ -41,30 +39,19 @@ export default class AuthContainer extends Component {
 			password_confirm: this.state.reg_password_confirm
 		}
 		// console.log(user);
-		this.props.registerUser(user);
-	};
-
-	handleInputLogChange = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value
-		})
-	};
-
-	handleSubmitLog = (e) => {
-		e.preventDefault();
-		const user = {
-			email: this.state.log_email,
-			password: this.state.log_password,
-		}
-
-		this.props.loginUser(user);
+		this.props.registerUser(user)
+		.then(() => {
+			this.setState({ redirect: true });
+		});
 	};
 
 	render() {
+		if(this.state.redirect) return <Redirect to='/login' />
+
 		return (
 			<div className="auth-wrapper">
 				<div className="form-wrapper">
-					<h2>Рєстрація</h2>
+					<h2>Реєстрація</h2>
 
 					<form onSubmit={this.handleSubmitReg}>
 						<div className="input-wrapper">
@@ -112,41 +99,16 @@ export default class AuthContainer extends Component {
 							/>
 						</div>
 						<div className="input-wrapper">
-							<button type="submit" className="btn">Зареєструвати</button>
-						</div>
-					</form>
-
-					<div className="divider">
-						<span>або</span>
-					</div>
-
-					<h2>Авторизація</h2>
-
-					<form onSubmit={this.handleSubmitLog}>
-						<div className="input-wrapper">
-							<label htmlFor="log-email">Email:</label>
-							<input
-								name="log_email"
-								type="text"
-								className="input"
-								id="log-email"
-								onChange={this.handleInputLogChange}
-								value={this.state.log_email}
-							/>
+							<Button
+								typeButton="submit"
+								className="btn"
+								isLoading={this.props.isRegisterLoading}
+							>
+								Зареєструватись
+							</Button>
 						</div>
 						<div className="input-wrapper">
-							<label htmlFor="log-password">Пароль:</label>
-							<input
-								name="log_password"
-								type="password"
-								className="input"
-								id="log-password"
-								onChange={this.handleInputLogChange}
-								value={this.state.log_password}
-							/>
-						</div>
-						<div className="input-wrapper">
-							<button type="submit" className="btn">Вхід</button>
+							<Link to="/login">Вже зареєстровані?</Link>
 						</div>
 					</form>
 				</div>
@@ -157,23 +119,11 @@ export default class AuthContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		// playlist: state.getMusicReducer.music,
-		// currentMusic: state.controlMusicReducer.currentMusic,
+		isRegisterLoading: state.AuthReducer.isRegisterLoading,
 		errors: state.AuthReducer.errors
 	};
 }
 
-
 function mapDispatchToProps(dispatch, props) {
 	return bindActionCreators(AuthAction, dispatch);
 }
-
-
-
-			// <div className="auth-wrapper">
-			// 	<div className="form-wrapper">
-			// 		<div className="btn google">Авторизація через Google</div>
-			// 		<div className="btn facebook" onClick={this.handleAuthFacebook}>Авторизація через Facebook</div>
-			// 		<div className="btn telegram">Авторизація через Telegram</div>
-			// 	</div>
-			// </div>

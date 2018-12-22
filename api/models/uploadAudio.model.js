@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const audioSchema = mongoose.Schema({
 	_id: mongoose.Types.ObjectId,
+	userId: String,
 	link: String,
 	title: String,
 	artists: String,

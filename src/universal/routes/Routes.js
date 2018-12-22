@@ -13,26 +13,30 @@ import * as RouteMap from '../routes/static.js';
 // This is used in production for code splitting via `wepback.config.server.js`
 // import * as RouteMap from 'universal/routes/async.js';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, ...rest }) => {
+	return (
 	<Route {...rest} render={props => (
-			props.isLogged ?
+			isAuthenticated ?
 			(<Component {...props}/>) :
-			(<Redirect to={{pathname: '/auth', state: { from: props.location }}} />)
+			(<Redirect to={{pathname: '/login', state: { from: props.location }}} />)
 		)}
-	/>
-)
+	/>)
+}
 
 @connect(mapStateToProps)
 export default class Routes extends Component {
+
 	render() {
+		// console.log(this.props.isAuthenticated)
 		const { location } = this.props;
 		return (
 			<Fragment>
 				<Switch>
-					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} {...this.props} />
-					<PrivateRoute exact location={location} path='/music' component={RouteMap.MyMusicListPage} {...this.props} />
-					<PrivateRoute exact location={location} path='/upload' component={RouteMap.UploadMusicPage} {...this.props} />
-					<Route exact location={location} path='/auth' component={RouteMap.AuthPage} />
+					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/music' component={RouteMap.MyMusicListPage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/upload' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
+					<Route exact location={location} path='/login' component={RouteMap.LoginPage} />
+					<Route exact location={location} path='/register' component={RouteMap.RegisterPage} />
 					<Route location={location} component={RouteMap.NotFoundPage} />
 				</Switch>
 			</Fragment>
@@ -42,6 +46,6 @@ export default class Routes extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		isLogged: state.AuthReducer.isLogged
+		isAuthenticated: state.AuthReducer.isAuthenticated
 	};
 }

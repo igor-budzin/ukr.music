@@ -40,6 +40,21 @@ export default function AuthReducer(state = initialState, action) {
 				...state,
 				isLoginLoading: false
 			}
+		case REQUEST_REGISTER_USER:
+			return {
+				...state,
+				isRegisterLoading: true
+			}
+		case REQUEST_REGISTER_USER_SUCCESS:
+			return {
+				...state,
+				isRegisterLoading: false
+			}
+		case REQUEST_REGISTER_USER_ERROR:
+			return {
+				...state,
+				isRegisterLoading: false
+			}
 		default: 
 			return state;
 	}

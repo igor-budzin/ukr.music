@@ -3,6 +3,7 @@ import React, { Component, Fragment } from  'react';
 import { Route, Redirect, Switch } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { AnimatedSwitch } from 'react-router-transition';
 
 import styles from 'universal/assets/styles/styles.scss';
 
@@ -25,20 +26,24 @@ const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, 
 
 @connect(mapStateToProps)
 export default class Routes extends Component {
-
 	render() {
 		// console.log(this.props.isAuthenticated)
 		const { location } = this.props;
 		return (
 			<Fragment>
-				<Switch>
+				<AnimatedSwitch
+				  atEnter={{ opacity: 0 }}
+				  atLeave={{ opacity: 0 }}
+				  atActive={{ opacity: 1 }}
+				  className="switch-wrapper"
+				>
 					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/music' component={RouteMap.MyMusicListPage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/upload' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
 					<Route exact location={location} path='/login' component={RouteMap.LoginPage} />
 					<Route exact location={location} path='/register' component={RouteMap.RegisterPage} />
 					<Route location={location} component={RouteMap.NotFoundPage} />
-				</Switch>
+				</AnimatedSwitch>
 			</Fragment>
 		);
 	}

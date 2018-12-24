@@ -1,12 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router';
+// Actions
+import * as AuthAction from './Auth/AuthActions';
 
-class Header extends Component {
-	handleLogout = () => {
-		window.location.href = 'https://localhost:8080/api/logout';
+@connect(mapStateToProps, mapDispatchToProps)
+export default class Header extends Component {
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {
+			redirect: false
+		}
 	}
 
-	render () {
+	handleLogout = () => {
+		this.props.logoutUser();
+		this.setState({
+			redirect: true
+		});
+	}
+
+	render() {
+		if(this.state.redirect) return <Redirect to='/login' />
+
 		return (
 			<header id="header" className="header">
 				<div className="container">
@@ -37,4 +56,15 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+function mapStateToProps(state, props) {
+	return {
+		// playlist: state.getMusicReducer.music,
+		// currentMusic: state.controlMusicReducer.currentMusic,
+		// isPlaying: state.controlMusicReducer.isPlaying,
+		// userId: state.AuthReducer.user.id
+	};
+}
+
+function mapDispatchToProps(dispatch, props) {
+	return bindActionCreators(AuthAction, dispatch);
+}

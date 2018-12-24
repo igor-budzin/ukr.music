@@ -14,7 +14,7 @@ import { getMusicListAction } from 'universal/redux/actions/getMusicListActions'
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
-class MyMusicListContainer extends Component {
+export default class MyMusicListContainer extends Component {
 	constructor(props, context) {
 		super(props, context)
 	}
@@ -97,12 +97,9 @@ function mapStateToProps(state, props) {
 	};
 }
 
-
 function mapDispatchToProps(dispatch, props) {
 	return bindActionCreators({
 		...AudioActions,
 		getMusic: getMusicListAction
 	}, dispatch);
 }
-
-export default MyMusicListContainer;

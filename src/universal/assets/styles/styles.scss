@@ -41,10 +41,10 @@ a:hover {
 .content {
 	width: 622px;
 	float: left;
-	margin-right: 26px;
+	margin-right: 56px;
 }
 .sidebar {
-	width: 330px;
+	width: 300px;
 	float: left;
 }
 .item-left {
@@ -165,6 +165,8 @@ a:hover {
 	font-weight: 400;
 }
 .section-links {
+	@extend .clearfix;
+	width: 100%;
 	float: left;
 }
 .section-links a {
@@ -431,7 +433,7 @@ a:hover {
 .home {
 	.grid-row {
 		margin-bottom: 11px;
-		 @extend .clearfix;
+		@extend .clearfix;
 
 		.grid-item {
 			width: 200px;
@@ -696,3 +698,77 @@ a:hover {
 }
 
 
+.artist-profile {
+	.artist-cover {
+		background-image: url('../img/thehardkiss.jpg');
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+		height: 240px;
+		margin-bottom: 40px;
+	}
+
+	.counts {
+		-moz-user-select: none;
+		-ms-user-select: none;
+		-o-user-select: none;
+		-webkit-user-select: none;
+
+		.col {
+			width: 150px;
+			height: 50px;
+			padding-right: 30px;
+			float: left;
+			border-right: 1px solid #eaeaea;
+
+			&:last-child {
+				padding-right: 0;
+				padding-left: 30px;
+				border: none;
+			}
+
+			span {
+				text-align: center;
+				display: block;
+
+				&.text {
+					margin-bottom: 5px;
+				}
+
+				&.count {
+					font-size: 24px;
+				}
+			}
+		}
+	}
+}
+
+.sidebar-wrapper {
+	@extend .clearfix;
+	margin-bottom: 20px;
+}
+
+.albumlist {
+	.album {
+		@extend .clearfix;
+		margin-bottom: 20px;
+
+		img {
+			width: 150px;
+			height: 150px;
+			float: left;
+			margin-right: 20px;
+		}
+
+		.name {
+			font-weight: bold;
+		}
+
+		.description {
+			padding-top: 12px;
+			& > div {
+				margin-bottom: 6px;
+			}
+		}
+	}
+}

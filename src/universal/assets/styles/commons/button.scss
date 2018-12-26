@@ -4,7 +4,7 @@ input[type='button'].button,
 input[type='reset'].button,
 input[type='submit'].button {
 	background-color: $color-primary;
-	border: 0.1rem solid $color-primary;
+	border: none;
 	border-radius: 3px;
 	color: $color-initial;
 	cursor: pointer;
@@ -19,6 +19,11 @@ input[type='submit'].button {
 	text-decoration: none;
 	position: relative;
 	white-space: nowrap;
+
+	&.full {
+		width: 100%;
+	}
+
 	&:focus,
 	&:hover {
 		background-color: $color-secondary;

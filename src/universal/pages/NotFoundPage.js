@@ -1,17 +1,50 @@
 // Libraries
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
-import Header from 'universal/components/Header/Header';
+import Header from 'universal/components/Header';
 
-export default class NotFound extends Component {
+export default class NotFoundPage extends Component {
 	render() {
 		return (
-			<Fragment>
+			<div className="wrapper">
 				<Header />
-				<div className="page-container" style={{'textAlign': 'center'}}>
-					<h1>404<br />Page Not Found :(</h1>
+				<div style={{'textAlign': 'center'}}>
+					<div style={code}>404</div>
+					<div style={text}>Page Not Found :(</div>
+					<div>
+						<Link style={btn} to="/music">На головну</Link>
+					</div>
 				</div>
-			</Fragment>
-		);
+			</div>
+		)
 	}
 }
+
+const code = {
+	"fontSize": "150px",
+	"fontFamily": "Roboto Condensed",
+	"color": "#DC4E41",
+	"marginTop": '150px'
+}
+const text = {
+	"fontSize": "40px",
+	"fontFamily": "Roboto Condensed",
+}
+const btn = {
+	height: "40px",
+	lineHeight: "40px",
+	color: "#fff",
+	borderRadius: "3px",
+	backgroundColor: "#DC4E41",
+	textAlign: "center",
+	display: "inline-block",
+	border: "none",
+	fonFamily: "Roboto Condensed",
+	fonSize: "16px",
+	padding: "0 30px",
+	marginTop: "20px"
+}
+
+
+

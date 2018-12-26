@@ -15,13 +15,17 @@ import * as RouteMap from '../routes/static.js';
 // import * as RouteMap from 'universal/routes/async.js';
 
 const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, ...rest }) => {
-	return (
-	<Route {...rest} render={props => (
-			isAuthenticated ?
-			(<Component {...props}/>) :
-			(<Redirect to={{pathname: '/login', state: { from: props.location }}} />)
-		)}
-	/>)
+	if(location.pathname !== '/login') {
+		return (
+			<Route {...rest} render={props => (
+					isAuthenticated ?
+					(<Component {...props}/>) :
+					(<Redirect to={{pathname: '/login', state: { from: props.location }}} />)
+				)}
+			/>
+		)
+	}
+	else return null;
 }
 
 @connect(mapStateToProps)
@@ -40,9 +44,10 @@ export default class Routes extends Component {
 					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/music' component={RouteMap.MyMusicListPage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/upload' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/artist/:username' component={RouteMap.ArtistProfilePage} isAuthenticated={this.props.isAuthenticated} />
 					<Route exact location={location} path='/login' component={RouteMap.LoginPage} />
 					<Route exact location={location} path='/register' component={RouteMap.RegisterPage} />
-					<Route location={location} component={RouteMap.NotFoundPage} />
+					<Route exact location={location} component={RouteMap.NotFoundPage} />
 				</AnimatedSwitch>
 			</Fragment>
 		);

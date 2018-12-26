@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const path =  require('path');
 
 const uploadAudio = require('./routes/uploadAudio.route');
 const getAllMusic = require('./routes/getAllMusic.route');
@@ -126,4 +127,9 @@ module.exports = (router, passport) => {
 	uploadAudio(router);
 	getAllMusic(router);
 	getMusic(router);
+
+	router.get('/image/:link', (req, res, next) => {
+		const filesPath = path.join(__dirname, '..', 'files', 'artist-album', req.params.link);
+		res.sendFile(filesPath);
+	});
 };

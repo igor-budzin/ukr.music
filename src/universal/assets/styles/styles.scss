@@ -1,4 +1,8 @@
 @import "./cssReset.scss";
+
+// @import "./slick.min.css";
+// @import "./slick-theme.min.css";
+
 @import "./variables.scss";
 @import "./notification.css";
 @import "./rangeSlider.scss";
@@ -272,7 +276,7 @@ a:hover {
 	border-top: 1px solid #f2f2f2;
 }
 /*--------------------------------------------------*/
-.playlist .audio-row {
+.audio-row {
 	height: 55px;
 	padding: 5px;
 	border-radius: 4px;
@@ -303,10 +307,10 @@ a:hover {
 		font-weight: 400;
 	}
 }
-.playlist .audio-row:hover {
+.audio-row:hover {
 	background-color: #e9f2ff;
 }
-.playlist .audio-row-cover {
+.audio-row-cover {
 	width: 46px;
 	height: 46px;
 	background-repeat: no-repeat;
@@ -320,23 +324,23 @@ a:hover {
 	background-color: rgba(0, 0, 0, 0.6);
 }
 
-.playlist .audio-row-desc {
+.audio-row-desc {
 	float: left;
 	margin: 7px 0;
-	width: 430px;
+	// width: 430px;
 }
-.playlist .audio-row-desc a {
+.audio-row-desc a {
 	color: #333;
 	font-family: 'Roboto', Arial, sans-serif;
 	font-size: 14px;
 }
-.playlist .audio-row-desc .singer a {
+.audio-row-desc .singer a {
 	font-weight: 600;
 }
-.playlist .audio-row-desc .song a {
+.audio-row-desc .song a {
 	color: #888;
 }
-.playlist .audio-row-desc a:hover {
+.audio-row-desc a:hover {
 	color: #00b0eb;
 }
 .audio-row-time {
@@ -708,6 +712,171 @@ a:hover {
 		margin-bottom: 40px;
 	}
 
+	.artist-title {
+		font-size: 28px;
+		position: relative;
+		margin-bottom: 40px;
+
+		&:after {
+			display: block;
+			content: "";
+			position: absolute;
+			width: 80px;
+			height: 3px;
+			bottom: -10px;
+			left: 0;
+			background-color: #ff4838;
+		}
+	}
+
+	.profile-section {
+		@extend .clearfix;
+		margin-bottom: 40px;
+		font-family: 'Roboto';
+
+		.title {
+			margin-bottom: 10px;
+			border-bottom: 1px solid #eaeaea;
+			padding-bottom: 10px;
+			position: relative;
+
+			span {
+				font-weight: bold;
+			}
+
+			.link {
+				float: right;
+				color: #ff4838;
+				font-size: 14px;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			.slider-control {
+				position: absolute;
+				right: 0;
+				top: -6px;
+
+				.arrow {
+					width: 28px;
+					height: 28px;
+					border: 1px solid #ccc;
+					float: left;
+					background-repeat: no-repeat;
+					background-position: center;
+					background-size: 16px;
+					cursor: pointer;
+					-moz-user-select: none;
+					-ms-user-select: none;
+					-o-user-select: none;
+					-webkit-user-select: none;
+
+					&:hover {
+						background-color: #ececec;
+					}
+
+					&.left {
+						background-image: url('../img/prev-arrow.svg');
+						border-radius: 12px 0 0 12px;
+					}
+					&.right {
+						background-image: url('../img/next-arrow.svg');
+						border-radius: 0 12px 12px 0;
+					}
+				}
+			}
+		}
+
+		// ТОП-треки
+		&.top-audio {
+			.audio-row {
+				width: 50%;
+				height: 45px;
+				float: left;
+
+				.audio-row-cover {
+					width: 36px;
+					height: 36px;
+				}
+			}
+
+			.audio-row-desc {
+				margin: 3px 0;
+
+				a {
+					font-weight: 400;
+				}
+			}
+		}
+		// Альбоми
+		&.albums {
+			.album {
+				width: 200px;
+				cursor: pointer;
+				padding-right: 11px;
+
+				img {
+					width: 100%;
+					height: auto;
+					margin-bottom: 5px;
+				}
+
+				.album-name {
+					margin-bottom: 5px;
+					font-family: 'Roboto Condensed';
+				}
+
+				.album-year {
+					font-family: 'Roboto Condensed';
+					font-size: 12px;
+					margin-bottom: 5px;
+				}
+			}
+		}
+		// Найближчий тур
+		&.tour {
+			.event {
+				height: 40px;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				font-family: 'Roboto Condensed';
+				font-size: 18px;
+
+				&:nth-child(even) {
+					background-color: lighten(#e9f2ff, 1.5%);
+				}
+
+				&:hover {
+					background-color: darken(#e9f2ff, 0.5%);
+				}
+
+				.date {
+					width: 160px;
+					flex-grow: 0;
+					text-align: center;
+				}
+				.city {
+					padding: 0 10px;
+					flex: 5 1 auto;
+				}
+				.ticket {
+					padding-right: 10px;
+					a {
+						color: #ff4838;
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+
 	.counts {
 		-moz-user-select: none;
 		-ms-user-select: none;
@@ -746,29 +915,4 @@ a:hover {
 .sidebar-wrapper {
 	@extend .clearfix;
 	margin-bottom: 20px;
-}
-
-.albumlist {
-	.album {
-		@extend .clearfix;
-		margin-bottom: 20px;
-
-		img {
-			width: 150px;
-			height: 150px;
-			float: left;
-			margin-right: 20px;
-		}
-
-		.name {
-			font-weight: bold;
-		}
-
-		.description {
-			padding-top: 12px;
-			& > div {
-				margin-bottom: 6px;
-			}
-		}
-	}
 }

@@ -132,4 +132,26 @@ module.exports = (router, passport) => {
 		const filesPath = path.join(__dirname, '..', 'files', 'artist-album', req.params.link);
 		res.sendFile(filesPath);
 	});
+
+	router.get('/get-music/:user', (req, res, next) => {
+		UserModel.findById(req.params.user, 'audio', function(err, user) {
+			if(err) console.log(err);
+			console.log(user)
+
+			AudioModel.find({ _id: { $in: user.audio }}, '_id link title artists duration picture').exec().then((result) => {
+				res.json(result);
+			});
+		});
+	});
+
+	router.get('/get-music/:user/:limit', (req, res, next) => {
+		UserModel.findById(req.params.user, 'audio').limit(req.params.limit).exec(function(err, user) {
+			if(err) console.log(err);
+			console.log(user)
+
+			AudioModel.find({ _id: { $in: user.audio }}, '_id link title artists duration picture').exec().then((result) => {
+				res.json(result);
+			});
+		})
+	});
 };

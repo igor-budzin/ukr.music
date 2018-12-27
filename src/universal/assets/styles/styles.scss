@@ -707,7 +707,7 @@ a:hover {
 		background-image: url('../img/thehardkiss.jpg');
 		background-repeat: no-repeat;
 		background-position: center;
-		background-size: cover;
+		background-size: 100%;
 		height: 240px;
 		margin-bottom: 40px;
 	}
@@ -716,6 +716,21 @@ a:hover {
 		font-size: 28px;
 		position: relative;
 		margin-bottom: 40px;
+
+		&.official span {
+			position: relative;
+
+			&:after {
+				display: block;
+				content: "";
+				width: 18px;
+				height: 18px;
+				background-image: url('../img/quaver.svg');
+				position: absolute;
+				right: -25px;
+				top: 10px;
+			}
+		}
 
 		&:after {
 			display: block;
@@ -789,7 +804,7 @@ a:hover {
 			}
 		}
 
-		// ТОП-треки
+		// РўРћРџ-С‚СЂРµРєРё
 		&.top-audio {
 			.audio-row {
 				width: 50%;
@@ -810,7 +825,7 @@ a:hover {
 				}
 			}
 		}
-		// Альбоми
+		// РђР»СЊР±РѕРјРё
 		&.albums {
 			.album {
 				width: 200px;
@@ -835,7 +850,7 @@ a:hover {
 				}
 			}
 		}
-		// Найближчий тур
+		// РќР°Р№Р±Р»РёР¶С‡РёР№ С‚СѓСЂ
 		&.tour {
 			.event {
 				height: 40px;

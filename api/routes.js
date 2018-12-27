@@ -134,7 +134,7 @@ module.exports = (router, passport) => {
 	});
 
 	router.get('/get-music/:user', (req, res, next) => {
-		UserModel.findById(req.params.user, 'audio', function(err, user) {
+		User.findById(req.params.user, 'audio', function(err, user) {
 			if(err) console.log(err);
 			console.log(user)
 
@@ -145,7 +145,7 @@ module.exports = (router, passport) => {
 	});
 
 	router.get('/get-music/:user/:limit', (req, res, next) => {
-		UserModel.findById(req.params.user, 'audio').limit(req.params.limit).exec(function(err, user) {
+		User.findById(req.params.user, 'audio').limit(req.params.limit).exec(function(err, user) {
 			if(err) console.log(err);
 			console.log(user)
 

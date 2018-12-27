@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 import SlickSlider from "react-slick";
+import axios from 'axios';
 // Components
 import Button from '../Commons/Button';
 import AlbumsSection from './AlbumsSection';
@@ -20,6 +21,19 @@ export default class ArtistProfileContainer extends Component {
 		this.state = {
 
 		};
+	}
+
+	// componentDidMount() {
+	// 	console.log(this.props)
+	// }
+
+	componentDidUpdate(prevProps, prevState) {
+		const axiosInstance = axios.create({
+			baseURL: 'https://localhost:8080/api/',
+			headers: {'Access-Control-Allow-Origin': '*'}
+		});
+		// console.log(this.props.router)
+		// axiosInstance.get('/get-music/', user)
 	}
 
 	render() {
@@ -65,8 +79,7 @@ export default class ArtistProfileContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		// isRegisterLoading: state.AuthReducer.isRegisterLoading,
-		// errors: state.AuthReducer.errors
+		router: state.router
 	};
 }
 

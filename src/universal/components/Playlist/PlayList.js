@@ -9,7 +9,7 @@ export default class PlayList extends Component {
 
 	render() {
 		return (
-			<div className="playlist clearfix">
+			<div className="playlist">
 				{
 					this.props.playlist.map((music, index) => {
 						return (

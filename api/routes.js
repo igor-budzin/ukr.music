@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
 const path =  require('path');
-
-const uploadAudio = require('./routes/uploadAudio.route');
-const getAllMusic = require('./routes/getAllMusic.route');
-const getMusic = require('./routes/getMusic.route');
-
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -12,8 +7,11 @@ const passport = require('passport');
 const validateRegisterInput = require('./auth/register');
 const validateLoginInput = require('./auth/login');
 
-const User = require('./models/user.model');
+const uploadAudio = require('./routes/uploadAudio.route');
+const getMusic = require('./routes/getMusic.route');
 
+const User = require('./models/user.model');
+const AudioModel = require('./models/uploadAudio.model');
 
 mongoose.connect('mongodb://localhost/musicDB', { useNewUrlParser: true }, (err) => {
 	if(err) throw err;
@@ -125,7 +123,6 @@ module.exports = (router, passport) => {
 	});
 
 	uploadAudio(router);
-	getAllMusic(router);
 	getMusic(router);
 
 	router.get('/image/:link', (req, res, next) => {
@@ -144,14 +141,41 @@ module.exports = (router, passport) => {
 		});
 	});
 
-	router.get('/get-music/:user/:limit', (req, res, next) => {
-		User.findById(req.params.user, 'audio').limit(req.params.limit).exec(function(err, user) {
-			if(err) console.log(err);
-			console.log(user)
-
-			AudioModel.find({ _id: { $in: user.audio }}, '_id link title artists duration picture').exec().then((result) => {
-				res.json(result);
-			});
-		})
+	router.get('/getUserData/:user', (req, res, next) => {
+		User.aggregate()
+			.match({ _id: mongoose.Types.ObjectId(req.params.user) })
+			.project({
+				audioCount: { $size:"$audio" }
+			})
+			.exec(function(err, user) {
+				if(err) console.log(err);
+				res.json(user[0].audioCount);
+		});
 	});
+
+	// router.get('/get-music/:user/:limit', (req, res, next) => {
+	// 	User.findById(req.params.user, 'audio').limit(req.params.limit).exec(function(err, user) {
+	// 		if(err) console.log(err);
+	// 		console.log(user)
+
+	// 		AudioModel.find({ _id: { $in: user.audio }}, '_id link title artists duration picture').exec().then((result) => {
+	// 			res.json(result);
+	// 		});
+	// 	})
+	// });
+
+			// User.aggregate()
+			// .match({_id: mongoose.Types.ObjectId(req.params.user)})
+			// .project({
+			// 	audioArr: '$audio',
+			// 	audioCount: { $size:"$audio" }
+			// })
+			// .exec(function(err, user) {
+			// 	if(err) console.log(err);
+			// 	// console.log(user[0].audioArr)
+			// 	AudioModel.find({ _id: { $in: user[0].audioArr }}, '_id link title artists duration picture').exec().then((result) => {
+			// 		console.log(result)
+			// 		res.json(result);
+			// 	});
+			// });
 };

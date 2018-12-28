@@ -22,7 +22,7 @@ function pauseAudioAction() {
 export function playAudio(currentMusic = undefined) {
 	return dispatch => {
 		if(currentMusic !== undefined) {
-			window.audioInstance.src = 'https://localhost:8080/api/get-music/' + currentMusic.link;
+			window.audioInstance.src = 'https://localhost:8080/api/getAudioFile/' + currentMusic.link;
 			window.audioInstance.play().then(() => {
 				dispatch(playNewAudioAction(currentMusic));
 			});

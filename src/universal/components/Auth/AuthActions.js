@@ -54,7 +54,8 @@ export const loginUser = (user) => dispatch => {
 				resolve();
 			})
 			.catch(err => {
-				dispatch(requestLoginUserError(err.response.data));
+				console.log(err)
+				// dispatch(requestLoginUserError(err));
 				resolve();
 			});
 		}, 1500);

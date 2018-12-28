@@ -39,13 +39,13 @@ export default class Routes extends Component {
 		return (
 			<Fragment>
 				<AnimatedSwitch
-				  atEnter={{ opacity: 0 }}
-				  atLeave={{ opacity: 0 }}
-				  atActive={{ opacity: 1 }}
-				  className="switch-wrapper"
+					atEnter={{ opacity: 0 }}
+					atLeave={{ opacity: 0 }}
+					atActive={{ opacity: 1 }}
+					className="switch-wrapper"
 				>
 					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/music' component={RouteMap.MyMusicListPage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/profile/:userId' component={RouteMap.UserProfilePage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/upload' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/artist/:name' component={RouteMap.ArtistProfilePage} isAuthenticated={this.props.isAuthenticated} />
 					<Route exact location={location} path='/login' component={RouteMap.LoginPage} />

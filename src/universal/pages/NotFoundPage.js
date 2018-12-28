@@ -8,7 +8,6 @@ export default class NotFoundPage extends Component {
 	render() {
 		return (
 			<div className="wrapper">
-				<Header />
 				<div style={{'textAlign': 'center'}}>
 					<div style={code}>404</div>
 					<div style={text}>Page Not Found :(</div>

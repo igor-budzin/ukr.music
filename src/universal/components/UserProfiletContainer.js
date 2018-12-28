@@ -11,12 +11,13 @@ import PlayList from 'universal/components/PlayList/PlayList';
 import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
+import Button from 'universal/components/Commons/Button';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class MyMusicListContainer extends Component {
+export default class UserProfiletContainer extends Component {
 	constructor(props, context) {
 		super(props, context);
 
@@ -26,7 +27,7 @@ export default class MyMusicListContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getMusic(this.props.userId, (response) => {
+		this.props.getMusic(this.props.locationParams.userId, (response) => {
 			if(!response.status) {
 				NotificationManager.error({
 					title: 'Помилка',
@@ -36,11 +37,31 @@ export default class MyMusicListContainer extends Component {
 			}
 		});
 
-		axios.get('https://localhost:8080/api/getUserData/' + this.props.userId).then((response) => {
+		axios.get('https://localhost:8080/api/getUserData/' + this.props.locationParams.userId).then((response) => {
 			this.setState({
 				audioCount: response.data
 			});
 		});
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if(this.props.locationParams.userId !== prevProps.locationParams.userId) {
+			this.props.getMusic(this.props.locationParams.userId, (response) => {
+				if(!response.status) {
+					NotificationManager.error({
+						title: 'Помилка',
+						message: 'На жаль під час завантаження аудіофайлів сталася помилка',
+						timeOut: 10000
+					});
+				}
+			});
+
+			axios.get('https://localhost:8080/api/getUserData/' + this.props.locationParams.userId).then((response) => {
+				this.setState({
+					audioCount: response.data
+				});
+			});
+		}
 	}
 
 	handleChoseAudio = (audioData) => {
@@ -60,7 +81,7 @@ export default class MyMusicListContainer extends Component {
 				this.props.playAudio(audioData);
 			}
 		}
-	}
+	};
 
 	render() {
 		return (
@@ -117,18 +138,20 @@ export default class MyMusicListContainer extends Component {
 					</div>
 
 					<div className="sidebar-wrapper">
-						
-					</div>
+						{
+							this.props.userId !== this.props.locationParams.userId ?
+							(<div className="sidebar-wrapper">
+								<Button className="btn full">Підписатися</Button>
+							</div>) :
+							(<div className="sidebar-link">
+								<Link to="/upload" className="link upload">Завантажити аудіозаписи</Link>
+								<Link to="" className="link recommend">Рекомендації</Link>
+								<Link to="" className="link update">Оновлення друзів</Link>
+								<Link to="" className="link settings">Налаштування</Link>
+							</div>)
 
-					<div className="sidebar-wrapper">
-						<div className="sidebar-link">
-							<Link to="/upload" className="link upload">Завантажити аудіозаписи</Link>
-							<Link to="" className="link recommend">Рекомендації</Link>
-							<Link to="" className="link update">Оновлення друзів</Link>
-							<Link to="" className="link settings">Налаштування</Link>
-						</div>
+						}
 					</div>
-					
 				</div>
 				<NotificationContainer />
 			</main>

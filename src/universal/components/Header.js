@@ -35,7 +35,7 @@ export default class Header extends Component {
 					<div className="item-left">
 						<ul className="header-nav">
 							<li><Link to="/">Головна</Link></li>
-							<li><Link to="/music" className="active">Музика</Link></li>
+							<li><Link to={`/profile/${this.props.userId}`} className="active">Музика</Link></li>
 							<li><a href="#">Відео</a></li>
 							<li><a href="#">Контакти</a></li>
 						</ul>
@@ -58,10 +58,7 @@ export default class Header extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		// playlist: state.getMusicReducer.music,
-		// currentMusic: state.controlMusicReducer.currentMusic,
-		// isPlaying: state.controlMusicReducer.isPlaying,
-		// userId: state.AuthReducer.user.id
+		userId: state.AuthReducer.user.id
 	};
 }
 

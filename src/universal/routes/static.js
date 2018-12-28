@@ -1,6 +1,6 @@
 export { default as HomePage } from 'universal/pages/HomePage.js';
 
-export { default as MyMusicListPage } from 'universal/pages/MyMusicListPage.js';
+export { default as UserProfilePage } from 'universal/pages/UserProfilePage.js';
 export { default as UploadMusicPage } from 'universal/pages/UploadMusicPage.js';
 
 export { default as LoginPage } from 'universal/pages/LoginPage.js';

@@ -132,8 +132,10 @@ module.exports = (router, passport) => {
 
 	router.get('/get-music/:user', (req, res, next) => {
 		User.findById(req.params.user, 'audio', function(err, user) {
-			if(err) console.log(err);
-			console.log(user)
+			if(err) {
+				res.json({ 'status': 'error' });
+				return;
+			}
 
 			AudioModel.find({ _id: { $in: user.audio }}, '_id link title artists duration picture').exec().then((result) => {
 				res.json(result);
@@ -148,9 +150,9 @@ module.exports = (router, passport) => {
 				audioCount: { $size:"$audio" }
 			})
 			.exec(function(err, user) {
-				if(err) console.log(err);
-				res.json(user[0].audioCount);
-		});
+				if(err) res.json({ 'status': 'error' });
+				else res.json(user[0].audioCount);
+			});
 	});
 
 	// router.get('/get-music/:user/:limit', (req, res, next) => {
@@ -164,18 +166,4 @@ module.exports = (router, passport) => {
 	// 	})
 	// });
 
-			// User.aggregate()
-			// .match({_id: mongoose.Types.ObjectId(req.params.user)})
-			// .project({
-			// 	audioArr: '$audio',
-			// 	audioCount: { $size:"$audio" }
-			// })
-			// .exec(function(err, user) {
-			// 	if(err) console.log(err);
-			// 	// console.log(user[0].audioArr)
-			// 	AudioModel.find({ _id: { $in: user[0].audioArr }}, '_id link title artists duration picture').exec().then((result) => {
-			// 		console.log(result)
-			// 		res.json(result);
-			// 	});
-			// });
 };

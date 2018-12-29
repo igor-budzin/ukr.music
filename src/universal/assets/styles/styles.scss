@@ -927,6 +927,11 @@ a:hover {
 				background-size: 22px;
 				background-position: left 11px center;
 			}
+			&.follow {
+				background-image: url('../img/menu/users.svg');
+				background-size: 22px;
+				background-position: left 10px center;
+			}
 		}
 	}
 

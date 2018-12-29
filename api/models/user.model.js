@@ -24,6 +24,12 @@ const UserSchema = new Schema({
 	},
 	audio: {
 		type: []
+	},
+	follow: {
+		type: []
+	},
+	followers: {
+		type: []
 	}
 });
 

@@ -42,7 +42,7 @@ export default class LoginContainer extends Component {
 	};
 
 	render() {
-		if(this.state.redirect) return <Redirect to='/music' />
+		if(this.state.redirect) return <Redirect to={`/profile/${this.props.userId}`} />
 
 		return (
 			<div className="auth-wrapper">
@@ -94,6 +94,7 @@ export default class LoginContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
+		userId: state.AuthReducer.user.id,
 		isLoginLoading: state.AuthReducer.isLoginLoading,
 		errors: state.AuthReducer.errors
 	};

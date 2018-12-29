@@ -10,7 +10,7 @@ const validateLoginInput = require('./auth/login');
 const uploadAudio = require('./routes/uploadAudio.route');
 const getMusic = require('./routes/getMusic.route');
 
-const User = require('./models/user.model');
+const UserModel = require('./models/user.model');
 const AudioModel = require('./models/uploadAudio.model');
 
 mongoose.connect('mongodb://localhost/musicDB', { useNewUrlParser: true }, (err) => {
@@ -28,7 +28,7 @@ module.exports = (router, passport) => {
 		if(!isValid) {
 			return res.status(400).json(errors);
 		}
-		User.findOne({
+		UserModel.findOne({
 			email: req.body.email
 		}).then(user => {
 			if(user) {
@@ -42,7 +42,7 @@ module.exports = (router, passport) => {
 					r: 'pg',
 					d: 'mm'
 				});
-				const newUser = new User({
+				const newUser = new UserModel({
 					name: req.body.name,
 					email: req.body.email,
 					password: req.body.password,
@@ -80,7 +80,7 @@ module.exports = (router, passport) => {
 		const email = req.body.email;
 		const password = req.body.password;
 
-		User.findOne({email})
+		UserModel.findOne({email})
 			.then(user => {
 				if(!user) {
 					errors.email = 'User not found'
@@ -125,13 +125,13 @@ module.exports = (router, passport) => {
 	uploadAudio(router);
 	getMusic(router);
 
-	router.get('/image/:link', (req, res, next) => {
+	router.get('/image/:link', (req, res) => {
 		const filesPath = path.join(__dirname, '..', 'files', 'artist-album', req.params.link);
 		res.sendFile(filesPath);
 	});
 
-	router.get('/get-music/:user', (req, res, next) => {
-		User.findById(req.params.user, 'audio', function(err, user) {
+	router.get('/get-music/:user', (req, res) => {
+		UserModel.findById(req.params.user, 'audio', function(err, user) {
 			if(err) {
 				res.json({ 'status': 'error' });
 				return;
@@ -143,16 +143,27 @@ module.exports = (router, passport) => {
 		});
 	});
 
-	router.get('/getUserData/:user', (req, res, next) => {
-		User.aggregate()
+	router.get('/getUserData/:user', (req, res) => {
+		UserModel.aggregate()
 			.match({ _id: mongoose.Types.ObjectId(req.params.user) })
 			.project({
-				audioCount: { $size:"$audio" }
+				audioCount: { $size:"$audio" },
+				followersCount: { $size:"$followers" }
 			})
 			.exec(function(err, user) {
-				if(err) res.json({ 'status': 'error' });
-				else res.json(user[0].audioCount);
+				if(err) {
+					console.log(err);
+					res.json({ 'status': 'error' });
+				}
+				else res.json(user[0]);
 			});
+	});
+
+	router.get('/getUserFollows/:user', (req, res) => {
+		UserModel.findById(req.params.user, 'follows', (err, follows) => {
+			if(err) console.log(err);
+			else res.json(follows)
+		});
 	});
 
 	// router.get('/get-music/:user/:limit', (req, res, next) => {

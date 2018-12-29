@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 import axios from 'axios';
 // Components
@@ -12,6 +11,7 @@ import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
 import Button from 'universal/components/Commons/Button';
+import SidebarContainer from 'universal/components/Sidebar/SidebarContainer';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
@@ -22,11 +22,22 @@ export default class UserProfiletContainer extends Component {
 		super(props, context);
 
 		this.state = {
-			audioCount: null
+			audioCount: null,
+			followersCount: null
 		};
 	}
 
 	componentDidMount() {
+		this.getPageData();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if(this.props.locationParams.userId !== prevProps.locationParams.userId) {
+			this.getPageData();
+		}
+	}
+
+	getPageData = () => {
 		this.props.getMusic(this.props.locationParams.userId, (response) => {
 			if(!response.status) {
 				NotificationManager.error({
@@ -39,29 +50,10 @@ export default class UserProfiletContainer extends Component {
 
 		axios.get('https://localhost:8080/api/getUserData/' + this.props.locationParams.userId).then((response) => {
 			this.setState({
-				audioCount: response.data
+				audioCount: response.data.audioCount,
+				followersCount: response.data.followersCount
 			});
 		});
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if(this.props.locationParams.userId !== prevProps.locationParams.userId) {
-			this.props.getMusic(this.props.locationParams.userId, (response) => {
-				if(!response.status) {
-					NotificationManager.error({
-						title: 'Помилка',
-						message: 'На жаль під час завантаження аудіофайлів сталася помилка',
-						timeOut: 10000
-					});
-				}
-			});
-
-			axios.get('https://localhost:8080/api/getUserData/' + this.props.locationParams.userId).then((response) => {
-				this.setState({
-					audioCount: response.data
-				});
-			});
-		}
 	}
 
 	handleChoseAudio = (audioData) => {
@@ -81,7 +73,7 @@ export default class UserProfiletContainer extends Component {
 				this.props.playAudio(audioData);
 			}
 		}
-	};
+	}
 
 	render() {
 		return (
@@ -125,34 +117,11 @@ export default class UserProfiletContainer extends Component {
 
 
 
-				<div className="sidebar">
-					<div className="counts sidebar-wrapper">
-						<div className="col">
-							<span className="text">Підписалось</span>
-							<span className="count">122</span>
-						</div>
-						<div className="col">
-							<span className="text">Аудіофайлів</span>
-							<span className="count">{this.state.audioCount}</span>
-						</div>
-					</div>
-
-					<div className="sidebar-wrapper">
-						{
-							this.props.userId !== this.props.locationParams.userId ?
-							(<div className="sidebar-wrapper">
-								<Button className="btn full">Підписатися</Button>
-							</div>) :
-							(<div className="sidebar-link">
-								<Link to="/upload" className="link upload">Завантажити аудіозаписи</Link>
-								<Link to="" className="link recommend">Рекомендації</Link>
-								<Link to="" className="link update">Оновлення друзів</Link>
-								<Link to="" className="link settings">Налаштування</Link>
-							</div>)
-
-						}
-					</div>
-				</div>
+				<SidebarContainer
+					audioCount={this.state.audioCount}
+					followersCount={this.state.followersCount}
+					locationParams={this.props.locationParams}
+				/>
 				<NotificationContainer />
 			</main>
 		);

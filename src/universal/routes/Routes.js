@@ -34,7 +34,6 @@ const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, 
 @connect(mapStateToProps)
 export default class Routes extends Component {
 	render() {
-		
 		const { location } = this.props;
 		return (
 			<Fragment>
@@ -48,6 +47,8 @@ export default class Routes extends Component {
 					<PrivateRoute exact location={location} path='/profile/:userId' component={RouteMap.UserProfilePage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/upload' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/artist/:name' component={RouteMap.ArtistProfilePage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/followers/:userId' component={RouteMap.FollowListPage} isAuthenticated={this.props.isAuthenticated} />
+					
 					<Route exact location={location} path='/login' component={RouteMap.LoginPage} />
 					<Route exact location={location} path='/register' component={RouteMap.RegisterPage} />
 					<Route exact location={location} component={RouteMap.NotFoundPage} />

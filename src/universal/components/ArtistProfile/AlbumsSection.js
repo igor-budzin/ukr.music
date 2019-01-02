@@ -15,7 +15,7 @@ export default class AlbumsSection extends Component {
 		const settings = {
 			dots: false,
 			infinite: false,
-			speed: 500,
+			speed: 200,
 			slidesToShow: 4,
 			slidesToScroll: 1,
 			arrows: false
@@ -39,32 +39,32 @@ export default class AlbumsSection extends Component {
 				<div className="body">
 					<SlickSlider ref={c => (this.slider = c)} {...settings}>
 						<div className="album">
-							<img src="https://localhost:8080/api/image/MAXIMALISM.jpg" alt=""/>
+							<img src="https://localhost:8080/api/albumCover/MAXIMALISM.jpg" alt=""/>
 							<div className="album-name">Perfection Is a Lie</div>
 							<div className="album-year">2017</div>
 						</div>
 						<div className="album">
-							<img src="https://localhost:8080/api/image/epolets-album.jpg" alt=""/>
+							<img src="https://localhost:8080/api/albumCover/epolets-album.jpg" alt=""/>
 							<div className="album-name">Cold Altair</div>
 							<div className="album-year">2014</div>
 						</div>
 						<div className="album">
-							<img src="https://localhost:8080/api/image/thehardkiss-album.jpg" alt=""/>
+							<img src="https://localhost:8080/api/albumCover/thehardkiss-album.jpg" alt=""/>
 							<div className="album-name">Stones and Honey</div>
 							<div className="album-year">2014</div>
 						</div>
 						<div className="album">
-							<img src="https://localhost:8080/api/image/ThePrettyReckless.jpg" alt=""/>
+							<img src="https://localhost:8080/api/albumCover/ThePrettyReckless.jpg" alt=""/>
 							<div className="album-name">Залізна ластівка</div>
 							<div className="album-year">2018</div>
 						</div>
 						<div className="album">
-							<img src="https://localhost:8080/api/image/color-album.jpg" alt=""/>
+							<img src="https://localhost:8080/api/albumCover/color-album.jpg" alt=""/>
 							<div className="album-name">Lovers</div>
 							<div className="album-year">2016</div>
 						</div>
 						<div className="album">
-							<img src="https://localhost:8080/api/image/mort-album.jpg" alt=""/>
+							<img src="https://localhost:8080/api/albumCover/mort-album.jpg" alt=""/>
 							<div className="album-name">Stones and Honey</div>
 							<div className="album-year">2015</div>
 						</div>

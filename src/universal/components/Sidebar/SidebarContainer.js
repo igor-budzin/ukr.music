@@ -42,10 +42,10 @@ export default class SidebarContainer extends Component {
 						</div>) :
 						(<div className="sidebar-link">
 							<Link to="/upload" className="link upload">Завантажити аудіозаписи</Link>
-							<Link to="" className="link recommend">Рекомендації</Link>
+							<Link to="/recommend" className="link recommend">Рекомендації</Link>
 							<Link to={`../followers/${this.props.userId}`} className="link follow">Слухаю їх</Link>
-							<Link to="" className="link update">Оновлення</Link>
-							<Link to="" className="link settings">Налаштування</Link>
+							<Link to="/update" className="link update">Оновлення</Link>
+							<Link to="/settings" className="link settings">Налаштування</Link>
 						</div>)
 
 					}

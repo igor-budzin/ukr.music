@@ -9,8 +9,9 @@ import Button from 'universal/components/Commons/Button';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
 import SidebarContainer from 'universal/components/Sidebar/SidebarContainer';
+import FollowList from 'universal/components/Followers/FollowList';
 // Actions
-import * as FollowListActions from './FollowListActions';
+import * as FollowListActions from './followListActions';
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class FollowListContainer extends Component {
@@ -19,7 +20,8 @@ export default class FollowListContainer extends Component {
 
 		this.state = {
 			audioCount: null,
-			followersCount: null
+			followersCount: null,
+			follows: []
 		};
 	}
 
@@ -34,19 +36,10 @@ export default class FollowListContainer extends Component {
 	}
 
 	getPageData = () => {
-		axios.get('https://localhost:8080/api/getUserFollows/' + this.props.locationParams.userId);
-		// this.props.getMusic(this.props.locationParams.userId, (response) => {
-		// 	if(!response.status) {
-		// 		NotificationManager.error({
-		// 			title: 'Помилка',
-		// 			message: 'На жаль під час завантаження аудіофайлів сталася помилка',
-		// 			timeOut: 10000
-		// 		});
-		// 	}
-		// });
-
+		this.props.getFollows(this.props.locationParams.userId);
+		const accessString = localStorage.getItem('jwtToken')
 		axios.get('https://localhost:8080/api/getUserData/' + this.props.locationParams.userId)
-		.then((response) => {
+		.then(response => {
 			this.setState({
 				audioCount: response.data.audioCount,
 				followersCount: response.data.followersCount
@@ -63,8 +56,6 @@ export default class FollowListContainer extends Component {
 
 					<MusicPlayerContainer />
 
-					{/*<MusicFilter />*/}
-
 				</div>
 
 				<div className="filter-hr"></div>
@@ -80,6 +71,7 @@ export default class FollowListContainer extends Component {
 						<a href="javascript:void(0)" className="link">Підписані на мене</a>
 					</div>
 
+					<FollowList follows={this.props.follows} />
 
 				</div>
 
@@ -96,7 +88,7 @@ export default class FollowListContainer extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		
+		follows: state.followsReducer.follows
 	};
 }
 

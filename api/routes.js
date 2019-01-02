@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const path =  require('path');
-const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -37,16 +36,11 @@ module.exports = (router, passport) => {
 				});
 			}
 			else {
-				const avatar = gravatar.url(req.body.email, {
-					s: '200',
-					r: 'pg',
-					d: 'mm'
-				});
 				const newUser = new UserModel({
 					name: req.body.name,
 					email: req.body.email,
 					password: req.body.password,
-					avatar
+					avatar: 'https://localhost:8080/api/image/boy.svg'
 				});
 				
 				bcrypt.genSalt(10, (err, salt) => {
@@ -95,7 +89,7 @@ module.exports = (router, passport) => {
 									avatar: user.avatar
 								}
 								jwt.sign(payload, 'secret', {
-									expiresIn: 3600
+									expiresIn: 86400
 								}, (err, token) => {
 									if(err) console.error('There is some error in token', err);
 									else {
@@ -125,8 +119,13 @@ module.exports = (router, passport) => {
 	uploadAudio(router);
 	getMusic(router);
 
-	router.get('/image/:link', (req, res) => {
+	router.get('/albumCover/:link', (req, res) => {
 		const filesPath = path.join(__dirname, '..', 'files', 'artist-album', req.params.link);
+		res.sendFile(filesPath);
+	});
+
+	router.get('/image/:link', (req, res) => {
+		const filesPath = path.join(__dirname, '..', 'files', 'image', req.params.link);
 		res.sendFile(filesPath);
 	});
 
@@ -160,9 +159,29 @@ module.exports = (router, passport) => {
 	});
 
 	router.get('/getUserFollows/:user', (req, res) => {
-		UserModel.findById(req.params.user, 'follows', (err, follows) => {
+		UserModel.findById(req.params.user, 'follows', (err, data) => {
 			if(err) console.log(err);
-			else res.json(follows)
+			
+			const ids = data.follows.map(function(el) { return mongoose.Types.ObjectId(el) });
+
+			UserModel.aggregate([
+				{ $match: { "_id": { "$in": ids } } },
+				{
+					$project: {
+						_id: '$_id',
+						name: '$name',
+						avatar: '$avatar',
+						audioCount: { $size:"$audio" },
+						followsCount: { $size:"$follows" }
+					}
+				}
+			],
+			(err, docs) => {
+				if(err) console.log(err);
+				else {
+					res.json(docs)
+				}
+			});
 		});
 	});
 

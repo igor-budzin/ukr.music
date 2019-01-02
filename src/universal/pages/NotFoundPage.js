@@ -12,7 +12,7 @@ export default class NotFoundPage extends Component {
 					<div style={code}>404</div>
 					<div style={text}>Page Not Found :(</div>
 					<div>
-						<Link style={btn} to="/music">На головну</Link>
+						<Link style={btn} to="/">На головну</Link>
 					</div>
 				</div>
 			</div>
@@ -24,7 +24,7 @@ const code = {
 	"fontSize": "150px",
 	"fontFamily": "Roboto Condensed",
 	"color": "#DC4E41",
-	"marginTop": '150px'
+	"paddingTop": '150px'
 }
 const text = {
 	"fontSize": "40px",

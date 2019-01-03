@@ -8,7 +8,13 @@ import isEqual from 'lodash.isequal';
 import Button from '../Commons/Button';
 
 // Actions
-// import * as AuthAction from './AuthActions';
+import * as FollowActions from '../Followers/followListActions';
+
+const mapStateToProps = (state, props) => ({
+	userId: state.AuthReducer.user.id
+});
+
+const mapDispatchToProps = (dispatch, props) => bindActionCreators(FollowActions, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SidebarContainer extends Component {
@@ -16,8 +22,13 @@ export default class SidebarContainer extends Component {
 		super(props, context);
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return !isEqual(nextProps, this.props);
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	return !isEqual(nextProps, this.props);
+	// }
+
+	handleFollow = () => {
+		console.log('handleFollow')
+		this.props.followUser(this.props.userId, this.props.locationParams.userId);
 	}
 
 	render() {
@@ -36,31 +47,22 @@ export default class SidebarContainer extends Component {
 
 				<div className="sidebar-wrapper">
 					{
-						this.props.userId !== this.props.locationParams.userId ?
+						this.props.userId !== this.props.locationParams.userId &&
 						(<div className="sidebar-wrapper">
-							<Button className="btn full">Підписатися</Button>
-						</div>) :
-						(<div className="sidebar-link">
-							<Link to="/upload" className="link upload">Завантажити аудіозаписи</Link>
-							<Link to="/recommend" className="link recommend">Рекомендації</Link>
-							<Link to={`../followers/${this.props.userId}`} className="link follow">Слухаю їх</Link>
-							<Link to="/update" className="link update">Оновлення</Link>
-							<Link to="/settings" className="link settings">Налаштування</Link>
+							<Button className="btn full" onClick={this.handleFollow}>Підписатися</Button>
 						</div>)
-
 					}
+
+					<div className="sidebar-link">
+						<Link to={`../profile/${this.props.userId}`} className="link my">Мої треки</Link>
+						<Link to="/upload" className="link upload">Завантажити аудіозаписи</Link>
+						<Link to="/recommend" className="link recommend">Рекомендації</Link>
+						<Link to={`../followers/${this.props.userId}`} className="link follow">Слухаю їх</Link>
+						<Link to="/update" className="link update">Оновлення</Link>
+						<Link to="/settings" className="link settings">Налаштування</Link>
+					</div>
 				</div>
 			</div>
 		);
 	}
-}
-
-function mapStateToProps(state, props) {
-	return {
-		userId: state.AuthReducer.user.id
-	};
-}
-
-function mapDispatchToProps(dispatch, props) {
-	return bindActionCreators({}, dispatch);
 }

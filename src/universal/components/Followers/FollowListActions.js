@@ -4,6 +4,9 @@ import {
 	REQUEST_GET_FOLLOWS,
 	REQUEST_GET_FOLLOWS_SUCCESS,
 	REQUEST_GET_FOLLOWS_ERROR,
+	REQUEST_FOLLOW_USER,
+	REQUEST_FOLLOW_USER_SUCCESS,
+	REQUEST_FOLLOW_USER_ERROR
 } from '../../redux/consts';
 
 const axiosInstance = axios.create({
@@ -11,26 +14,20 @@ const axiosInstance = axios.create({
 	headers: {'Access-Control-Allow-Origin': '*'}
 });
 
-export function requestGetFollowsAction() {
-	return {
-		type: REQUEST_GET_FOLLOWS
-	}
-}
+const requestGetFollowsAction = () => ({
+	type: REQUEST_GET_FOLLOWS
+});
 
-export function requestGetFollowsSuccessAction(data) {
-	return {
-		type: REQUEST_GET_FOLLOWS_SUCCESS,
-		follows: data
-	}
-}
+const requestGetFollowsSuccessAction = (data) => ({
+	type: REQUEST_GET_FOLLOWS_SUCCESS,
+	follows: data
+});
 
-export function requestGetFollowsErrorAction() {
-	return {
-		type: REQUEST_GET_FOLLOWS_ERROR
-	}
-}
+const requestGetFollowsErrorAction = () => ({
+	type: REQUEST_GET_FOLLOWS_ERROR
+});
 
-export function getFollows(userId, callback) {
+export function getFollows(userId) {
 	return (dispatch) => {
 		dispatch(requestGetFollowsAction());
 
@@ -41,13 +38,43 @@ export function getFollows(userId, callback) {
 			}
 			else {
 				dispatch(requestGetFollowsErrorAction());
-				callback({status: false});
 			}
 		})
 		.catch((error) => {
 			dispatch(requestGetFollowsErrorAction());
 			console.log(error);
-			callback({status: false});
+		});
+	}
+}
+
+const requestFollowUser = () => ({
+	type: REQUEST_FOLLOW_USER
+});
+
+const requestFollowUserSuccessAction = () => ({
+	type: REQUEST_FOLLOW_USER_SUCCESS
+});
+
+const requestFollowUserErrorAction = () => ({
+	type: REQUEST_FOLLOW_USER_ERROR
+});
+
+export function followUser(userId, followId) {
+	return (dispatch) => {
+		dispatch(requestFollowUser());
+
+		axiosInstance.get(`followUser/${userId}/${followId}`)
+		.then((response) => {
+			if(response.status === 200) {
+				dispatch(requestFollowUserSuccessAction());
+			}
+			else {
+				dispatch(requestFollowUserErrorAction());
+			}
+		})
+		.catch((error) => {
+			dispatch(requestFollowUserErrorAction());
+			console.log(error);
 		});
 	}
 }

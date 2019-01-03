@@ -24,14 +24,14 @@ export default class ArtistProfileContainer extends Component {
 	}
 
 	componentDidMount() {
-		const axiosInstance = axios.create({
-			baseURL: 'https://localhost:8080/api/',
-			headers: {'Access-Control-Allow-Origin': '*'}
-		});
-		// console.log(this.props.router)
-		axiosInstance.get(`/get-music/${this.props.locationParams.name}/6`).then((res) => {
-			console.log(res)
-		});
+		// const axiosInstance = axios.create({
+		// 	baseURL: 'https://localhost:8080/api/',
+		// 	headers: {'Access-Control-Allow-Origin': '*'}
+		// });
+		// // console.log(this.props.router)
+		// axiosInstance.get(`/get-music/${this.props.locationParams.name}/6`).then((res) => {
+		// 	console.log(res)
+		// });
 	}
 
 	render() {

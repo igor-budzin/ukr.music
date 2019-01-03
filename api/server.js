@@ -28,8 +28,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-
-
 const port = process.env.PORT || 8080;
 const router = express.Router();
 
@@ -39,7 +37,7 @@ router.get('/', function(req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });
 });
 
-routes(router, passport);
+routes(router);
 
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(port);

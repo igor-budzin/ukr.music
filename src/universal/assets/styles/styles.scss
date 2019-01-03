@@ -911,11 +911,14 @@ a:hover {
 				color: #00b0eb;
 			}
 
+			&.my {
+				background-image: url('../img/menu/quaver-1.svg');
+			}
 			&.upload {
 				background-image: url('../img/menu/cloud-computing.svg');
 			}
 			&.recommend {
-				background-image: url('../img/menu/quaver-1.svg');
+				background-image: url('../img/menu/ribbon.svg');
 			}
 			&.update {
 				background-image: url('../img/menu/update-arrows.svg');

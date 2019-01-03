@@ -34,7 +34,7 @@ export function getMusicListAction(userId, callback) {
 	return (dispatch) => {
 		dispatch(requestGetListMusic());
 
-		axiosInstance.get('get-music/' + userId)
+		axiosInstance.get('getMusic/' + userId)
 		.then((response) => {
 			if(response.status === 200) {
 				dispatch(requestGetMusicListSuccess(response.data));

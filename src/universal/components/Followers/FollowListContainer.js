@@ -13,6 +13,12 @@ import FollowList from 'universal/components/Followers/FollowList';
 // Actions
 import * as FollowListActions from './followListActions';
 
+const mapStateToProps = (state, props) => ({
+	follows: state.followsReducer.follows
+});
+
+const mapDispatchToProps = (dispatch, props) => bindActionCreators(FollowListActions, dispatch);
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class FollowListContainer extends Component {
 	constructor(props, context) {
@@ -37,7 +43,8 @@ export default class FollowListContainer extends Component {
 
 	getPageData = () => {
 		this.props.getFollows(this.props.locationParams.userId);
-		const accessString = localStorage.getItem('jwtToken')
+		const accessString = localStorage.getItem('jwtToken');
+
 		axios.get('https://localhost:8080/api/getUserData/' + this.props.locationParams.userId)
 		.then(response => {
 			this.setState({
@@ -86,12 +93,3 @@ export default class FollowListContainer extends Component {
 	}
 }
 
-function mapStateToProps(state, props) {
-	return {
-		follows: state.followsReducer.follows
-	};
-}
-
-function mapDispatchToProps(dispatch, props) {
-	return bindActionCreators(FollowListActions, dispatch);
-}

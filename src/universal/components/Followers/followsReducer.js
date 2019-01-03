@@ -9,7 +9,6 @@ const initialState = {
 };
 
 export default function followsReducer(state = initialState, action) {
-	console.log(action)
 	const {follows}  = action;
 	switch(action.type) {
 		case REQUEST_GET_FOLLOWS:

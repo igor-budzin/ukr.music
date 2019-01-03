@@ -45,7 +45,12 @@ export default class FollowListContainer extends Component {
 		this.props.getFollows(this.props.locationParams.userId);
 		const accessString = localStorage.getItem('jwtToken');
 
-		axios.get('https://localhost:8080/api/getUserData/' + this.props.locationParams.userId)
+		const needCheckFollow = this.props.userId !== this.props.locationParams.userId ? this.props.locationParams.userId : false;
+
+		axios.post('https://localhost:8080/api/getUserData', {
+			userID: this.props.locationParams.userId,
+			needCheckFollow
+		})
 		.then(response => {
 			this.setState({
 				audioCount: response.data.audioCount,

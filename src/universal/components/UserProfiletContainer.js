@@ -47,8 +47,12 @@ export default class UserProfiletContainer extends Component {
 				});
 			}
 		});
-
-		axios.get('https://localhost:8080/api/getUserData/' + this.props.locationParams.userId).then((response) => {
+		
+		axios.post('https://localhost:8080/api/getUserData', {
+			currentUserID: this.props.userId,
+			userID: this.props.locationParams.userId
+		})
+		.then((response) => {
 			this.setState({
 				audioCount: response.data.audioCount,
 				followersCount: response.data.followersCount

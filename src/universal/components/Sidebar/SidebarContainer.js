@@ -22,12 +22,11 @@ export default class SidebarContainer extends Component {
 		super(props, context);
 	}
 
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	return !isEqual(nextProps, this.props);
-	// }
+	shouldComponentUpdate(nextProps, nextState) {
+		return !isEqual(nextProps, this.props);
+	}
 
 	handleFollow = () => {
-		console.log('handleFollow')
 		this.props.followUser(this.props.userId, this.props.locationParams.userId);
 	}
 

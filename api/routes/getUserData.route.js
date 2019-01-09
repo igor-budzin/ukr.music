@@ -3,37 +3,36 @@ const UserModel = require('../models/user.model.js');
 
 module.exports = (router) => {
 	router.post('/getUserData', (req, res) => {
-		// UserModel.aggregate()
-		// 	.match({ _id: mongoose.Types.ObjectId(req.body.userID) })
-		// 	.project({
-		// 		audioCount: { $size:"$audio" },
-		// 		followersCount: { $size:"$followers" }
-		// 	})
-		// 	.exec(function(err, user) {
-		// 		if(err) {
-		// 			console.log(err);
-		// 			res.json({ 'status': 'error' });
-		// 		}
-
-		// 		if(req.body.userID !== req.body.currentUserID) {
-		// 			UserModel.findById(req.body.currentUserID, )
-		// 		}
-		// 		else res.json(user[0]);
-		// 	});
-		// 	
-	
-			UserModel.aggregate([
-				{ $match: { "_id": mongoose.Types.ObjectId(req.body.currentUserID) } },
-				{
-					$project: {
-						test: '$follows',
-						foll: {[mongoose.Types.ObjectId(req.body.currentUserID)]: { $in: '$follows' }}
-					}
+		UserModel.aggregate()
+			.match({ _id: mongoose.Types.ObjectId(req.body.userID) })
+			.project({
+				audioCount: { $size:"$audio" },
+				followersCount: { $size:"$followers" }
+			})
+			.exec(function(err, user) {
+				if(err) {
+					console.log(err);
+					res.json({ 'status': 'error' });
 				}
-			],
-			(err, docs) => {
-				console.log(docs)
+
+				const id = mongoose.Types.ObjectId(req.body.userID);
+
+				UserModel.aggregate([
+					{ $match: { "_id": mongoose.Types.ObjectId(req.body.currentUserID) } },
+					{ $project: { follows: '$follows' } },
+					{ $match: { "follows": { '$in': [id] } } },
+					{ $project: { canFollowUser: { $size: "$follows" } } },
+				],  
+				(err, docs) => {
+					if(err) {
+						console.log(err);
+						res.json({ 'status': 'error' });
+					};
+
+					user[0].canFollowUser = docs[0] !== undefined ? false : true
+					res.json(user[0]);
+				});
 			});
-		
+
 	});
 }

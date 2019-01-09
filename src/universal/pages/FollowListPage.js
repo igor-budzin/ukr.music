@@ -9,7 +9,7 @@ export default class FollowListPage extends Component {
 		return (
 			<div className="wrapper">
 				<Header />
-				<FollowListContainer locationParams={this.props.match.params} />
+				<FollowListContainer locationParams={this.props.match} />
 			</div>
 		);
 	}

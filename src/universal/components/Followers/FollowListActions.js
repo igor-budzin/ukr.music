@@ -65,6 +65,7 @@ export function followUser(userId, followId) {
 
 		axiosInstance.get(`followUser/${userId}/${followId}`)
 		.then((response) => {
+			console.log('follow user response')
 			if(response.status === 200) {
 				dispatch(requestFollowUserSuccessAction());
 			}

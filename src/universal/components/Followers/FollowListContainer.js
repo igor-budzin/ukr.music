@@ -23,12 +23,6 @@ const mapDispatchToProps = (dispatch, props) => bindActionCreators(FollowListAct
 export default class FollowListContainer extends Component {
 	constructor(props, context) {
 		super(props, context);
-
-		this.state = {
-			audioCount: null,
-			followersCount: null,
-			follows: []
-		};
 	}
 
 	componentDidMount() {
@@ -36,27 +30,14 @@ export default class FollowListContainer extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if(this.props.locationParams.userId !== prevProps.locationParams.userId) {
-			this.getPageData();
-		}
+		// if(this.props.locationParams.params.userId !== prevProps.locationParams.params.userId) {
+		// 	this.getPageData();
+		// }
 	}
 
 	getPageData = () => {
-		this.props.getFollows(this.props.locationParams.userId);
-		const accessString = localStorage.getItem('jwtToken');
-
-		const needCheckFollow = this.props.userId !== this.props.locationParams.userId ? this.props.locationParams.userId : false;
-
-		axios.post('https://localhost:8080/api/getUserData', {
-			userID: this.props.locationParams.userId,
-			needCheckFollow
-		})
-		.then(response => {
-			this.setState({
-				audioCount: response.data.audioCount,
-				followersCount: response.data.followersCount
-			});
-		});
+		console.log(this.props.locationParams.params.userId)
+		this.props.getFollows(this.props.locationParams.params.userId);
 	}
 
 	render() {
@@ -88,13 +69,13 @@ export default class FollowListContainer extends Component {
 				</div>
 
 				<SidebarContainer
-					audioCount={this.state.audioCount}
-					followersCount={this.state.followersCount}
+					audioCount={this.props.audioCount}
+					followersCount={this.props.followersCount}
 					locationParams={this.props.locationParams}
+					canFollowUser={this.props.canFollowUser}
 				/>
 				<NotificationContainer />
 			</main>
 		);
 	}
 }
-

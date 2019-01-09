@@ -4,7 +4,7 @@ mongoose.connect('mongodb://localhost/musicDB', { useNewUrlParser: true }, (err)
 	if(err) throw err;
 	console.log('Connected to musicDB')
 });
-
+ 
 module.exports = (router, passport) => {
 
 	require('./routes/register.route')(router); // Реєстрація

@@ -1,9 +1,9 @@
 // Libraries
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
-import axios from 'axios';
+import isEqual from 'lodash.isequal';
 // Components
 import MusicFilter from 'universal/components/MusicFilter';
 import PlayList from 'universal/components/PlayList/PlayList';
@@ -12,6 +12,7 @@ import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContain
 import SearchField from 'universal/components/SearchField';
 import Button from 'universal/components/Commons/Button';
 import SidebarContainer from 'universal/components/Sidebar/SidebarContainer';
+import withUserData from 'universal/components/withUserData';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
@@ -20,11 +21,6 @@ import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 export default class UserProfiletContainer extends Component {
 	constructor(props, context) {
 		super(props, context);
-
-		this.state = {
-			audioCount: null,
-			followersCount: null
-		};
 	}
 
 	componentDidMount() {
@@ -32,7 +28,8 @@ export default class UserProfiletContainer extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if(this.props.locationParams.userId !== prevProps.locationParams.userId) {
+		if(this.props.locationPath !== prevProps.locationPath
+			|| this.props.locationParams.userId !== prevProps.locationParams.userId) {
 			this.getPageData();
 		}
 	}
@@ -46,17 +43,6 @@ export default class UserProfiletContainer extends Component {
 					timeOut: 10000
 				});
 			}
-		});
-		
-		axios.post('https://localhost:8080/api/getUserData', {
-			currentUserID: this.props.userId,
-			userID: this.props.locationParams.userId
-		})
-		.then((response) => {
-			this.setState({
-				audioCount: response.data.audioCount,
-				followersCount: response.data.followersCount
-			});
 		});
 	}
 
@@ -81,7 +67,7 @@ export default class UserProfiletContainer extends Component {
 
 	render() {
 		return (
-			<main id="page" className="page clearfix">
+			<Fragment>
 				<h2 className="section-title">Моя музика</h2>
 
 				<div className="container clearfix">
@@ -116,18 +102,9 @@ export default class UserProfiletContainer extends Component {
 						/> :
 						<EmptyPlayList />
 					}
-
 				</div>
-
-
-
-				<SidebarContainer
-					audioCount={this.state.audioCount}
-					followersCount={this.state.followersCount}
-					locationParams={this.props.locationParams}
-				/>
 				<NotificationContainer />
-			</main>
+			</Fragment>
 		);
 	}
 }

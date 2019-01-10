@@ -11,3 +11,4 @@ export { default as ArtistProfilePage } from 'universal/pages/ArtistProfilePage.
 export { default as UserProfilePage } from 'universal/pages/UserProfilePage.js';
 export { default as FollowListPage } from 'universal/pages/FollowListPage.js';
 
+export { default as SettingsPage } from 'universal/pages/SettingsPage.js';

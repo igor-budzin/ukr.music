@@ -17,6 +17,11 @@ export default class MusicItem extends Component {
 		return !isEqual(nextProps, this.props);
 	}
 
+	onEdit = event => {
+		event.stopPropagation();
+		this.props.handleEditAudio(this.props._id);
+	}
+
 	render() {
 		let style = {};
 		if(this.props.bgUrl) {
@@ -44,6 +49,9 @@ export default class MusicItem extends Component {
 					<div className="song"><a href="javascript:void(0);">{this.props.title}</a></div>
 				</div>
 				<div className="audio-row-time">{formatSeconds(this.props.duration)}</div>
+				<div className="audio-row-options">
+					<div className="edit" title="Редагувати" onClick={this.onEdit}></div>
+				</div>
 			</div>
 		);
 	}

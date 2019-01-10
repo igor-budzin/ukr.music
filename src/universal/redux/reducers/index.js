@@ -3,3 +3,4 @@ export {default as getMusicReducer} from './getMusicReducer';
 export {default as uploadMusicReducer} from '../../components/UploadMusic/uploadMusicReducer';
 export {default as followsReducer} from '../../components/Followers/followsReducer';
 export {default as controlMusicReducer} from './controlMusicReducer';
+export {default as visibleUserDataReducer} from '../../components/Sidebar/visibleUserDataReducer';

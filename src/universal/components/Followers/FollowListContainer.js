@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
-import axios from 'axios';
 // Components
 import Button from 'universal/components/Commons/Button';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
@@ -30,14 +29,13 @@ export default class FollowListContainer extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		// if(this.props.locationParams.params.userId !== prevProps.locationParams.params.userId) {
+		// if(this.props.locationParams.userId !== prevProps.locationParams.userId) {
 		// 	this.getPageData();
 		// }
 	}
 
 	getPageData = () => {
-		console.log(this.props.locationParams.params.userId)
-		this.props.getFollows(this.props.locationParams.params.userId);
+		this.props.getFollows(this.props.locationParams.userId);
 	}
 
 	render() {

@@ -4,35 +4,60 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import isEqual from 'lodash.isequal';
-import axios from 'axios';
+import ReactPlaceholder from 'react-placeholder';
+import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 // Components
 import Button from '../Commons/Button';
-
 // Actions
-import * as getUserDataActions from './getUserDataActions';
+import * as visibleUserDataActions from './visibleUserDataActions';
 
 const mapStateToProps = (state, props) => ({
-	currentUserId: state.AuthReducer.user.id
+	currentUserId: state.AuthReducer.user.id,
+	followersCount: state.visibleUserDataReducer.followersCount,
+	audioCount: state.visibleUserDataReducer.audioCount,
+	canFollowUser: state.visibleUserDataReducer.canFollowUser
 });
 
-const mapDispatchToProps = (dispatch, props) => bindActionCreators(getUserDataActions, dispatch);
+const mapDispatchToProps = (dispatch, props) => bindActionCreators(visibleUserDataActions, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SidebarContainer extends Component {
 	constructor(props, context) {
 		super(props, context);
+
+		this.state = {
+			dataReady: false
+		}
 	}
 
 	componentDidMount() {
-		this.props.getUserData(this.props.currentUserId, this.props.locationParams.userId);
+		console.log(this.props.locationParams.userId)
+		this.props.getVisibleUserData(
+				this.props.currentUserId,
+				this.props.locationParams.userId !== undefined ? this.props.locationParams.userId : this.props.currentUserId
+		)
+		.then(response => {
+			this.setState({ dataReady: true });
+		});
 	}
 
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	return !isEqual(nextProps, this.props);
-	// }
+	componentDidUpdate(prevProps, prevState) {
+		if(this.props.locationParams.userId !== prevProps.locationParams.userId) {
+			this.props.getVisibleUserData(
+					this.props.currentUserId,
+					this.props.locationParams.userId !== undefined ? this.props.locationParams.userId : this.props.currentUserId
+			)
+			.then(response => {
+				this.setState({ dataReady: true });
+			});
+		}
+	}
 
 	handleFollow = () => {
-		this.props.followUser(this.props.userId, this.props.locationParams.userId);
+		this.props.followUser(
+				this.props.userId, 
+				this.props.locationParams.userId !== undefined ? this.props.locationParams.userId : this.props.currentUserId
+			);
 	};
 
 	handleUnfollow = () => {
@@ -45,17 +70,25 @@ export default class SidebarContainer extends Component {
 				<div className="counts sidebar-wrapper">
 					<div className="col">
 						<span className="text">Підписались</span>
-						<span className="count">{this.props.followersCount}</span>
+						<span className="count">
+							<ReactPlaceholder showLoadingAnimation ready={this.state.dataReady} customPlaceholder={countPlaceholder}>
+								{this.props.followersCount}
+							</ReactPlaceholder>
+						</span>
 					</div>
 					<div className="col">
 						<span className="text">Аудіофайлів</span>
-						<span className="count">{this.props.audioCount}</span>
+						<span className="count">
+							<ReactPlaceholder showLoadingAnimation ready={this.state.dataReady} customPlaceholder={countPlaceholder}>
+								{this.props.audioCount}
+							</ReactPlaceholder>
+						</span>
 					</div>
 				</div>
 
 				<div className="sidebar-wrapper">
 					{
-						this.props.currentUserId !== this.props.locationParams.userId &&
+						this.props.locationParams.userId && this.props.currentUserId !== this.props.locationParams.userId &&
 						(<div className="sidebar-wrapper">
 							{
 								this.props.canFollowUser ?
@@ -67,10 +100,11 @@ export default class SidebarContainer extends Component {
 
 					<div className="sidebar-link">
 						<Link to={`../profile/${this.props.currentUserId}`} className="link my">Мої треки</Link>
-						<Link to="/upload" className="link upload">Завантажити аудіозаписи</Link>
+						<Link to={`../upload/${this.props.currentUserId}`} className="link upload">Завантажити аудіозаписи</Link>
 						<Link to="/recommend" className="link recommend">Рекомендації</Link>
 						<Link to={`../followers/${this.props.currentUserId}`} className="link follow">Слухаю їх</Link>
 						<Link to="/update" className="link update">Оновлення</Link>
+						<Link to={`../stats/${this.props.currentUserId}`} className="link stats">Статистика</Link>
 						<Link to="/settings" className="link settings">Налаштування</Link>
 					</div>
 				</div>
@@ -78,3 +112,20 @@ export default class SidebarContainer extends Component {
 		);
 	}
 }
+
+const countPlaceholderStyle = {
+	width: '14px',
+	height: '20px',
+	borderRadius: '3px',
+	position: 'absolute',
+	top: '0',
+	left: '50%',
+	transform: 'translateX(-50%)'
+}
+
+const countPlaceholder = (
+	<div style={{position: 'relative'}}>
+		<RectShape color="#ccc" style={countPlaceholderStyle} />
+	</div>
+);
+

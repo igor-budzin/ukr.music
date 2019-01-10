@@ -1,5 +1,5 @@
 // Libraries
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropzone from 'react-dropzone';
@@ -63,7 +63,7 @@ class UploadMusicContainer extends Component {
 	render() {
 		const files = this.state.uploadedFiles;
 		return (
-			<main id="page" className="page upload-page clearfix">
+			<Fragment>
 				<h2 className="section-title">Завантаження файлів</h2>
 
 				<div className="content">
@@ -117,7 +117,7 @@ class UploadMusicContainer extends Component {
 
 				</div>
 				<NotificationContainer />
-			</main>
+			</Fragment>
 		);
 	}
 }

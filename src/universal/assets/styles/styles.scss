@@ -326,6 +326,10 @@ a:hover {
 }
 .audio-row:hover {
 	background-color: #e9f2ff;
+
+	.audio-row-options {
+		display: block;
+	}
 }
 .audio-row-cover {
 	width: 46px;
@@ -367,6 +371,30 @@ a:hover {
 	transform: translateY(-50%);
 	font-family: 'Roboto', Arial, sans-serif;
 	font-size: 14px;
+}
+.audio-row-options {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: auto;
+	padding: 0 10px;
+	z-index: 3;
+	line-height: 100%;
+	border-radius: 0 4px 4px 0;
+	background-color: #e9f2ff;
+
+	.edit {
+		width: 25px;
+		height: 25px;
+		background-image: url('../img/play-controls/edit.svg');
+		background-size: 20px;
+		background-position: center;
+		background-repeat: no-repeat;
+		margin: 14px 5px;
+		float: left;
+	}
 }
 .bars {
 	left: 50%;
@@ -436,6 +464,7 @@ a:hover {
 .upload-page {
 	.file-list {
 		margin-bottom: 20px;
+		
 		.item {
 			height: 35px;
 			line-height: 35px;
@@ -920,6 +949,10 @@ a:hover {
 			&.recommend {
 				background-image: url('../img/menu/ribbon.svg');
 			}
+			&.stats {
+				background-image: url('../img/menu/stats.svg');
+				background-position: left 10px center;
+			}
 			&.update {
 				background-image: url('../img/menu/update-arrows.svg');
 				background-size: 20px;
@@ -1018,3 +1051,60 @@ a:hover {
 		}
 	}
 }
+
+
+
+
+
+.show-loading-animation.rect-shape, .show-loading-animation.round-shape, .show-loading-animation.text-row,
+.show-loading-animation .rect-shape,
+.show-loading-animation .round-shape,
+.show-loading-animation .text-row {
+  animation: react-placeholder-pulse 1.5s infinite; }
+
+@keyframes react-placeholder-pulse {
+  0% {
+    opacity: .6; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: .6; } }
+
+
+    #outline {
+      stroke-dasharray: 2.42777px, 242.77666px;
+      stroke-dashoffset: 0;
+      -webkit-animation: anim 1.0s linear infinite;
+              animation: anim 1.0s linear infinite;
+    }
+
+    @-webkit-keyframes anim {
+      12.5% {
+        stroke-dasharray: 33.98873px, 242.77666px;
+        stroke-dashoffset: -26.70543px;
+      }
+      43.75% {
+        stroke-dasharray: 84.97183px, 242.77666px;
+        stroke-dashoffset: -84.97183px;
+      }
+      100% {
+        stroke-dasharray: 2.42777px, 242.77666px;
+        stroke-dashoffset: -240.34889px;
+      }
+    }
+
+    @keyframes anim {
+      12.5% {
+        stroke-dasharray: 33.98873px, 242.77666px;
+        stroke-dashoffset: -26.70543px;
+      }
+      43.75% {
+        stroke-dasharray: 84.97183px, 242.77666px;
+        stroke-dashoffset: -84.97183px;
+      }
+      100% {
+        stroke-dasharray: 2.42777px, 242.77666px;
+        stroke-dashoffset: -240.34889px;
+      }
+    }
+

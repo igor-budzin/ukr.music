@@ -3,6 +3,11 @@ const UserModel = require('../models/user.model.js');
 
 module.exports = (router) => {
 	router.post('/getUserData', (req, res) => {
+		if(!req.body.currentUserID || !req.body.userID) {
+			res.status(500).send({ 'status': 'error' });
+			return false;
+		}
+
 		UserModel.aggregate()
 			.match({ _id: mongoose.Types.ObjectId(req.body.userID) })
 			.project({

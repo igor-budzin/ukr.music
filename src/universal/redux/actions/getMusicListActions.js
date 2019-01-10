@@ -30,24 +30,27 @@ export function requestGetMusicListError() {
 	}
 }
 
-export function getMusicListAction(userId, callback) {
+export function getMusicListAction(userId) {
 	return (dispatch) => {
 		dispatch(requestGetListMusic());
 
-		axiosInstance.get('getMusic/' + userId)
-		.then((response) => {
-			if(response.status === 200) {
-				dispatch(requestGetMusicListSuccess(response.data));
-			}
-			else {
+		return new Promise((resolve, reject) => {
+			axiosInstance.get('getMusic/' + userId)
+			.then((response) => {
+				if(response.status === 200) {
+					dispatch(requestGetMusicListSuccess(response.data));
+					resolve();
+				}
+				else {
+					dispatch(requestGetMusicListError());
+					reject();
+				}
+			})
+			.catch((error) => {
 				dispatch(requestGetMusicListError());
-				callback({status: false});
-			}
+				console.log(error);
+				reject();
+			});
 		})
-		.catch((error) => {
-			dispatch(requestGetMusicListError());
-			console.log(error);
-			callback({status: false});
-		});
 	}
 }

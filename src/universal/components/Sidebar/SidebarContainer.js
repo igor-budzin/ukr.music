@@ -31,7 +31,7 @@ export default class SidebarContainer extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props.locationParams.userId)
+		// console.log(this.props.locationParams.userId)
 		this.props.getVisibleUserData(
 				this.props.currentUserId,
 				this.props.locationParams.userId !== undefined ? this.props.locationParams.userId : this.props.currentUserId

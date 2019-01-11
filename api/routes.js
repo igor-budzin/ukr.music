@@ -17,6 +17,7 @@ module.exports = (router, passport) => {
 	require('./routes/uploadAudio.route')(router); // Завантаження аудіофайлів
 
 	require('./routes/getMusic.route')(router); // Список треків
+	require('./routes/getAudioData.route')(router); // Інформація про трек
 
 	require('./routes/getUserData.route')(router); // Інформація про юзера (кількість треків і підписників)
 	require('./routes/getUserFollows.route')(router); // Список користувачів на яких підписаний юзер

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 import ReactPlaceholder from 'react-placeholder';
-import SkyLight from 'react-skylight';
+import ReactModal from 'react-modal';
+import axios from 'axios';
 // Components
 import MusicFilter from 'universal/components/MusicFilter';
 import PlayList from 'universal/components/PlayList/PlayList';
@@ -12,6 +13,7 @@ import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
 import Button from 'universal/components/Commons/Button';
+
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
@@ -31,12 +33,18 @@ export default class UserProfiletContainer extends Component {
 		super(props, context);
 
 		this.state = {
-			dataReady: false
+			audioListReady: false,
+			audioDataReady: false,
+			showModal: false,
+			editField_Artist: '',
+			editField_Title: '',
+			editFieldA_Genre: ''
 		}
 	}
 
 	componentDidMount() {
 		this.getPageData();
+		ReactModal.setAppElement(document.getElementById('root'));
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -49,7 +57,9 @@ export default class UserProfiletContainer extends Component {
 	getPageData = () => {
 		this.props.getMusic(this.props.locationParams.userId)
 		.then(response => {
-			this.setState({ dataReady: true });
+			this.setState({
+				audioListReady: true
+			});
 		})
 		.catch(error => {
 			NotificationManager.error({
@@ -80,7 +90,26 @@ export default class UserProfiletContainer extends Component {
 	}
 
 	handleEditAudio = (id) => {
-		this.editModal.show()
+		this.setState({ showModal: true });
+		axios.post('https://localhost:8080/api/getAudioData', {
+			audioID: id
+		})
+		.then(response => {
+			this.setState({
+				audioDataReady: true,
+				editField_Artist: response.data.artists,
+				editField_Title: response.data.title,
+				editFieldA_Genre: response.data.genre
+			});
+		})
+		
+	}
+
+	handleCloseModal = () => {
+		this.setState({
+			showModal: false,
+			audioDataReady: false
+		})
 	}
 
 	render() {
@@ -110,7 +139,7 @@ export default class UserProfiletContainer extends Component {
 						<a href="javascript:void(0)" className="link">Плейлисти</a>
 					</div>
 
-					<ReactPlaceholder showLoadingAnimation ready={this.state.dataReady} customPlaceholder={musicLoader}>
+					<ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
 						{
 							this.props.playlist && this.props.playlist.length > 0 ?
 							<PlayList
@@ -125,14 +154,63 @@ export default class UserProfiletContainer extends Component {
 					</ReactPlaceholder>
 				</div>
 
-				<SkyLight
-					className="editAudio-modal"
-					dialogStyles={dialogStyles}
-					ref={ref => this.editModal = ref}
-					transitionDuration={200}
-				>
-					<div className="title">Радагування аудіозапису</div>
-				</SkyLight>
+				
+					
+				
+					<ReactModal
+						isOpen={this.state.showModal}
+						onAfterOpen={this.handleOpenEditModal}
+						className="modal edit-audio"
+						overlayClassName="overlay"
+					>
+						<div className="title">
+							Редагування аудіозапису
+							<div className="close" onClick={this.handleCloseModal}></div>
+						</div>
+
+							<ReactPlaceholder showLoadingAnimation ready={this.state.audioDataReady} customPlaceholder={musicLoader}>
+								<div>
+									<div className="cover">
+										<img src="https://localhost:8080/api/albumCover/MAXIMALISM.jpg" />
+										<div className="edit"><span>змінити</span></div>
+									</div>
+
+									<div className="desc">
+										<div className="input-wrapper">
+											<label htmlFor="edit-artist">Виконавець</label>
+											<input
+												type="text"
+												className="input"
+												id="edit-artist"
+												value={this.state.editField_Artist}
+												onChange={e => this.setState({ editField_Artist: e.target.value })}
+											/>
+										</div>
+
+										<div className="input-wrapper">
+											<label htmlFor="edit-title">Назва</label>
+											<input
+												type="text"
+												className="input"
+												id="edit-title"
+												value={this.state.editField_Title}
+												onChange={e => this.setState({ editField_Title: e.target.value })}
+											/>
+										</div>
+
+										<div className="input-wrapper">
+											<label htmlFor="edit-genre">Жанр</label>
+											<input type="text" className="input" id="edit-genre" />
+										</div>
+
+										<div className="input-wrapper">
+											<Button className="red">Зберегти</Button>
+										</div>
+									</div>
+								</div>
+							</ReactPlaceholder>
+					</ReactModal>
+
 				<NotificationContainer />
 			</Fragment>
 		);
@@ -145,7 +223,7 @@ const svgLoaderStyle = {
 	marginTop: '40px',
 	width: '240px',
 	position: 'absolute',
-	transform: 'translate(-50%, -50%) matrix(1, 0, 0, 1, 0, 0)'
+	transform: 'translate(-50%, -50%) matrix(1, 0, 0, 1, 0, 0)',
 }
 
 const musicLoader = (
@@ -158,8 +236,3 @@ const musicLoader = (
 		</svg>
 	</div>
 )
-
-const dialogStyles = {
-	width: '400px',
-	marginLeft: '-200px'
-}

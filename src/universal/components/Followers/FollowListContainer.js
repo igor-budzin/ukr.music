@@ -40,7 +40,7 @@ export default class FollowListContainer extends Component {
 
 	render() {
 		return (
-			<main id="page" className="page clearfix">
+			<Fragment>
 				<h2 className="section-title">Підписники</h2>
 
 				<div className="container clearfix">
@@ -66,14 +66,8 @@ export default class FollowListContainer extends Component {
 
 				</div>
 
-				<SidebarContainer
-					audioCount={this.props.audioCount}
-					followersCount={this.props.followersCount}
-					locationParams={this.props.locationParams}
-					canFollowUser={this.props.canFollowUser}
-				/>
 				<NotificationContainer />
-			</main>
+			</Fragment>
 		);
 	}
 }

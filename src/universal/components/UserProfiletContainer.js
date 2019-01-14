@@ -13,7 +13,7 @@ import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
 import Button from 'universal/components/Commons/Button';
-
+import Select from 'universal/components/Commons/Select';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
@@ -200,7 +200,8 @@ export default class UserProfiletContainer extends Component {
 
 										<div className="input-wrapper">
 											<label htmlFor="edit-genre">Жанр</label>
-											<input type="text" className="input" id="edit-genre" />
+											<Select id="edit-genre" options={options} defaultValue="item 2" defaultLabel="2 Item">
+											</Select>
 										</div>
 
 										<div className="input-wrapper">
@@ -236,3 +237,13 @@ const musicLoader = (
 		</svg>
 	</div>
 )
+
+const options = [
+	{value: 'item 1', label: '1 Item'},
+	{value: 'item 2', label: '2 Item'},
+	{value: 'item 3', label: '3 Item'},
+	{value: 'item 4', label: '4 Item'},
+	{value: 'item 1', label: '1 Item'},
+	{value: 'item 1', label: '1 Item'},
+	{value: 'item 1', label: '1 Item'}
+];

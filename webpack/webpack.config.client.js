@@ -70,9 +70,9 @@ export default {
    })
  ],
  module: {
-   loaders: [
+   rules: [
      {
-       test: /\.(png|j|jpeg|gif|svg|woff|woff2)$/,
+       test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
        use: {
          loader: 'url-loader',
          options: {
@@ -91,12 +91,11 @@ export default {
      // JavaScript
      {
        test: /\.css|less$/,
-       loader: 'babel-loader',
        include: clientInclude,
        loaders: ExtractTextPlugin.extract({
-         fallback: 'style-loader',
+         fallback: 'babel-loader',
          use: [
-           {loader: 'css-loader',
+           {loader: 'style-loader!css-loader',
             options: {
               root: src,
               modules: true,
@@ -107,12 +106,19 @@ export default {
      },
 
      // CSS
+     // {
+     //  test: /\.scss$/,
+     //  include: clientInclude,
+     //  loaders: ExtractTextPlugin.extract('style-loader', 'css-loader', 'sass-loader')
+     // }
      {
       test: /\.scss$/,
       include: clientInclude,
-      loaders: ExtractTextPlugin.extract('style-loader', 'css-loader', 'sass-loader')
+      loaders: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: "css-loader!sass-loader"
+      })
      }
-
    ]
  }
 };

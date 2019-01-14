@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
+import 'universal/assets/styles/commons/button.scss';
+
 const Loader = () => {
 	return (
 		<div className="button-loader">

@@ -9,7 +9,8 @@ export default class MusicItem extends Component {
 			link: this.props.link,
 			artist: this.props.artist,
 			title: this.props.title,
-			duration: this.props.duration
+			duration: this.props.duration,
+			coverLink: this.props.bgUrl
 		});
 	}
 

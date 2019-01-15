@@ -3,11 +3,13 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import ReactModal from 'react-modal';
+import axios from 'axios';
 // Components
 import Button from 'universal/components/Commons/Button';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 // Actions
-
 
 const mapStateToProps = (state, props) => ({
 	userId: state.AuthReducer.user.id
@@ -19,8 +21,37 @@ const mapDispatchToProps = (dispatch, props) =>  bindActionCreators({}, dispatch
 export default class SettingstContainer extends Component {
 	constructor(props, context) {
 		super(props, context);
+
+		this.state = {
+			showModal: false,
+			artistName: ''
+		}
 	}
 
+	componentDidMount() {
+		ReactModal.setAppElement(document.getElementById('root'));
+	}
+
+	handleOpenModal = (event) => {
+		event.preventDefault();
+		this.setState({ showModal: true });
+	};
+
+	handleCloseModal = () => {
+		this.setState({ showModal: false, artistName: '' });
+	};
+
+	handleCreateArtist = () => {
+		axios.post('https://localhost:8080/api/createArtist', {
+			artistName: this.state.artistName,
+			currentUserID: this.props.userId
+		})
+		.then(response => {
+			this.handleCloseModal();
+			this.props.history.push(`/artist/${response.data._id}`); 
+		})
+		.catch(err => { console.log(err) })
+	};
 
 	render() {
 		return (
@@ -39,12 +70,46 @@ export default class SettingstContainer extends Component {
 
 				<div className="content">
 
-					<div className="section-links" style={{"marginBottom": "40px"}}>
-						<a href="javascript:void(0)" className="link active">Профіль</a>
-						<a href="javascript:void(0)" className="link">Пароль</a>
-						<a href="javascript:void(0)" className="link">Синхронізація</a>
-					</div>
+					<Tabs>
+						<TabList className="section-links" style={{"marginBottom": "40px"}}>
+							<Tab className="link" selectedClassName="active">Профіль</Tab>
+							<Tab className="link" selectedClassName="active">Пароль</Tab>
+							<Tab className="link" selectedClassName="active">Синхронізація</Tab>
+						</TabList>
+					
+						<TabPanel>
+							<div className="input-wrapper">
+								<a className="orange" href="#" onClick={this.handleOpenModal}>Створити сторінку виконавця</a>
+							</div>
 
+							<ReactModal
+								isOpen={this.state.showModal}
+								onAfterOpen={this.handleOpenEditModal}
+								className="modal edit-audio"
+								overlayClassName="overlay"
+							>
+								<div className="title">
+									<div className="close" onClick={this.handleCloseModal}></div>
+								</div>
+									<div className="input-wrapper">
+										<label htmlFor="artist-name">Назва виконавця</label>
+										<input type="text" className="input" id="artist-name" onChange={e => this.setState({ artistName: e.target.value })} />
+									</div>
+
+									<div className="input-wrapper">
+										<Button className="red" onClick={this.handleCreateArtist}>Створити</Button>
+									</div>
+							</ReactModal>
+						</TabPanel>
+
+						<TabPanel>
+							Пароль
+						</TabPanel>
+
+						<TabPanel>
+							Синхронізація
+						</TabPanel>
+					</Tabs>
 				</div>
 
 				<NotificationContainer />

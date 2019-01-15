@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import isEqual from 'lodash.isequal';
 // Components
 import MusicPlayer from './MusicPlayer';
 // Actions
@@ -85,8 +84,9 @@ class MusicPlayerContainer extends Component {
 	render() {
 		return (
 			<MusicPlayer
-				atrist={this.props.currentMusic.atrist}
+				atrist={this.props.currentMusic.artist}
 				title={this.props.currentMusic.title}
+				coverLink={this.props.currentMusic.coverLink}
 				durationTime={this.props.currentMusic.duration}
 				currentTime={this.state.currentTime}
 				volume={this.state.volume}

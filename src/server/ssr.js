@@ -1,9 +1,8 @@
-// Node Modules
 import fs from 'fs';
-import {basename, join} from 'path';
-// Libraries
+import { basename, join } from 'path';
 import React from 'react';
-import {renderToString} from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
+import { resetIdCounter } from 'react-tabs';
 // Redux
 // import {push} from 'react-router-redux';
 import createStore from '../universal/redux/createStore';
@@ -14,7 +13,8 @@ import Html from './Html.js';
 
 function renderApp(url, res, store, assets) {
 	const context = {};
-
+	
+	resetIdCounter();
 	const html = renderToString(
 		<Html
 			title='💥'

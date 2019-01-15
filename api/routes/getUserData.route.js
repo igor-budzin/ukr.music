@@ -11,6 +11,7 @@ module.exports = (router) => {
 		UserModel.aggregate()
 			.match({ _id: mongoose.Types.ObjectId(req.body.userID) })
 			.project({
+				name: '$name',
 				audioCount: { $size:"$audio" },
 				followersCount: { $size:"$followers" }
 			})

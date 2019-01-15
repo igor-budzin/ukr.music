@@ -31,9 +31,18 @@ body {
 }
 a {
 	text-decoration: none;
-}
-a:hover {
-	color: #00b0eb;
+
+	&.orange {
+		color: #ff4838;
+
+		&:hover {
+			color: #f92411;
+		}
+	}
+
+	&:hover {
+		color: #00b0eb;
+	}
 }
 .header {
 	position: relative;
@@ -178,6 +187,7 @@ a:hover {
 		font-family: 'Roboto', sans-serif;
 		position: relative;
 		cursor: default;
+		display: inline-block;
 
 		&:not(.active):hover {
 			cursor: pointer;
@@ -585,10 +595,24 @@ a:hover {
 }
 
 .player {
-	width: 622px;
+	// width: 622px;
 	height: 40px;
 	display: flex;
 	flex-direction: row;
+
+	.cover {
+		width: 40px;
+		height: 40px;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+		border-radius: 4px;
+		overflow: hidden;
+		float: left;
+		margin-right: 10px;
+		position: relative;
+		background-color: rgba(0, 0, 0, 0.6);
+	}
 
 	.controls {
 		width: 120px;
@@ -619,15 +643,19 @@ a:hover {
 
 			&.play {
 				background-image: url('../img/play-controls/play-button.svg');
-				background-position-x: 11px;
+				background-position-x: 8px;
+				background-size: 30px;
 			}
 			&.pause {
+				background-size: 30px;
 				background-image: url('../img/play-controls/pause.svg');
 			}
 			&.prev {
+				background-size: 16px;
 				background-image: url('../img/play-controls/previous.svg');
 			}
 			&.next {
+				background-size: 16px;
 				background-image: url('../img/play-controls/next.svg');
 			}
 			&.repeat {
@@ -669,6 +697,15 @@ a:hover {
 	.progress-bar {
 		flex: 5 1 auto;
 		position: relative;
+
+		.title {
+			display: inline-block;
+			position: absolute;
+			left: 0;
+			top: 5px;
+			width: 275px;
+			height: 16px;
+		}
 
 		.time {
 			display: inline-block;
@@ -852,31 +889,7 @@ a:hover {
 				}
 			}
 		}
-		// Альбоми
-		&.albums {
-			.album {
-				width: 200px;
-				cursor: pointer;
-				padding-right: 11px;
 
-				img {
-					width: 100%;
-					height: auto;
-					margin-bottom: 5px;
-				}
-
-				.album-name {
-					margin-bottom: 5px;
-					font-family: 'Roboto Condensed';
-				}
-
-				.album-year {
-					font-family: 'Roboto Condensed';
-					font-size: 12px;
-					margin-bottom: 5px;
-				}
-			}
-		}
 		// Найближчий тур
 		&.tour {
 			.event {
@@ -913,6 +926,47 @@ a:hover {
 						}
 					}
 				}
+			}
+		}
+	}
+}
+
+// Альбоми
+.albums {
+	.album {
+		width: 200px;
+		cursor: pointer;
+		padding-right: 11px;
+
+		img {
+			width: 100%;
+			height: auto;
+			margin-bottom: 5px;
+		}
+
+		.album-name {
+			margin-bottom: 5px;
+			font-family: 'Roboto Condensed';
+		}
+
+		.album-year {
+			font-family: 'Roboto Condensed';
+			font-size: 12px;
+			margin-bottom: 5px;
+		}
+	}
+
+	&.albums-list {
+		@extend .clearfix;
+		.album {
+			width: 148px;
+			float: left;
+			padding-right: 0px;
+			margin-bottom: 10px;
+			margin-right: 10px;
+
+			&:nth-child(4) {
+				margin-right: 0;
 			}
 		}
 	}

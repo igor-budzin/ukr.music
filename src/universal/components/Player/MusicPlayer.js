@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import Slider from 'react-rangeslider';
 import { formatSeconds } from 'universal/utils';
 import classNames from 'classnames';
+import isEqual from 'lodash.isequal';
 
 export default class MusicPlayer extends Component {
-
+	shouldComponentUpdate(nextProps, nextState) {
+		return !isEqual(this.props, nextProps);
+	}
 
 	render() {
 		return (
 			<div className="player">
+				<div className="cover" style={{"backgroundImage": "url(data:image/png;base64," + this.props.coverLink + ")"}}></div>
 				<div className="controls controls--play">
 					<div className="btn prev"></div>
 					{
@@ -20,6 +24,9 @@ export default class MusicPlayer extends Component {
 				</div>
 
 				<div className="progress-bar">
+					<div className="title">
+						{`${this.props.atrist} - ${this.props.title}`}
+					</div>
 					<div className="time">
 						<span className="current">{formatSeconds(this.props.currentTime)}</span>
 						<span> / </span>

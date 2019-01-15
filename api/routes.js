@@ -23,4 +23,6 @@ module.exports = (router, passport) => {
 	require('./routes/getUserFollows.route')(router); // Список користувачів на яких підписаний юзер
 	require('./routes/followUser.route')(router); // Підписується на користувача
 
+	require('./routes/createArtist.route')(router); // Створює нового виконавця
+
 };

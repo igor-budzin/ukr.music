@@ -6,6 +6,7 @@ import { NotificationContainer, NotificationManager } from "react-light-notifica
 import ReactPlaceholder from 'react-placeholder';
 import ReactModal from 'react-modal';
 import axios from 'axios';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // Components
 import MusicFilter from 'universal/components/MusicFilter';
 import PlayList from 'universal/components/PlayList/PlayList';
@@ -22,7 +23,9 @@ const mapStateToProps = (state, props) => ({
 	playlist: state.getMusicReducer.music,
 	currentMusic: state.controlMusicReducer.currentMusic,
 	isPlaying: state.controlMusicReducer.isPlaying,
-	userId: state.AuthReducer.user.id
+	userId: state.AuthReducer.user.id,
+	visibleUserName: state.visibleUserDataReducer.name,
+	visibleUserID: state.visibleUserDataReducer._id
 });
 
 const mapDispatchToProps = (dispatch, props) =>  bindActionCreators({ ...AudioActions, getMusic: getMusicListAction }, dispatch);
@@ -115,7 +118,12 @@ export default class UserProfiletContainer extends Component {
 	render() {
 		return (
 			<Fragment>
-				<h2 className="section-title">Моя музика</h2>
+				<h2 className="section-title">
+					{
+						this.props.userId !== this.props.visibleUserID && this.props.visibleUserName ?
+						this.props.visibleUserName : 'Моя музика'
+					}
+				</h2>
 
 				<div className="container clearfix">
 
@@ -133,30 +141,72 @@ export default class UserProfiletContainer extends Component {
 						<SearchField />
 					</div>
 
-					<div className="section-links" style={{"marginBottom": "40px"}}>
-						<a href="javascript:void(0)" className="link active">Треки</a>
-						<a href="javascript:void(0)" className="link">Альбоми</a>
-						<a href="javascript:void(0)" className="link">Плейлисти</a>
-					</div>
+					<Tabs>
 
-					<ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
-						{
-							this.props.playlist && this.props.playlist.length > 0 ?
-							<PlayList
-								currentId={this.props.currentMusic.id}
-								playlist={this.props.playlist}
-								handleChoseAudio={this.handleChoseAudio}
-								handleEditAudio={this.handleEditAudio}
-								isPlaying={this.props.isPlaying}
-							/> :
-							<EmptyPlayList />
-						}
-					</ReactPlaceholder>
+					
+						<TabList className="section-links" style={{"marginBottom": "40px"}}>
+							<Tab className="link" selectedClassName="active">Треки</Tab>
+							<Tab className="link" selectedClassName="active">Альбоми</Tab>
+							<Tab className="link" selectedClassName="active">Плейлисти</Tab>
+						</TabList>
+
+						<TabPanel>
+							<ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
+								{
+									this.props.playlist && this.props.playlist.length > 0 ?
+									<PlayList
+										currentId={this.props.currentMusic.id}
+										playlist={this.props.playlist}
+										handleChoseAudio={this.handleChoseAudio}
+										handleEditAudio={this.handleEditAudio}
+										isPlaying={this.props.isPlaying}
+									/> :
+									<EmptyPlayList />
+								}
+							</ReactPlaceholder>
+						</TabPanel>
+
+						<TabPanel>
+							<div className="albums albums-list">
+								<div className="album">
+									<img src="https://localhost:8080/api/albumCover/MAXIMALISM.jpg" alt=""/>
+									<div className="album-name">Perfection Is a Lie</div>
+									<div className="album-year">2017</div>
+								</div>
+								<div className="album">
+									<img src="https://localhost:8080/api/albumCover/epolets-album.jpg" alt=""/>
+									<div className="album-name">Cold Altair</div>
+									<div className="album-year">2014</div>
+								</div>
+								<div className="album">
+									<img src="https://localhost:8080/api/albumCover/thehardkiss-album.jpg" alt=""/>
+									<div className="album-name">Stones and Honey</div>
+									<div className="album-year">2014</div>
+								</div>
+								<div className="album">
+									<img src="https://localhost:8080/api/albumCover/ThePrettyReckless.jpg" alt=""/>
+									<div className="album-name">Залізна ластівка</div>
+									<div className="album-year">2018</div>
+								</div>
+								<div className="album">
+									<img src="https://localhost:8080/api/albumCover/color-album.jpg" alt=""/>
+									<div className="album-name">Lovers</div>
+									<div className="album-year">2016</div>
+								</div>
+								<div className="album">
+									<img src="https://localhost:8080/api/albumCover/mort-album.jpg" alt=""/>
+									<div className="album-name">Stones and Honey</div>
+									<div className="album-year">2015</div>
+								</div>
+							</div>
+						</TabPanel>
+						<TabPanel>Плейлисти</TabPanel>
+					</Tabs>
+
 				</div>
 
-				
-					
-				
+
+
 					<ReactModal
 						isOpen={this.state.showModal}
 						onAfterOpen={this.handleOpenEditModal}
@@ -230,10 +280,10 @@ const svgLoaderStyle = {
 const musicLoader = (
 	<div style={{position: 'relative'}}>
 		<svg viewBox="0 0 187.3 93.7" preserveAspectRatio="xMidYMid meet" style={svgLoaderStyle}>
-		  <path stroke="#ff4838" id="outline" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" 
-		        d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
-		  <path id="outline-bg" opacity="0.5" fill="none" stroke="#ededed" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" 
-		        d="				M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
+			<path stroke="#ff4838" id="outline" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" 
+						d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
+			<path id="outline-bg" opacity="0.5" fill="none" stroke="#ededed" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" 
+						d="				M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
 		</svg>
 	</div>
 )

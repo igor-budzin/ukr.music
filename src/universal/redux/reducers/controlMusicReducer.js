@@ -6,7 +6,8 @@ const initialState = {
 		link: '',
 		title: '',
 		artist: '',
-		duration: 0
+		duration: 0,
+		coverLink: ''
 	}
 };
 

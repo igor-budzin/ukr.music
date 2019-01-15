@@ -11,40 +11,24 @@ const axiosInstance = axios.create({
 	headers: { 'Access-Control-Allow-Origin': '*' }
 });
 
-const requestGetUserDataAction = () => ({
-	type: REQUEST_GET_USERDATA
-});
-
-const requestGetUserDataSuccessAction = data => ({
-	type: REQUEST_GET_USERDATA_SUCCESS,
-	payload: data
-});
-
-const requestGetUserDataErrorAction = () => ({
-	type: REQUEST_GET_USERDATA_ERROR
-});
-
 export function getVisibleUserData(currentUserID, visibleUserID) {
 	return dispatch => {
-		dispatch(requestGetUserDataAction());
+		dispatch({ type: REQUEST_GET_USERDATA });
 
 		return new Promise((resolve, reject) => {
 			axiosInstance.post('getUserData', {
 				currentUserID: currentUserID,
 				userID: visibleUserID
 			})
-			.then(response => {
-				if(response.status === 200) {
-					dispatch(requestGetUserDataSuccessAction(response.data));
-					resolve();
-				}
-				else {
-					dispatch(requestGetUserDataErrorAction());
-					reject();
-				}
+			.then(response => {response.data
+				dispatch({
+					type: REQUEST_GET_USERDATA_SUCCESS,
+					payload: response.data
+				});
+				resolve();
 			})
 			.catch(error => {
-				dispatch(requestGetUserDataErrorAction());
+				dispatch({ type: REQUEST_GET_USERDATA_ERROR });
 				console.log(error);
 				reject();
 			});

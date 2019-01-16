@@ -48,7 +48,7 @@ export default class SettingstContainer extends Component {
 		})
 		.then(response => {
 			this.handleCloseModal();
-			this.props.history.push(`/artist/${response.data._id}`); 
+			this.props.history.push(`/artist/${response.data.name}`); 
 		})
 		.catch(err => { console.log(err) })
 	};

@@ -1,9 +1,23 @@
 // Libraries
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+// Components
 import Button from '../Commons/Button';
+// Actions
+import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 
+const mapStateToProps = (state, props) => ({
+	name: state.ArtistProfileReducer.name
+});
+
+const mapDispatchToProps = (dispatch, props) => bindActionCreators({ getMusic: getMusicListAction }, dispatch);
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class TopMusicSection extends Component {
+	componentDidMount() {
+		this.props.getMusic(this.props.artistName, this.props.limit)
+	}
 
 	render() {
 		return (

@@ -30,6 +30,9 @@ const UserSchema = new Schema({
 	},
 	followers: {
 		type: []
+	},
+	artists: {
+		type: []
 	}
 });
 

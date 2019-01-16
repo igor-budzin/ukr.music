@@ -37,14 +37,12 @@ export default class Routes extends Component {
 		const { location } = this.props;
 		return (
 			<Fragment>
-				{/*<AnimatedSwitch
+				<AnimatedSwitch
 					atEnter={{ opacity: 0 }}
 					atLeave={{ opacity: 0 }}
 					atActive={{ opacity: 1 }}
 					className="switch-wrapper"
 				>
-				</AnimatedSwitch>*/}
-				<Switch>
 					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/profile/:userId' component={RouteMap.UserProfilePage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/upload/:userId' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
@@ -55,7 +53,7 @@ export default class Routes extends Component {
 					<Route exact location={location} path='/login' component={RouteMap.LoginPage} />
 					<Route exact location={location} path='/register' component={RouteMap.RegisterPage} />
 					<Route exact location={location} component={RouteMap.NotFoundPage} />
-				</Switch>
+				</AnimatedSwitch>
 			</Fragment>
 		);
 	}

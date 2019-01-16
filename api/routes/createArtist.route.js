@@ -8,14 +8,33 @@ module.exports = router => {
 	router.post('/createArtist/', passport.authenticate('jwt', { session: false }), (req, res) => {
 		if(req.body.currentUserID === undefined && req.body.artistName === undefined) return false;
 
-		const newArtist = new ArtistModel({
-			_id: mongoose.Types.ObjectId(),
-			name: req.body.artistName
-		});
+		ArtistModel.findOne({ name: req.body.artistName }, '_id')
+		.exec((err, doc) => {
+			if(err) res.status(500).json({"status": "error"});
 
-		newArtist.save().then(artist => {
-			console.log(artist)
-			res.json(artist)
-		}); 
+			if(doc === null) {
+				const newArtist = new ArtistModel({
+					_id: mongoose.Types.ObjectId(),
+					name: req.body.artistName 
+				});
+
+				newArtist.save().then(artist => {
+					UserModel.findByIdAndUpdate(
+						{ _id: req.body.currentUserID },
+						{ $addToSet: { artists: mongoose.Types.ObjectId(artist._id) } }
+					)
+					.exec((err, doc) => {
+						if(err) res.status(500).json({"status": "error"});
+						res.json(artist);
+					})
+				});
+			}
+			else {
+				res.json({
+					"status": "error",
+					"message": 'Виконавець з таким ім\'я вже існує'
+				});
+			}
+		});
 	});
 }

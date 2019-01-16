@@ -8,7 +8,9 @@ const ArtistSchema = new Schema({
 		type: String,
 		required: true
 	},
-	coverLink: String,
+	coverLink: {
+		type: String
+	},
 	audio: [],
 	followers: [],
 	albums: []

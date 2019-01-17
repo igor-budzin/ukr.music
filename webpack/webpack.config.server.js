@@ -8,11 +8,13 @@ const root = process.cwd();
 const src  = path.join(root, 'src');
 const build = path.join(root, 'build');
 const universal = path.join(src, 'universal');
+const sectionslSrc = path.join(src, 'universal', 'components', 'Sections');
+
 const server = path.join(src, 'server');
 const nodeModules = path.join(root, 'node_modules');
 
 
-const serverInclude = [server, universal, nodeModules];
+const serverInclude = [server, universal, sectionslSrc, nodeModules];
 
 export default {
 	context: src,

@@ -12,8 +12,9 @@ const build = path.join(root, 'build');
 
 const clientSrc    = path.join(src, 'client');
 const universalSrc = path.join(src, 'universal');
+const sectionslSrc = path.join(src, 'universal', 'components', 'Sections');
 
-const clientInclude = [clientSrc, universalSrc];
+const clientInclude = [clientSrc, universalSrc, sectionslSrc];
 
 // Cache vendor && client javascript on CDN...
 const vendor = [

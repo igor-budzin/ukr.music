@@ -62,6 +62,7 @@
 		"cors": "^2.8.4",
 		"express": "^4.15.2",
 		"express-session": "^1.15.6",
+		"flux-standard-action": "^2.0.3",
 		"history": "^4.6.1",
 		"id3-editor": "^1.0.0",
 		"jsonwebtoken": "^8.4.0",

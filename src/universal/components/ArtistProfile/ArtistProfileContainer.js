@@ -6,9 +6,9 @@ import { NotificationContainer, NotificationManager } from "react-light-notifica
 import SlickSlider from "react-slick";
 // Components
 import Button from '../Commons/Button';
-import AlbumsSection from './AlbumsSection';
-import TourSection from './TourSection';
-import TopMusicSection from './TopMusicSection';
+import AlbumsSection from 'universal/components/Sections/AlbumsSection';
+import TourSection from 'universal/components/Sections/TourSection';
+import TopMusicSection from 'universal/components/Sections/TopMusicSection';
 // Actions
 import * as ArtistProfile from './ArtistProfileActions';
 

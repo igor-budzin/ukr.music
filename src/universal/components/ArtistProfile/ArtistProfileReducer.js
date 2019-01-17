@@ -27,3 +27,4 @@ export default function ArtistProfileReducer(state = initialState, action) {
 	}
 }
 
+

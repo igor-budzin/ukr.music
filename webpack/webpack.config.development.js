@@ -7,9 +7,10 @@ const src  = path.join(root, 'src');
 
 const clientSrc    = path.join(src, 'client');
 const universalSrc = path.join(src, 'universal');
+const sectionslSrc = path.join(src, 'universal', 'components', 'Sections');
 const nodeModules = path.join(root, 'node_modules');
 
-const clientInclude = [clientSrc, universalSrc, nodeModules];
+const clientInclude = [clientSrc, universalSrc, sectionslSrc, nodeModules];
 
 const babelQuery = {
   "presets": [

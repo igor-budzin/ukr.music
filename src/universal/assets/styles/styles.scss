@@ -883,6 +883,13 @@ a {
 
 			.audio-row-desc {
 				margin: 3px 0;
+				width: 250px;
+
+				.singer,
+				.song {
+					white-space: pre;
+					overflow: hidden;
+				}
 
 				a {
 					font-weight: 400;

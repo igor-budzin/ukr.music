@@ -35,7 +35,7 @@ export default class FollowListContainer extends Component {
 	}
 
 	getPageData = () => {
-		this.props.getFollows(this.props.locationParams.userId);
+		this.props.getFollows(this.props.locationParams.name);
 	}
 
 	render() {

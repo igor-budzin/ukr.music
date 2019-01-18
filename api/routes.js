@@ -27,5 +27,6 @@ module.exports = (router, passport) => {
 	require('./routes/getArtistData.route')(router); // Інформація про виконавця
 
 	require('./routes/getArtistMusicList.route')(router);
+	require('./routes/getArtistList.route')(router);
 
 };

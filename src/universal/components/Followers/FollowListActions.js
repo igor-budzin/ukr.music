@@ -27,11 +27,11 @@ const requestGetFollowsErrorAction = () => ({
 	type: REQUEST_GET_FOLLOWS_ERROR
 });
 
-export function getFollows(userId) {
+export function getFollows(name) {
 	return (dispatch) => {
 		dispatch(requestGetFollowsAction());
 
-		axiosInstance.get('getUserFollows/' + userId)
+		axiosInstance.get('getUserFollows/' + name)
 		.then((response) => {
 			if(response.status === 200) {
 				dispatch(requestGetFollowsSuccessAction(response.data));
@@ -47,34 +47,22 @@ export function getFollows(userId) {
 	}
 }
 
-const requestFollowUser = () => ({
-	type: REQUEST_FOLLOW_USER
-});
-
-const requestFollowUserSuccessAction = () => ({
-	type: REQUEST_FOLLOW_USER_SUCCESS
-});
-
-const requestFollowUserErrorAction = () => ({
-	type: REQUEST_FOLLOW_USER_ERROR
-});
-
 export function followUser(userId, followId) {
 	return (dispatch) => {
-		dispatch(requestFollowUser());
+		dispatch({ type: REQUEST_FOLLOW_USER });
 
 		axiosInstance.get(`followUser/${userId}/${followId}`)
 		.then((response) => {
 			console.log('follow user response')
 			if(response.status === 200) {
-				dispatch(requestFollowUserSuccessAction());
+				dispatch({ type: REQUEST_FOLLOW_USER_SUCCESS });
 			}
 			else {
-				dispatch(requestFollowUserErrorAction());
+				dispatch({ type: REQUEST_FOLLOW_USER_ERROR });
 			}
 		})
 		.catch((error) => {
-			dispatch(requestFollowUserErrorAction());
+			dispatch({ type: REQUEST_FOLLOW_USER_ERROR });
 			console.log(error);
 		});
 	}

@@ -59,6 +59,13 @@ a {
 .sidebar {
 	width: 300px;
 	float: left;
+
+	.divider {
+		width: 100%;
+		height: 0;
+		border-bottom: 1px solid #f2f2f2;
+		margin: 10px 0;
+	}
 }
 .item-left {
 	float: left;

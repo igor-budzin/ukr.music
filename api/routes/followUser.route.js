@@ -4,16 +4,16 @@ const passport = require('passport');
 const UserModel = require('../models/user.model.js');
 
 module.exports = router => {
-	router.get('/followUser/:userID/:followID', passport.authenticate('jwt', { session: false }), (req, res) => {
-		UserModel.findByIdAndUpdate(
-			{ _id: req.params.userID },
-			{ $addToSet: { follows: mongoose.Types.ObjectId(req.params.followID) } }
+	router.get('/followUser/:currentUserName/:followUserName', passport.authenticate('jwt', { session: false }), (req, res) => {
+		UserModel.findOneAndUpdate(
+			{ name: req.params.currentUserName },
+			{ $addToSet: { follows: req.params.followUserName } }
 		)
 		.exec()
 		.then(response => {
-			UserModel.findByIdAndUpdate(
-				{ _id: req.params.followID },
-				{ $addToSet: { followers: mongoose.Types.ObjectId(req.params.userID) } }
+			UserModel.findOneAndUpdate(
+				{ name: req.params.followUserName },
+				{ $addToSet: { followers: req.params.currentUserName } }
 			)
 			.exec()
 			.then(response => res.status(200))

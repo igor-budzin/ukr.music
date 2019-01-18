@@ -15,7 +15,7 @@ export default class FollowList extends Component {
 						return (
 							<div key={item._id} className="clearfix" style={{"marginBottom": "20px"}}>
 								<img src={item.avatar} alt={item.name} style={imgStyle} />
-								<Link to={`/profile/${item._id}`}><span>{item.name}</span></Link><br />
+								<Link to={`/profile/${item.name}`}><span>{item.name}</span></Link><br />
 								<span>треки: {item.audioCount}</span><br />
 								<span>підписники: {item.followsCount}</span>
 							</div>

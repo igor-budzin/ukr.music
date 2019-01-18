@@ -5,20 +5,20 @@ import {
 } from '../consts';
 
 const initialState = {
-	music: []
+	artistList: []
 };
 
-export default function musicDataReducer(state = initialState, action) {
+export default function artistListReducer(state = initialState, action) {
 	switch(action.type) {
-		case 'GET_MUSIC_LIST_REQUEST':
+		case 'GET_ARTIST_LIST_REQUEST':
 			return state;
 
-		case 'GET_MUSIC_LIST_SUCCESS':
+		case 'GET_ARTIST_LIST_SUCCESS':
 			const newState = Object.assign({}, state);
-			newState.music = action.payload.music;
+			newState.artistList = action.payload.artistList;
 			return newState;
 
-		case 'GET_MUSIC_LIST_ERROR':
+		case 'GET_ARTIST_LIST_ERROR':
 			return state;
 
 		default:

@@ -30,12 +30,12 @@ export function requestGetMusicListError() {
 	}
 }
 
-export function getMusicListAction(userId) {
+export function getMusicListAction(name) {
 	return (dispatch) => {
 		dispatch(requestGetListMusic());
 
 		return new Promise((resolve, reject) => {
-			axiosInstance.get('getMusic/' + userId)
+			axiosInstance.get('getMusic/' + name)
 			.then((response) => {
 				if(response.status === 200) {
 					dispatch(requestGetMusicListSuccess(response.data));

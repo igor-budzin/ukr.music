@@ -14,14 +14,14 @@ module.exports = (router) => {
 				audio: '$audio',
 			})
 			.exec((err, doc) => {
-				if(err) console.log(err)
+				if(err) console.log(err);
 
 				AudioModel
 					.find({ _id: { $in: doc[0].audio }}, '_id link title artists duration picture')
 					.exec((err, audios) => {
 						if(err) console.log(err);
 
-						res.json(audios)
+						res.json({"music": audios});
 					})
 			});
 	});

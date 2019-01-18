@@ -3,13 +3,13 @@ const UserModel = require('../models/user.model.js');
 
 module.exports = (router) => {
 	router.post('/getUserData', (req, res) => {
-		if(!req.body.currentUserID || !req.body.userID) {
+		if(!req.body.currentUserName || !req.body.userName) {
 			res.status(500).send({ 'status': 'error' });
 			return false;
 		}
 
 		UserModel.aggregate()
-			.match({ _id: mongoose.Types.ObjectId(req.body.userID) })
+			.match({ name: req.body.userName })
 			.project({
 				name: '$name',
 				audioCount: { $size:"$audio" },
@@ -21,24 +21,21 @@ module.exports = (router) => {
 					res.json({ 'status': 'error' });
 				}
 
-				const id = mongoose.Types.ObjectId(req.body.userID);
+				UserModel
+					.aggregate()
+					.match({ name: req.body.currentUserName })
+					.project({ follows: '$follows' })
+					.match({ "follows": { '$in': [user[0]._id] } })
+					.project({ canFollowUser: { $size: "$follows" } })
+					.exec((err, docs) => {
+						if(err) {
+							console.log(err);
+							res.json({ 'status': 'error' });
+						};
 
-				UserModel.aggregate([
-					{ $match: { "_id": mongoose.Types.ObjectId(req.body.currentUserID) } },
-					{ $project: { follows: '$follows' } },
-					{ $match: { "follows": { '$in': [id] } } },
-					{ $project: { canFollowUser: { $size: "$follows" } } },
-				],  
-				(err, docs) => {
-					if(err) {
-						console.log(err);
-						res.json({ 'status': 'error' });
-					};
-
-					user[0].canFollowUser = docs[0] !== undefined ? false : true
-					res.json(user[0]);
-				});
+						user[0].canFollowUser = docs[0] !== undefined ? false : true
+						res.json(user[0]);
+					});
 			});
-
 	});
 }

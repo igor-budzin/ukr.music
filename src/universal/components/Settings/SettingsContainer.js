@@ -12,7 +12,7 @@ import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContain
 // Actions
 
 const mapStateToProps = (state, props) => ({
-	userId: state.AuthReducer.user.id
+	currentUserName: state.AuthReducer.user.name
 });
 
 const mapDispatchToProps = (dispatch, props) =>  bindActionCreators({}, dispatch);
@@ -44,7 +44,7 @@ export default class SettingstContainer extends Component {
 	handleCreateArtist = () => {
 		axios.post('https://localhost:8080/api/createArtist', {
 			artistName: this.state.artistName,
-			currentUserID: this.props.userId
+			currentUserName: this.props.currentUserName
 		})
 		.then(response => {
 			this.handleCloseModal();

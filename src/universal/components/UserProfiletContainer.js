@@ -23,6 +23,7 @@ const mapStateToProps = (state, props) => ({
 	playlist: state.getMusicReducer.music,
 	currentMusic: state.controlMusicReducer.currentMusic,
 	isPlaying: state.controlMusicReducer.isPlaying,
+	currentUserName: state.AuthReducer.user.name,
 	userId: state.AuthReducer.user.id,
 	visibleUserName: state.visibleUserDataReducer.name,
 	visibleUserID: state.visibleUserDataReducer._id
@@ -52,13 +53,13 @@ export default class UserProfiletContainer extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if(this.props.locationPath !== prevProps.locationPath
-			|| this.props.locationParams.userId !== prevProps.locationParams.userId) {
+			|| this.props.locationParams.name !== prevProps.locationParams.name) {
 			this.getPageData();
 		}
 	}
 
 	getPageData = () => {
-		this.props.getMusic(this.props.locationParams.userId)
+		this.props.getMusic(this.props.locationParams.name)
 		.then(response => {
 			this.setState({
 				audioListReady: true
@@ -71,7 +72,7 @@ export default class UserProfiletContainer extends Component {
 				timeOut: 10000
 			});
 		})
-	}
+	};
 
 	handleChoseAudio = (audioData) => {
 		if(this.props.currentMusic.link.length === 0) {
@@ -90,7 +91,7 @@ export default class UserProfiletContainer extends Component {
 				this.props.playAudio(audioData);
 			}
 		}
-	}
+	};
 
 	handleEditAudio = (id) => {
 		this.setState({ showModal: true });

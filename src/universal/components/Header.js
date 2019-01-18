@@ -35,7 +35,7 @@ export default class Header extends Component {
 					<div className="item-left">
 						<ul className="header-nav">
 							<li><Link to="/">Головна</Link></li>
-							<li><Link to={`/profile/${this.props.userId}`} className="active">Музика</Link></li>
+							<li><Link to={`/profile/${this.props.currentUserName}`} className="active">Музика</Link></li>
 							<li><a href="#">Відео</a></li>
 							<li><a href="#">Контакти</a></li>
 						</ul>
@@ -58,7 +58,7 @@ export default class Header extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		userId: state.AuthReducer.user.id
+		currentUserName: state.AuthReducer.user.name
 	};
 }
 

@@ -10,20 +10,30 @@ import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-place
 import Button from '../Commons/Button';
 // Actions
 import * as visibleUserDataActions from './visibleUserDataActions';
+import { followUser } from 'universal/components/Followers/followListActions';
+import { getArtistList } from 'universal/components/ArtistProfile/ArtistProfileActions';
 
 const mapStateToProps = (state, props) => ({
+	currentUserName: state.AuthReducer.user.name,
 	currentUserId: state.AuthReducer.user.id,
 	followersCount: state.visibleUserDataReducer.followersCount,
 	audioCount: state.visibleUserDataReducer.audioCount,
-	canFollowUser: state.visibleUserDataReducer.canFollowUser
+	canFollowUser: state.visibleUserDataReducer.canFollowUser,
+	artistList: state.artistListReducer.artistList
 });
 
-const mapDispatchToProps = (dispatch, props) => bindActionCreators(visibleUserDataActions, dispatch);
+const mapDispatchToProps = (dispatch, props) => bindActionCreators({
+	...visibleUserDataActions,
+	followUser,
+	getArtistList
+}, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SidebarContainer extends Component {
 	constructor(props, context) {
 		super(props, context);
+
+		this.mounted = true;
 
 		this.state = {
 			dataReady: false
@@ -31,33 +41,31 @@ export default class SidebarContainer extends Component {
 	}
 
 	componentDidMount() {
-		// console.log(this.props.locationParams.userId)
 		this.props.getVisibleUserData(
-				this.props.currentUserId,
-				this.props.locationParams.userId !== undefined ? this.props.locationParams.userId : this.props.currentUserId
+				this.props.currentUserName,
+				this.props.locationParams.name !== undefined ? this.props.locationParams.name : this.props.currentUserName
 		)
 		.then(response => {
-			this.setState({ dataReady: true });
+			if(this.mounted) this.setState({ dataReady: true });
 		});
+		this.props.getArtistList(this.props.currentUserName);
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if(this.props.locationParams.userId !== prevProps.locationParams.userId) {
-			this.props.getVisibleUserData(
-					this.props.currentUserId,
-					this.props.locationParams.userId !== undefined ? this.props.locationParams.userId : this.props.currentUserId
-			)
-			.then(response => {
-				this.setState({ dataReady: true });
-			});
-		}
+	// componentDidUpdate(prevProps, prevState) {
+	// 	if(this.props.locationParams.name !== prevProps.locationParams.name) {
+	// 		this.props.getVisibleUserData(this.props.currentUserName, this.props.locationParams.name)
+	// 		.then(response => {
+	// 			if(this.mounted) this.setState({ dataReady: true });
+	// 		});
+	// 	}
+	// }
+
+	componentWillUnmount() {
+		this.mounted = false;
 	}
 
 	handleFollow = () => {
-		this.props.followUser(
-				this.props.userId, 
-				this.props.locationParams.userId !== undefined ? this.props.locationParams.userId : this.props.currentUserId
-			);
+		this.props.followUser(this.props.currentUserName, this.props.locationParams.name);
 	};
 
 	handleUnfollow = () => {
@@ -88,7 +96,7 @@ export default class SidebarContainer extends Component {
 
 				<div className="sidebar-wrapper">
 					{
-						this.props.locationParams.userId && this.props.currentUserId !== this.props.locationParams.userId &&
+						this.props.currentUserName !== this.props.locationParams.name &&
 						(<div className="sidebar-wrapper">
 							{
 								this.props.canFollowUser ?
@@ -99,13 +107,29 @@ export default class SidebarContainer extends Component {
 					}
 
 					<div className="sidebar-link">
-						<Link to={`../profile/${this.props.currentUserId}`} className="link my">Мої треки</Link>
-						<Link to={`../upload/${this.props.currentUserId}`} className="link upload">Завантажити аудіозаписи</Link>
+						<Link to={`../profile/${this.props.currentUserName}`} className="link my">Мої треки</Link>
+						<Link to="../upload/" className="link upload">Завантажити аудіозаписи</Link>
 						<Link to="/recommend" className="link recommend">Рекомендації</Link>
-						<Link to={`../followers/${this.props.currentUserId}`} className="link follow">Слухаю їх</Link>
+						<Link to={`../followers/${this.props.currentUserName}`} className="link follow">Слухаю їх</Link>
 						<Link to="/update" className="link update">Оновлення</Link>
-						<Link to={`../stats/${this.props.currentUserId}`} className="link stats">Статистика</Link>
+						<Link to={`../stats/${this.props.currentUserName}`} className="link stats">Статистика</Link>
 						<Link to="/settings" className="link settings">Налаштування</Link>
+						{
+							this.props.artistList.length ? <div className="divider"></div> : null
+						}
+						{
+							this.props.artistList.map(item => {
+								return (
+									<Link
+										key={item._id}
+										to={`/artist/${item.name}`}
+										className="link"
+									>
+										{item.name}
+									</Link>
+								)
+							})
+						}
 					</div>
 				</div>
 			</div>

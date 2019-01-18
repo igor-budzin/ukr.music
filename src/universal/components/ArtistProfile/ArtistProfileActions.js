@@ -16,7 +16,7 @@ export function getArtistData(artist) {
 		dispatch({ type: REQUEST_GET_ARTIST_DATA });
 
 		axiosInstance.get('getArtistData', { params: { artist }})
-		.then (response => {
+		.then(response => {
 				dispatch({ type: REQUEST_GET_ARTIST_DATA_SUCCESS, payload: response.data });
 		})
 		.catch(error => {
@@ -24,4 +24,15 @@ export function getArtistData(artist) {
 			console.log(error);
 		});
 	}
+}
+
+export function getArtistList(currentUserName) {
+	console.log('getArtistList action')
+	return {
+		typePrefix: 'GET_ARTIST_LIST',
+		endpoint: 'getArtistList',
+		data: {
+			currentUserName
+		}
+	};
 }

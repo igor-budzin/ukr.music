@@ -6,7 +6,7 @@ const ArtistModel = require('../models/Artist.model.js');
 
 module.exports = router => {
 	router.post('/createArtist/', passport.authenticate('jwt', { session: false }), (req, res) => {
-		if(req.body.currentUserID === undefined && req.body.artistName === undefined) return false;
+		if(req.body.currentUserName === undefined && req.body.artistName === undefined) return false;
 
 		ArtistModel.findOne({ name: req.body.artistName }, '_id')
 		.exec((err, doc) => {
@@ -19,9 +19,9 @@ module.exports = router => {
 				});
 
 				newArtist.save().then(artist => {
-					UserModel.findByIdAndUpdate(
-						{ _id: req.body.currentUserID },
-						{ $addToSet: { artists: mongoose.Types.ObjectId(artist._id) } }
+					UserModel.findOneAndUpdate(
+						{ name: req.body.currentUserName },
+						{ $addToSet: { artists: req.body.artistName } }
 					)
 					.exec((err, doc) => {
 						if(err) res.status(500).json({"status": "error"});
@@ -32,7 +32,7 @@ module.exports = router => {
 			else {
 				res.json({
 					"status": "error",
-					"message": 'Виконавець з таким ім\'я вже існує'
+					"message": 'Р’РёРєРѕРЅР°РІРµС†СЊ Р· С‚Р°РєРёРј С–Рј\'СЏ РІР¶Рµ С–СЃРЅСѓС”'
 				});
 			}
 		});

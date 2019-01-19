@@ -8,7 +8,8 @@ module.exports = (router) => {
 			return false;
 		}
 
-		UserModel.aggregate()
+		UserModel
+			.aggregate()
 			.match({ name: req.body.userName })
 			.project({
 				name: '$name',
@@ -20,12 +21,12 @@ module.exports = (router) => {
 					console.log(err);
 					res.json({ 'status': 'error' });
 				}
-
+				
 				UserModel
 					.aggregate()
 					.match({ name: req.body.currentUserName })
 					.project({ follows: '$follows' })
-					.match({ "follows": { '$in': [user[0]._id] } })
+					.match({ "follows": { '$in': [user[0].name] } })
 					.project({ canFollowUser: { $size: "$follows" } })
 					.exec((err, docs) => {
 						if(err) {
@@ -33,7 +34,7 @@ module.exports = (router) => {
 							res.json({ 'status': 'error' });
 						};
 
-						user[0].canFollowUser = docs[0] !== undefined ? false : true
+						user[0].canFollowUser = docs.length ? false : true
 						res.json(user[0]);
 					});
 			});

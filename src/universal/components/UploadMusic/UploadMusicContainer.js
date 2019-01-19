@@ -7,11 +7,19 @@ import { formatBytes } from 'universal/utils';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 // Components
 import Button from 'universal/components/Commons/Button';
+import Select from 'universal/components/Commons/Select';
 // Actions
 import * as uploadMusicActions from './uploadMusicActions';
 
+const mapStateToProps = (state, props) => ({
+	isUploading: state.uploadMusicReducer.isUploading,
+	userId: state.AuthReducer.user.id
+});
+
+const mapDispatchToProps = (dispatch, props) => bindActionCreators(uploadMusicActions, dispatch);
+
 @connect(mapStateToProps, mapDispatchToProps)
-class UploadMusicContainer extends Component {
+export default class UploadMusicContainer extends Component {
 	constructor(props) {
 		super(props);
 
@@ -68,7 +76,7 @@ class UploadMusicContainer extends Component {
 
 				<div className="content">
 					<div>
-						<p>Обмеження</p>
+						<p>Обмеження:</p>
 						<ul>
 							<li>Аудіофайл не повинен перевищувати 20 МБ і мусить бути в форматі MP3.</li>
 							<li>Аудiофайл не повинен порушувати авторськi та суміжні права.</li>
@@ -112,26 +120,15 @@ class UploadMusicContainer extends Component {
 							>
 								Завантажити
 							</Button>
+
+
 						)
 					}
 
 				</div>
+
 				<NotificationContainer />
 			</Fragment>
 		);
 	}
 }
-
-function mapStateToProps(state, props) {
-	return {
-		isUploading: state.uploadMusicReducer.isUploading,
-		userId: state.AuthReducer.user.id
-	};
-}
-
-
-function mapDispatchToProps(dispatch, props) {
-	return bindActionCreators(uploadMusicActions, dispatch);
-}
-
-export default UploadMusicContainer;

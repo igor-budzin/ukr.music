@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import Dropzone from 'react-dropzone';
 import { formatBytes } from 'universal/utils';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
+import Select from 'react-select'
 // Components
 import Button from 'universal/components/Commons/Button';
-import Select from 'universal/components/Commons/Select';
 // Actions
 import * as uploadMusicActions from './uploadMusicActions';
 
@@ -24,7 +24,9 @@ export default class UploadMusicContainer extends Component {
 		super(props);
 
 		this.state = {
-			uploadedFiles: []
+			uploadedFiles: [],
+			uploadType: 'user',
+			uploadUserName: ''
 		};
 	}
 
@@ -75,13 +77,20 @@ export default class UploadMusicContainer extends Component {
 				<h2 className="section-title">Завантаження файлів</h2>
 
 				<div className="content">
-					<div>
+					<div style={{marginBottom: '20px'}}>
 						<p>Обмеження:</p>
 						<ul>
 							<li>Аудіофайл не повинен перевищувати 20 МБ і мусить бути в форматі MP3.</li>
 							<li>Аудiофайл не повинен порушувати авторськi та суміжні права.</li>
 							<li>Одночасно можна завантажити не більше 10 аудіофайлів.</li>
 						</ul>
+					</div>
+
+					<div className="input-wrapper" style={{ width: '300px' }}>
+						<label>Завантажити для:</label>
+						<Select
+							 options={options}
+						/>
 					</div>
 
 					<div className="dropzone-wrapper">
@@ -132,3 +141,9 @@ export default class UploadMusicContainer extends Component {
 		);
 	}
 }
+
+const options = [
+	{ label: 'item1', value: 'value1' },
+	{ label: 'item2', value: 'value2' },
+	{ label: 'item3', value: 'value3' }
+]

@@ -96,7 +96,7 @@ export default class SidebarContainer extends Component {
 
 				<div className="sidebar-wrapper">
 					{
-						this.props.currentUserName !== this.props.locationParams.name &&
+						this.props.locationParams.name && this.props.currentUserName !== this.props.locationParams.name &&
 						(<div className="sidebar-wrapper">
 							{
 								this.props.canFollowUser ?

@@ -1300,9 +1300,17 @@ a {
 	z-index: 10;
 }
 
-.css-d8oujb {
+.react-select__indicator-separator {
 	display: none;
 }
-.css-vj8t7z {
-	border: 0;
+.react-select__control--is-focused {
+	border-color: #00b0eb !important;
+	box-shadow: none !important;
+	border-radius: 3px !important;
+}
+.react-select__control--is-focused:hover {
+	border-color: #00b0eb;
+}
+.react-select__option--is-selected {
+	background-color: #00b0eb !important;
 }

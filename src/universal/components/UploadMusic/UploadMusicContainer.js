@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import Dropzone from 'react-dropzone';
 import { formatBytes } from 'universal/utils';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
-import Select from 'react-select'
+import Select from 'react-select/lib/Async';
+import axios from 'axios';
 // Components
 import Button from 'universal/components/Commons/Button';
 // Actions
@@ -13,7 +14,8 @@ import * as uploadMusicActions from './uploadMusicActions';
 
 const mapStateToProps = (state, props) => ({
 	isUploading: state.uploadMusicReducer.isUploading,
-	userId: state.AuthReducer.user.id
+	userId: state.AuthReducer.user.id,
+	currentUserName: state.AuthReducer.user.name
 });
 
 const mapDispatchToProps = (dispatch, props) => bindActionCreators(uploadMusicActions, dispatch);
@@ -70,6 +72,28 @@ export default class UploadMusicContainer extends Component {
 		});
 	};
 
+	promiseOptions = inputValue => {
+		return axios.get('https://localhost:8080/api/getArtistList', {
+				params: {
+					currentUserName: this.props.currentUserName
+				}
+			})
+			.then(response => {
+				const arr = response.data.artistList.map(item => {
+					return {
+						value: item.name,
+						label: item.name
+					}
+				})
+				arr.unshift({
+					value: this.props.currentUserName,
+					label: 'Свій плейлист'
+				});
+				return arr;
+			});
+
+	}
+
 	render() {
 		const files = this.state.uploadedFiles;
 		return (
@@ -87,9 +111,12 @@ export default class UploadMusicContainer extends Component {
 					</div>
 
 					<div className="input-wrapper" style={{ width: '300px' }}>
-						<label>Завантажити для:</label>
+						<label>Завантажити в:</label>
 						<Select
-							 options={options}
+							defaultOptions
+							className="react-select-container"
+							classNamePrefix="react-select"
+							loadOptions={this.promiseOptions}
 						/>
 					</div>
 

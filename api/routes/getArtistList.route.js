@@ -9,13 +9,14 @@ module.exports = router => {
 		UserModel
 			.findOne({ name: req.query.currentUserName }, 'artists')
 			.exec((err, user) => {
+				if(err) console.log(err);
 
 				ArtistModel
 					.aggregate()
 					.match({ name: { "$in": user.artists } })
 					.project({ name: "$name" })
 					.exec((err, docs) => {
-						if(err) console.log(err)
+						if(err) console.log(err);
 						
 						res.json({ "artistList": docs });
 					});

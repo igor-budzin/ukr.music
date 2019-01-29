@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost/musicDB', { useNewUrlParser: true }, (err)
 	console.log('Connected to musicDB')
 });
  
-module.exports = (router, passport) => {
+module.exports = (router, socket) => {
 
 	require('./routes/register.route')(router); // Реєстрація
 	require('./routes/login.route')(router); // Авторизація
@@ -15,6 +15,7 @@ module.exports = (router, passport) => {
 	require('./routes/static/getAudioFile.route')(router); // Аудіофайл
 
 	require('./routes/uploadAudio.route')(router); // Завантаження аудіофайлів
+	require('./routes/uploadAudioFiles.route')(router, socket); 
 
 	require('./routes/getMusic.route')(router); // Список треків
 	require('./routes/getAudioData.route')(router); // Інформація про трек

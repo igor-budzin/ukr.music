@@ -33,7 +33,7 @@ export function requestUploadMusic(data, callback) {
 	return dispatch => {
 		dispatch(requestUploadMusicAction());
 
-		axiosInstance.post('upload-music', data)
+		axiosInstance.post('uploadAudioFiles', data)
 		.then((response) => {
 			if(response.status === 200) {
 				dispatch(requestUploadMusicSuccessAction());

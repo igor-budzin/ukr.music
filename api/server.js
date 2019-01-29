@@ -17,6 +17,10 @@ const credentials = {key: privateKey, cert: certificate, passphrase: 'local'};
 
 const routes = require('./routes');
 
+const httpsServer = https.createServer(credentials, app);
+
+const socket = require('socket.io')(httpsServer);
+
 // required for passport
 app.use(passport.initialize());
 require('./auth/passport')(passport);
@@ -37,8 +41,9 @@ router.get('/', function(req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });
 });
 
-routes(router);
+routes(router, socket);
 
-const httpsServer = https.createServer(credentials, app);
+
+
 httpsServer.listen(port);
 console.log('Magic happens on port ' + port);

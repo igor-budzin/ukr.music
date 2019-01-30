@@ -12,7 +12,6 @@ import UploaderContainer from './UploaderContainer';
 import * as uploadMusicActions from './uploadMusicActions';
 
 const mapStateToProps = (state, props) => ({
-	isUploading: state.uploadMusicReducer.isUploading,
 	userId: state.AuthReducer.user.id,
 	currentUserName: state.AuthReducer.user.name
 });

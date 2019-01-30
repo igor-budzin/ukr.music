@@ -5,3 +5,4 @@ files
 *.log.*
 map-routes.sublime-workspace
 ngrok.exe
+*.config.js

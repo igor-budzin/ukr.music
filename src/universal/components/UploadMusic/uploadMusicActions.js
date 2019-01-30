@@ -37,18 +37,18 @@ export function requestUploadMusic(data, callback) {
 		.then((response) => {
 			if(response.status === 200) {
 				dispatch(requestUploadMusicSuccessAction());
-				callback({status: true});
+				callback({ status: true });
 			}
 			else {
 				dispatch(requestUploadMusicErrorAction());
-				callback({status: false});
+				callback({ status: false });
 			}
 			
 		})
 		.catch((error) => {
 			dispatch(requestUploadMusicErrorAction());
 			console.log(error);
-			callback({status: false});
+			callback({ status: false });
 		});
 	}
 }

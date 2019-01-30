@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Dropzone from 'react-dropzone';
 import { formatBytes } from 'universal/utils';
 import io from 'socket.io-client';
+import { NotificationContainer, NotificationManager } from "react-light-notifications";
 // Components
 import Button from 'universal/components/Commons/Button';
 // Actions
@@ -23,111 +24,133 @@ export default class UploaderContainer extends Component {
 		super(props);
 
 		this.state = {
-			files: []
+			files: [],
+			uploadedCount: 0
 		};
 	}
 
-	onDrop = (acceptedFiles, rejectedFiles) => {
-		let arr = this.state.files;
+	componentDidMount() {
+		this.socket = io('https://localhost:8080');
+		this.socket.on('uploadProgress', this.updateUploadProgress);
+	}
 
-		acceptedFiles.map((item) => {
-			arr.push({
-				fileName: item.name,
-				size: item.size,
-				file: item,
-				progress: 0,
-				bytesReceived: 0
-			});
+	componentWillUnmount() {
+		this.socket.disconnect();
+	}
+
+	handleDrop = (acceptedFiles, rejectedFiles) => {
+		const arr = this.state.files;
+		let count = 0;
+
+		acceptedFiles.map(item => {
+			count++;
+			if(count <= 10) {
+				arr.push({
+					fileName: item.name,
+					size: item.size,
+					file: item,
+					progress: 0,
+					bytesReceived: 0,
+					uploaded: false
+				});
+			}
 		});
 
 		this.setState({ files: arr });
 	};
 
-	filesUpload = () => {
-		const socket = io('https://localhost:8080');
+	hnadleUpload = () => {
+		let uploadedCount = this.state.uploadedCount;
 
 		for(let i = 0; i < this.state.files.length; i++) {
 			const data = new FormData();
 
-			data.append('userId', this.props.userId);
+			data.append('currentUserName', this.props.currentUserName);
 			data.append("files", this.state.files[i].file);
 
 			this.props.requestUploadMusic(data, response => {
+				uploadedCount++;
 
-				console.log(response)
-			});
-
-			socket.on('uploadProgress', data => {
-				let arr = this.state.files;
-
-				let arrIndex = arr.findIndex(item => item.fileName === data.fileName);
-
-				if(data.progress == 100) {
-					arr.splice(arrIndex, 1);
+				if(uploadedCount === this.state.files.length) {
+					this.setState({
+						uploadedCount: 0,
+						files: []
+					});
+					NotificationManager.success({
+						message: 'аудіофайли успішно завантажені',
+						timeOut: 5000
+					});
 				}
 				else {
-					arr[arrIndex].bytesReceived = data.bytesReceived;
-					arr[arrIndex].progress = data.progress;
+					this.setState({ uploadedCount });
 				}
-
-				this.setState({
-					files: arr
-				})
 			});
 		}
+	};
 
+	updateUploadProgress = data => {
+		let arr = this.state.files;
 
-		
+		if(arr.length) {
+			let arrIndex = arr.findIndex(item => item.fileName === data.fileName);
+
+			arr[arrIndex].bytesReceived = data.bytesReceived;
+			arr[arrIndex].progress = data.progress;
+			if(data.progress == 100) arr[arrIndex].uploaded = true;
+
+			this.setState({ files: arr });
+		}
 	};
 
 	render() {
 		const files = this.state.files;
+
 		return (
 			<div>
-
-					<div className="file-list">
-						{
-							files.map((item, index) => {
-								return (
-									<div key={index} className="item">
-										<span className="file-name">{item.fileName}</span>
-										<span className="size">{formatBytes(item.bytesReceived)} / {formatBytes(item.size)}</span>
-
-										<div className="progress">
-											<div className="persent" style={{ width: `${item.progress}%` }}></div>
-										</div>
-									</div>
-								);
-							})
-						}
-					</div>
-
-					<div className="dropzone-wrapper">
-						<form>
-							<Dropzone
-								className="dropzone"
-								onDrop={this.onDrop}
-								maxSize={20000000}
-								accept="audio/mp3"
-								disabled={this.props.isUploading}
-							>
-							</Dropzone>
-						</form>
-					</div>
-
+				<div className="file-list">
 					{
-						files.length > 0 && (
-							<Button
-								isLoading={this.props.isUploading}
-								className="upload"
-								onClick={this.filesUpload}
-							>
-								Завантажити
-							</Button>
+						files.map((item, index) => {
+							return (
+								<div key={index} className="item">
+									<span className="file-name">{item.fileName}</span>
+									<span className="size">{formatBytes(item.bytesReceived)} / {formatBytes(item.size)}</span>
 
-
-						)
+									<div className="progress">
+										<div className="persent" style={{ width: `${item.progress}%` }}></div>
+									</div>
+								</div>
+							);
+						})
 					}
+				</div>
+
+				<div className="dropzone-wrapper">
+					<form>
+						{
+							(files.length <= 10 && !this.props.isUploading) && (
+								<Dropzone
+									className="dropzone"
+									onDrop={this.handleDrop}
+									maxSize={20000000}
+									accept="audio/mp3"
+									disabled={this.props.isUploading}
+								/>
+							)
+						}
+					</form>
+				</div>
+
+				{
+					files.length > 0 && (
+						<Button
+							isLoading={this.props.isUploading}
+							className="upload"
+							onClick={this.hnadleUpload}
+						>
+							Завантажити
+						</Button>
+					)
+				}
 			</div>
 		);
 	}

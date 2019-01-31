@@ -25,16 +25,18 @@ module.exports = (router, socket) => {
 		const editor = new Editor();
 
 		form.on('error', function(err) {
-			console.log('Error parsing form: ' + err.stack);
+			console.log('Проблема при парсингу вхідних даних: ', err.stack);
 		});
 
 		let progress = 0;
 		let persent = 0;
 		let fileName = '';
+		let currentUserName = '';
+		let currentUserID = '';
 
 		form.on('progress', function(bytesReceived, bytesExpected) {
 			persent = Math.round((bytesReceived / bytesExpected).toFixed(2) * 100);
-
+			
 			if(persent !== progress && persent % 2 === 0) {
 				progress = persent;
 				setTimeout(() => {
@@ -43,40 +45,78 @@ module.exports = (router, socket) => {
 			}
 		});
 
-		form.on('part', function(part) {
-			if (!part.filename) {
-				part.resume();
-			}
-			if (part.filename) {
-				fileName = part.filename;
-				part.resume();
+		form.on('field', function(name, value) {
+			switch(name) {
+				case 'currentUserName':
+					currentUserName = value;
+				break;
+				case 'currentUserID':
+					currentUserID = value;
+				break;
+				case 'fileName':
+					fileName = value;
+				break;
 			}
 		});
 
 		form.on('file', (name, file) => {
+	
+			fs.readFile(file.path, (err, buffer) => {
+				if(err) console.log('Проблема при читанні файла з тимчасової папки: ', err);
 
-			fs.readFile(file.path, (err, data) => {
-				if(err) console.log(err);
+				// const buffer = Buffer.from(data);
+				const newFileName = Date.now() + '_' + file.originalFilename.replace(/ /g, '_');
 
-				const params = {
-					Bucket: awsConfig.backetName,
-					Key: file.originalFilename,
-					Body: data
-				};
+				mp3Duration(buffer, function (err, durationTime) {
+					if(err) console.log('Проблема при читанні тривалості файла: ', err);
 
-				s3.putObject(params, function (error, pres) {
-					if (error) {
-						console.log("Error uploading data: ", error);
-					} else {
-						console.log("Successfully uploaded data to myBucket/myKey");
-					}
+					editor.load(buffer).then(() => {
+						const audioID = new mongoose.Types.ObjectId();
+
+						const audio = new AudioModel({
+							_id: audioID,
+							userId: currentUserID,
+							link: newFileName,
+							title: editor.get('title') ? editor.get('title') : file.originalFilename.replace('.mp3', ''),
+							artists: editor.get('artists') ? editor.get('artists') : 'Невідомий виконавець',
+							album: editor.get('album') ? editor.get('album') : null,
+							year: editor.get('year') ? editor.get('year') : null,
+							genre: editor.get('genre') ? editor.get('genre') : null,
+							duration: durationTime,
+							picture: editor.get('picture') ? editor.get('picture').data.toString('base64') : null
+						});
+
+						audio.save().then(result => {
+							UserModel.findOneAndUpdate(
+								{ name: currentUserName }, 
+								{ $push: { audio: audioID } },
+								(error, success) => {
+									if (error) throw error;
+
+									const params = {
+										Bucket: awsConfig.backetName,
+										Key: newFileName,
+										Body: buffer
+									};
+
+									s3.putObject(params, function (error, pres) {
+										if (error) {
+											console.log("Проблема під час завантаження файла на AWS: ", error);
+										} else {
+											console.log("Successfully uploaded data to myBucket/myKey");
+										}
+									});
+								}
+							);
+						})
+						.catch(err => {
+							console.log(err)
+						});
+					});
+
 				});
 			});
-
-
-			// console.log(name)
-			// console.log(file)
-			// console.log(filesPath)
+		
 		});
 
 		form.on('close', function() {

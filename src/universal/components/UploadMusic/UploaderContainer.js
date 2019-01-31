@@ -13,7 +13,8 @@ import * as uploadMusicActions from './uploadMusicActions';
 
 const mapStateToProps = (state, props) => ({
 	isUploading: state.uploadMusicReducer.isUploading,
-	currentUserName: state.AuthReducer.user.name
+	currentUserName: state.AuthReducer.user.name,
+	currentUserID: state.AuthReducer.user.id
 });
 
 const mapDispatchToProps = (dispatch, props) => bindActionCreators(uploadMusicActions, dispatch);
@@ -65,6 +66,8 @@ export default class UploaderContainer extends Component {
 		for(let i = 0; i < this.state.files.length; i++) {
 			const data = new FormData();
 
+			data.append('fileName', this.state.files[i].fileName);
+			data.append('currentUserID', this.props.currentUserID);
 			data.append('currentUserName', this.props.currentUserName);
 			data.append("files", this.state.files[i].file);
 
@@ -93,7 +96,7 @@ export default class UploaderContainer extends Component {
 
 		if(arr.length) {
 			let arrIndex = arr.findIndex(item => item.fileName === data.fileName);
-
+			console.log(data)
 			arr[arrIndex].bytesReceived = data.bytesReceived;
 			arr[arrIndex].progress = data.progress;
 			if(data.progress == 100) arr[arrIndex].uploaded = true;

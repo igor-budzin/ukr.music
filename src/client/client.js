@@ -15,6 +15,7 @@ const history = createHistory();
 const store = createStore(history);
 
 window.audioInstance = new Audio();
+window.audioInstance.preload = 'auto';
 
 if(localStorage.jwtToken) {
 	setAuthToken(localStorage.jwtToken);

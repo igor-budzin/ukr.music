@@ -201,7 +201,41 @@ export default class UserProfiletContainer extends Component {
 								</div>
 							</div>
 						</TabPanel>
-						<TabPanel>Плейлисти</TabPanel>
+
+						<TabPanel>
+							<div className="play-lists">
+
+								<div className="playlist" id="new-playlist">
+									<div className="cover">
+									</div>
+									<div className="playlist-name">Новий список відтворення</div>
+								</div>
+
+								<div className="playlist">
+									<div className="cover">
+										<div className="bg"></div>
+										<img src="https://localhost:8080/api/albumCover/thehardkiss-album.jpg" alt=""/>
+									</div>
+									<div className="playlist-name">Релакс</div>
+								</div>
+
+								<div className="playlist">
+									<div className="cover">
+										<div className="bg"></div>
+										<img src="https://localhost:8080/api/albumCover/epolets-album.jpg" alt=""/>
+									</div>
+									<div className="playlist-name">Stones and Honey</div>
+								</div>
+
+								<div className="playlist">
+									<div className="cover">
+										<div className="bg"></div>
+										<img src="https://localhost:8080/api/albumCover/color-album.jpg" alt=""/>
+									</div>
+									<div className="playlist-name">Stones and Honey</div>
+								</div>
+							</div>
+						</TabPanel>
 					</Tabs>
 
 				</div>

@@ -997,6 +997,7 @@ a {
 
 	&.albums-list {
 		@extend .clearfix;
+
 		.album {
 			width: 148px;
 			float: left;
@@ -1006,6 +1007,67 @@ a {
 
 			&:nth-child(4) {
 				margin-right: 0;
+			}
+		}
+	}
+}
+
+.play-lists {
+	.playlist {
+		width: 148px;
+		float: left;
+		padding-right: 0px;
+		margin-bottom: 10px;
+		margin-right: 10px;
+
+		&:nth-child(4) {
+			margin-right: 0;
+		}
+
+		.cover {
+			position: relative;
+			width: 148px;
+			height: 148px;
+			margin-bottom: 5px;
+
+			&:hover {
+				.bg {
+					display: block;
+				}
+			}
+			
+			.bg {
+				display: none;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+
+			img {
+				width: 100%;
+			}
+		}
+
+		.playlist-name {
+			font-family: 'Roboto Condensed';
+		}
+
+		&#new-playlist {
+			.cover {
+				background-image: url('../img/add-song.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 30px;
+				border: 1px solid lighten(#00b0eb, 35%);
+				cursor: pointer;
+
+				&:hover {
+					border-color: lighten(#00b0eb, 25%);
+					background-color: lighten(#00b0eb, 50%);
+				}
 			}
 		}
 	}

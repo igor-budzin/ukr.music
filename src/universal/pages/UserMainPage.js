@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // Components
 import Sidebar from 'universal/components/Sidebar/SidebarContainer';
-import UserProfiletContainer from 'universal/components/UserProfiletContainer';
+import UserMainContainer from 'universal/components/UserMain/UserMainContainer';
 import Header from 'universal/components/Header';
 
 const mapStateToProps = (state, props) => ({
@@ -20,7 +20,7 @@ export default class UserProfilePage extends Component {
 			<div className="wrapper">
 				<Header />
 				<main id="page" className="page clearfix">
-					<UserProfiletContainer 
+					<UserMainContainer 
 						locationParams={this.props.match.params}
 					/>
 					<Sidebar

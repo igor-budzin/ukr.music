@@ -330,6 +330,35 @@ a {
 			z-index: 1;
 		}
 	}
+
+	&.mini {
+		height: 45px;
+		margin-bottom: 2px;
+
+		.audio-row-cover {
+			width: 36px;
+			height: 36px;
+		}
+
+		.audio-row-desc {
+			margin: 3px 0;
+			width: 250px;
+
+			.singer,
+			.song {
+				white-space: pre;
+				overflow: hidden;
+			}
+
+			a {
+				font-weight: 400;
+			}
+		}
+	}
+
+	&.active {
+		background-color: darken(#e9f2ff, 2%);
+	}
 }
 .playlist {
 	@extend .clearfix;
@@ -366,6 +395,9 @@ a {
 	float: left;
 	margin: 7px 0;
 	// width: 430px;
+	color: #333;
+	font-family: 'Roboto', Arial, sans-serif;
+	font-size: 14px;
 }
 .audio-row-desc a {
 	color: #333;
@@ -1370,6 +1402,14 @@ a {
 			float: left;
 		}
 	}
+
+	&.create-playlist {
+		width: 500px;
+
+		.desc {
+			width: 100%;
+		}
+	}
 }
 
 .overlay {
@@ -1395,4 +1435,14 @@ a {
 }
 .react-select__option--is-selected {
 	background-color: #00b0eb !important;
+}
+
+
+
+
+
+
+.audio-list {
+	margin-bottom: 20px;
+	max-height: 85%;
 }

@@ -13,6 +13,7 @@ import PlayList from 'universal/components/PlayList/PlayList';
 import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
+import PlayLists from './PlayLists';
 import Button from 'universal/components/Commons/Button';
 import Select from 'universal/components/Commons/Select';
 // Actions
@@ -42,7 +43,7 @@ export default class UserProfiletContainer extends Component {
 			showModal: false,
 			editField_Artist: '',
 			editField_Title: '',
-			editFieldA_Genre: ''
+			editField_Genre: ''
 		}
 	}
 
@@ -103,7 +104,7 @@ export default class UserProfiletContainer extends Component {
 				audioDataReady: true,
 				editField_Artist: response.data.artists,
 				editField_Title: response.data.title,
-				editFieldA_Genre: response.data.genre
+				editField_Genre: response.data.genre
 			});
 		})
 		
@@ -203,38 +204,7 @@ export default class UserProfiletContainer extends Component {
 						</TabPanel>
 
 						<TabPanel>
-							<div className="play-lists">
-
-								<div className="playlist" id="new-playlist">
-									<div className="cover">
-									</div>
-									<div className="playlist-name">Новий список відтворення</div>
-								</div>
-
-								<div className="playlist">
-									<div className="cover">
-										<div className="bg"></div>
-										<img src="https://localhost:8080/api/albumCover/thehardkiss-album.jpg" alt=""/>
-									</div>
-									<div className="playlist-name">Релакс</div>
-								</div>
-
-								<div className="playlist">
-									<div className="cover">
-										<div className="bg"></div>
-										<img src="https://localhost:8080/api/albumCover/epolets-album.jpg" alt=""/>
-									</div>
-									<div className="playlist-name">Stones and Honey</div>
-								</div>
-
-								<div className="playlist">
-									<div className="cover">
-										<div className="bg"></div>
-										<img src="https://localhost:8080/api/albumCover/color-album.jpg" alt=""/>
-									</div>
-									<div className="playlist-name">Stones and Honey</div>
-								</div>
-							</div>
+							<PlayLists />
 						</TabPanel>
 					</Tabs>
 

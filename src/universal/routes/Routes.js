@@ -44,7 +44,7 @@ export default class Routes extends Component {
 					className="switch-wrapper"
 				>
 					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/profile/:name' component={RouteMap.UserProfilePage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/profile/:name' component={RouteMap.UserMainPage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/upload/' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/artist/:name' component={RouteMap.ArtistProfilePage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/followers/:name' component={RouteMap.FollowListPage} isAuthenticated={this.props.isAuthenticated} />

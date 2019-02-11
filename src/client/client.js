@@ -14,7 +14,7 @@ import createHistory from 'history/createBrowserHistory';
 const history = createHistory();
 const store = createStore(history);
 
-window.audioInstance = new Audio();
+window.audioInstance = document.createElement('audio');
 window.audioInstance.preload = 'auto';
 
 if(localStorage.jwtToken) {

@@ -13,7 +13,11 @@ const audioSchema = mongoose.Schema({
 	},
 	genre: String,
 	duration: Number,
-	picture: String
+	picture: String,
+	date: {
+		type: Date,
+		default: Date.now
+	}
 });
 
 module.exports = mongoose.model('Audio', audioSchema, 'audio');

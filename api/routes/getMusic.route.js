@@ -10,9 +10,16 @@ module.exports = (router) => {
 				res.json({ 'status': 'error' });
 			}
 
-			AudioModel.find({ _id: { $in: user.audio }}, '_id link title artists duration picture').exec().then((result) => {
-				res.json(result);
-			});
+			AudioModel
+				.find({ _id: { $in: user.audio }}, '_id link title artists duration picture')
+				.sort({ date: -1 })
+				.exec((err, result) => {
+					if(err) {
+						res.json({ 'status': 'error' });
+					}
+
+					res.json(result);
+				});
 		});
 	});
 }

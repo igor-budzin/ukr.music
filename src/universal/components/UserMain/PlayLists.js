@@ -1,9 +1,10 @@
 // Libraries
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactModal from 'react-modal';
 import axios from 'axios';
+import classNames from 'classnames';
 // Components
 import Button from 'universal/components/Commons/Button';
 import Select from 'universal/components/Commons/Select';
@@ -55,6 +56,7 @@ export default class UserProfiletContainer extends Component {
 	}
 
 	onChooseAudioForPlaylist = (id) => {
+		console.log(event.target)
 		event.target.classList.toggle('active');
 
 		const arr = this.state.choosenModalAudioList;
@@ -62,10 +64,13 @@ export default class UserProfiletContainer extends Component {
 
 		index !== -1 ? arr.splice(index, 1) : arr.push(id);
 
-		this.setState({ choosenModalAudioList: arr });
+		this.setState({ choosenModalAudioList: arr }, () => {console.log(arr)});
 	}
 
 	handleCreatePlaylist = () => {
+		if(this.stata.title.length !== 0) {
+			
+		}
 		console.log(this.state.choosenModalAudioList);
 	}
 
@@ -115,7 +120,7 @@ export default class UserProfiletContainer extends Component {
 						<div className="close" onClick={this.onCloseModal}></div>
 					</div>
 
-					<div>
+
 						<div className="desc">
 							<div className="input-wrapper">
 								<label htmlFor="title">Назва</label>
@@ -131,32 +136,13 @@ export default class UserProfiletContainer extends Component {
 							<div className="audio-list">
 								{
 									this.state.modalAudioList.map((audio, index) => {
-										let style = {};
-										if(audio.picture) {
-											style = { "backgroundImage": "url(data:image/png;base64," + audio.picture + ")" };
-										}
-
 										return (
-											<div className="audio-row mini" key={audio._id + index} onClick={this.onChooseAudioForPlaylist.bind(null, audio._id)}>
-												<div className="audio-row-cover" style={style}>
-													{
-														audio.isPlay && (
-															<div className="bars">
-																<div className="bar"></div>
-																<div className="bar"></div>
-																<div className="bar"></div>
-																<div className="bar"></div>
-																<div className="bar"></div>
-															</div>
-														)
-													}
-													<div className="bg"></div>
-												</div>
-												<div className="audio-row-desc">
-													<div className="singer">{audio.artists}</div>
-													<div className="song">{audio.title}</div>
-												</div>
-											</div>
+											<AudioRow
+												key={audio._id + index}
+												audio={audio}
+												onChooseAudioForPlaylist={this.onChooseAudioForPlaylist}
+												isActive={this.state.choosenModalAudioList.indexOf(audio._id) !== -1 ? true : false}
+											/>
 										);
 									})
 								}
@@ -166,9 +152,31 @@ export default class UserProfiletContainer extends Component {
 								<Button className="red" onClick={this.handleCreatePlaylist}>Зберегти</Button>
 							</div>
 						</div>
-					</div>
 				</ReactModal>
 			</div>
 		);
 	}
+}
+
+const AudioRow = props => {
+	let style = {};
+	if(props.audio.picture) {
+		style = { "backgroundImage": "url(data:image/png;base64," + props.audio.picture + ")" };
+	}
+
+	return (
+		<div
+			className={classNames('audio-row', 'mini', props.isActive ? 'active' : null)}
+			key={props.audio._id}
+			onClick={props.onChooseAudioForPlaylist.bind(null, props.audio._id)}
+		>
+			<div className="audio-row-cover" style={style}>
+				<div className="bg"></div>
+			</div>
+			<div className="audio-row-desc">
+				<div className="singer">{props.audio.artists}</div>
+				<div className="song">{props.audio.title}</div>
+			</div>
+		</div>
+	);
 }

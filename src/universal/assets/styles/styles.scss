@@ -357,7 +357,11 @@ a {
 	}
 
 	&.active {
-		background-color: darken(#e9f2ff, 2%);
+		background-color: darken(#e9f2ff, 6%);
+
+		&:hover {
+			background-color: darken(#e9f2ff, 8%);
+		}
 	}
 }
 .playlist {
@@ -767,7 +771,6 @@ a {
 			position: absolute;
 			left: 0;
 			top: 5px;
-			width: 275px;
 			height: 16px;
 		}
 
@@ -1441,8 +1444,15 @@ a {
 
 
 
+.modal.create-playlist {
+	max-height: 70%;
 
+	.desc {
+		overflow: hidden;
+	}
+}
 .audio-list {
-	margin-bottom: 20px;
-	max-height: 85%;
+		margin-bottom: 20px;
+		max-height: 400px;
+		overflow-y: scroll;
 }

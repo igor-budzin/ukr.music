@@ -4,6 +4,7 @@ import { AppContainer } from 'react-hot-loader';
 import jwt_decode from 'jwt-decode';
 import { setCurrentUser, logoutUser } from '../universal/components/Auth/AuthActions.js';
 import setAuthToken from '../universal/components/Auth/setAuthToken';
+import { stringToBoolean } from 'universal/utils';
 // Components
 import App from './containers/AppContainer.js';
 // Redux
@@ -16,6 +17,9 @@ const store = createStore(history);
 
 window.audioInstance = document.createElement('audio');
 window.audioInstance.preload = 'auto';
+window.audioInstance.volume = localStorage.getItem('volume') !== null ? parseFloat(localStorage.getItem('volume')) : 0.5;;
+window.audioInstance.muted = localStorage.getItem('isMuted') !== null ? stringToBoolean(localStorage.getItem('isMuted')) : false;
+
 
 if(localStorage.jwtToken) {
 	setAuthToken(localStorage.jwtToken);
@@ -24,13 +28,11 @@ if(localStorage.jwtToken) {
 
 	const currentTime = Date.now() / 1000;
 	if(decoded.exp < currentTime) {
-		console.log('logout')
-
 		store.dispatch(logoutUser());
 	}
 }
 
-const renderApp = (Component) => {
+const renderApp = Component => {
 	render(
 		<AppContainer>
 			<Provider store={store}>

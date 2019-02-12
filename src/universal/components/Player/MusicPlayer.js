@@ -12,20 +12,20 @@ export default class MusicPlayer extends Component {
 	render() {
 		return (
 			<div className="player">
-				<div className="cover" style={{"backgroundImage": "url(data:image/png;base64," + this.props.coverLink + ")"}}></div>
+				<div className="cover" style={{"backgroundImage": "url(data:image/png;base64," + this.props.picture + ")"}}></div>
 				<div className="controls controls--play">
-					<div className="btn prev"></div>
+					<div className="btn prev" onClick={this.props.handlePrevAudio}></div>
 					{
 						this.props.isPlaying ?
 						<div className="btn pause" onClick={this.props.handlePauseAudio}></div> :
 						<div className="btn play" onClick={this.props.handlePlayAudio}></div>
 					}
-					<div className="btn next"></div>
+					<div className="btn next" onClick={this.props.handleNextAudio}></div>
 				</div>
 
 				<div className="progress-bar">
 					<div className="title">
-						{`${this.props.atrist} - ${this.props.title}`}
+						{`${this.props.atrists} - ${this.props.title}`}
 					</div>
 					<div className="time">
 						<span className="current">{formatSeconds(this.props.currentTime)}</span>
@@ -43,8 +43,14 @@ export default class MusicPlayer extends Component {
 				</div>
 
 				<div className="controls controls--more">
-					<div className="btn repeat"></div>
+					<div
+						className={classNames('btn', 'repeat')}
+						onClick={this.props.handleRepeat}
+					>
+					</div>
+
 					<div className="btn shuffle"></div>
+
 					<div className={classNames('btn', 'volume', {'muted': this.props.isMuted})} onClick={this.props.handleMuteVolume}>
 						<div className="volume-seeker" onClick={(e) => {e.stopPropagation()}}>
 							<Slider
@@ -58,6 +64,7 @@ export default class MusicPlayer extends Component {
 							/>
 						</div>
 					</div>
+					<div className="btn playlist"></div>
 				</div>
 			</div>
 		);

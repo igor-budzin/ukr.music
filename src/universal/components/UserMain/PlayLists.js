@@ -170,7 +170,7 @@ const AudioRow = props => {
 			key={props.audio._id}
 			onClick={props.onChooseAudioForPlaylist.bind(null, props.audio._id)}
 		>
-			<div className="audio-row-cover" style={style}>
+			<div className={classNames('audio-row-cover', props.audio.picture ? null : 'empty')} style={style}>
 				<div className="bg"></div>
 			</div>
 			<div className="audio-row-desc">

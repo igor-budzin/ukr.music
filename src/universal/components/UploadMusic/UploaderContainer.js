@@ -96,7 +96,6 @@ export default class UploaderContainer extends Component {
 
 		if(arr.length) {
 			let arrIndex = arr.findIndex(item => item.fileName === data.fileName);
-			console.log(data)
 			arr[arrIndex].bytesReceived = data.bytesReceived;
 			arr[arrIndex].progress = data.progress;
 			if(data.progress == 100) arr[arrIndex].uploaded = true;

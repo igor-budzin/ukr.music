@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import isEqual from 'lodash.isequal';
+import classNames from 'classnames';
 import { formatSeconds } from 'universal/utils';
 
 export default class MusicItem extends Component {
 	onClick = () => {
 		this.props.handleChoseAudio({
-			id: this.props._id,
+			_id: this.props._id,
 			link: this.props.link,
-			artist: this.props.artist,
 			title: this.props.title,
+			artists: this.props.artist,
 			duration: this.props.duration,
-			coverLink: this.props.bgUrl
+			picture: this.props.picture
 		});
 	}
 
@@ -25,13 +26,13 @@ export default class MusicItem extends Component {
 
 	render() {
 		let style = {};
-		if(this.props.bgUrl) {
-			style = { "backgroundImage": "url(data:image/png;base64," + this.props.bgUrl + ")" };
+		if(this.props.picture) {
+			style = { "backgroundImage": "url(data:image/png;base64," + this.props.picture + ")" };
 		}
 
 		return (
-			<div className={'audio-row' + (this.props.isPlay ? ' isPlay' : '')} onClick={this.onClick}>
-				<div className="audio-row-cover" style={style}>
+			<div className={classNames('audio-row', this.props.isPlay ? ' isPlay' : null)} onClick={this.onClick}>
+				<div className={classNames('audio-row-cover', this.props.picture ? null : 'empty')} style={style}>
 					{
 						this.props.isPlay && (
 							<div className="bars">

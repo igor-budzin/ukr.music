@@ -20,9 +20,10 @@ import Select from 'universal/components/Commons/Select';
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
 	playlist: state.getMusicReducer.music,
 	currentMusic: state.controlMusicReducer.currentMusic,
+	currentPlaylist: state.controlMusicReducer,
 	isPlaying: state.controlMusicReducer.isPlaying,
 	currentUserName: state.AuthReducer.user.name,
 	userId: state.AuthReducer.user.id,
@@ -30,7 +31,7 @@ const mapStateToProps = (state, props) => ({
 	visibleUserID: state.visibleUserDataReducer._id
 });
 
-const mapDispatchToProps = (dispatch, props) =>  bindActionCreators({ ...AudioActions, getMusic: getMusicListAction }, dispatch);
+const mapDispatchToProps = dispatch =>  bindActionCreators({ ...AudioActions, getMusic: getMusicListAction }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class UserProfiletContainer extends Component {
@@ -77,7 +78,7 @@ export default class UserProfiletContainer extends Component {
 
 	handleChoseAudio = (audioData) => {
 		if(this.props.currentMusic.link.length === 0) {
-			this.props.playAudio(audioData);
+			this.props.playAudio(audioData, this.props.playlist);
 		}
 		else {
 			if(this.props.currentMusic.link === audioData.link) {
@@ -89,7 +90,7 @@ export default class UserProfiletContainer extends Component {
 				}
 			}
 			else {
-				this.props.playAudio(audioData);
+				this.props.playAudio(audioData, this.props.playlist);
 			}
 		}
 	};
@@ -157,7 +158,7 @@ export default class UserProfiletContainer extends Component {
 								{
 									this.props.playlist && this.props.playlist.length > 0 ?
 									<PlayList
-										currentId={this.props.currentMusic.id}
+										currentId={this.props.currentMusic._id}
 										playlist={this.props.playlist}
 										handleChoseAudio={this.handleChoseAudio}
 										handleEditAudio={this.handleEditAudio}

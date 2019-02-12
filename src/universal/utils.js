@@ -29,7 +29,7 @@ export function formatSeconds(seconds) {
 		if(hours < 10) string += hours + ':';
 		else string += '0' + hours + ':';
 	}
-	
+
 	if (mins < 10) string += "0" + mins + ':';
 	else string += mins + ':';
 
@@ -37,4 +37,17 @@ export function formatSeconds(seconds) {
 	else string += secs;
 
 	return string;
+}
+
+/**
+ * [stringToBoolean description]
+ * @param  {[String]} string [description]
+ * @return {[Boolean]}        [description]
+ */
+export function stringToBoolean(string) {
+	switch(string.toLowerCase().trim()){
+		case "true": case "yes": case "1": return true;
+		case "false": case "no": case "0": return false;
+		default: return string;
+	}
 }

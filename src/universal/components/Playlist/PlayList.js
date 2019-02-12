@@ -23,7 +23,7 @@ export default class PlayList extends Component {
 								artist={music.artists}
 								title={music.title}
 								time={music.duration}
-								bgUrl={music.picture}
+								picture={music.picture}
 								duration={music.duration}
 							/>
 						);

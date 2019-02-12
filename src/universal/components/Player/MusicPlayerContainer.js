@@ -2,10 +2,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { stringToBoolean } from '../../utils';
 // Components
 import MusicPlayer from './MusicPlayer';
 // Actions
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
+
+const mapStateToProps = state => ({
+	currentMusic: state.controlMusicReducer.currentMusic,
+	currentPlaylist: state.controlMusicReducer.currentPlaylist,
+	isPlaying: state.controlMusicReducer.isPlaying
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(AudioActions, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 class MusicPlayerContainer extends Component {
@@ -14,13 +23,13 @@ class MusicPlayerContainer extends Component {
 
 		this.state = {
 			currentTime: 0,
-			volume: 0.5,
-			isMuted: false
+			volume: localStorage.getItem('volume') !== null ? parseFloat(localStorage.getItem('volume')) : 0.5,
+			isMuted: localStorage.getItem('isMuted') !== null ? stringToBoolean(localStorage.getItem('isMuted')) : false,
+			repeat: false
 		};
 	}
 
 	componentDidMount() {
-		window.audioInstance.volume = this.state.volume;
 		window.audioInstance.addEventListener('timeupdate', this.handleUpdateCurrentTime);
 		window.audioInstance.addEventListener('ended', this.handleEndedAudio);
 	}
@@ -40,7 +49,7 @@ class MusicPlayerContainer extends Component {
 		this.setState({
 			currentTime: 0
 		});
-		this.props.pauseAudio();
+		this.handleNextAudio();
 	}
 
 	handlePlayAudio = () => {
@@ -67,10 +76,12 @@ class MusicPlayerContainer extends Component {
 	};
 
 	handleChangeVolume = (volume) => {
+		const volumeValue = Math.round((volume) * 100) / 100;
 		this.setState({
-			volume
+			volume: volumeValue
 		});
-		window.audioInstance.volume = volume;
+		window.audioInstance.volume = volumeValue;
+		localStorage.setItem('volume', volumeValue);
 	};
 
 	handleMuteVolume = () => {
@@ -78,18 +89,50 @@ class MusicPlayerContainer extends Component {
 			isMuted: !this.state.isMuted
 		}, () => {
 			window.audioInstance.muted = this.state.isMuted;
+			localStorage.setItem('isMuted', this.state.isMuted);
 		});
+	};
+
+	handleNextAudio = () => {
+		const { currentPlaylist, currentMusic } = this.props;
+		
+		const arrIndex = currentPlaylist.findIndex(elem => {
+			return elem._id === currentMusic._id;
+		});
+
+		if(arrIndex !== -1 && arrIndex !== currentPlaylist.lenght - 1) {
+			this.props.playAudio(currentPlaylist[arrIndex + 1]);
+		}
+		else this.props.pauseAudio();
+	};
+
+	handlePrevAudio = () => {
+		const { currentPlaylist, currentMusic } = this.props;
+
+		const arrIndex = currentPlaylist.findIndex(elem => {
+			return elem._id === currentMusic._id;
+		});
+
+		if(arrIndex !== -1 && arrIndex !== 0) {
+			this.props.playAudio(currentPlaylist[arrIndex - 1]);
+		}
+		else this.props.pauseAudio();
+	};
+
+	handleRepeat = () => {
+
 	};
 
 	render() {
 		return (
 			<MusicPlayer
-				atrist={this.props.currentMusic.artist}
+				atrists={this.props.currentMusic.artists}
 				title={this.props.currentMusic.title}
-				coverLink={this.props.currentMusic.coverLink}
+				picture={this.props.currentMusic.picture}
 				durationTime={this.props.currentMusic.duration}
 				currentTime={this.state.currentTime}
 				volume={this.state.volume}
+				repeat={this.state.repeat}
 				isPlaying={this.props.isPlaying}
 				isMuted={this.state.isMuted}
 				handlePlayAudio={this.handlePlayAudio}
@@ -97,20 +140,12 @@ class MusicPlayerContainer extends Component {
 				handleChangeCurrentTime={this.handleChangeCurrentTime}
 				handleChangeVolume={this.handleChangeVolume}
 				handleMuteVolume={this.handleMuteVolume}
+				handleRepeat={this.handleRepeat}
+				handleNextAudio={this.handleNextAudio}
+				handlePrevAudio={this.handlePrevAudio}
 			/>
 		);
 	}
-}
-
-function mapStateToProps(state, props) {
-	return {
-		currentMusic: state.controlMusicReducer.currentMusic,
-		isPlaying: state.controlMusicReducer.isPlaying
-	};
-}
-
-function mapDispatchToProps(dispatch, props) {
-	return bindActionCreators(AudioActions, dispatch);
 }
 
 export default MusicPlayerContainer;

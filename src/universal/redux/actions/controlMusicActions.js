@@ -1,4 +1,5 @@
 import * as consts from '../consts';
+import { API_URL } from '../../../global.config';
 
 function playNewAudioAction(currentMusic) {
 	return {
@@ -19,12 +20,13 @@ function pauseAudioAction() {
 	}
 }
 
-export function playAudio(currentMusic = undefined) {
+export function playAudio(currentMusic = undefined, playlist = undefined) {
 	return dispatch => {
 		if(currentMusic !== undefined) {
-			window.audioInstance.src = 'https://localhost:8080/api/getAudioFile/' + currentMusic.link;
+			window.audioInstance.src = `${API_URL}/getAudioFile/${currentMusic.link}`;
 			window.audioInstance.play().then(() => {
 				dispatch(playNewAudioAction(currentMusic));
+				if(playlist) dispatch(setCurrentPlaylistAction(playlist));
 			});
 		}
 		else {
@@ -38,5 +40,12 @@ export function pauseAudio() {
 	return dispatch => {
 		window.audioInstance.pause();
 		dispatch(pauseAudioAction());
+	}
+}
+
+export function setCurrentPlaylistAction(playlist) {
+	return {
+		type: consts.SET_CURRENT_PLAYLIST,
+		playlist
 	}
 }

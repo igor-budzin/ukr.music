@@ -326,7 +326,7 @@ a {
 			right: 0;
 			bottom: 0;
 			left: 0;
-			background-color: rgba(0, 0, 0, 0.8);
+			background-color: rgba(0, 0, 0, 0.7);
 			z-index: 1;
 		}
 	}
@@ -338,6 +338,10 @@ a {
 		.audio-row-cover {
 			width: 36px;
 			height: 36px;
+
+			&.empty {
+				background-size: 20px;
+			}
 		}
 
 		.audio-row-desc {
@@ -392,7 +396,14 @@ a {
 	float: left;
 	margin-right: 10px;
 	position: relative;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: darken(#e9f2ff, 2%);
+	background-image: url('../img/quaver.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+
+	&.empty {
+		background-size: 24px;
+	}
 }
 
 .audio-row-desc {
@@ -683,14 +694,15 @@ a {
 	}
 
 	.controls {
-		width: 120px;
 		flex-grow: 0;
 
 		&.controls--play {
+			width: 120px;
 			margin-right: 10px;
 		}
 
 		&.controls--more {
+			width: 160px;
 			margin-left: 10px;
 		}
 
@@ -731,6 +743,9 @@ a {
 			}
 			&.shuffle {
 				background-image: url('../img/play-controls/shuffle.svg');
+			}
+			&.playlist {
+				background-image: url('../img/play-controls/playlist.svg');
 			}
 			&.volume {
 				background-image: url('../img/play-controls/speaker-3.svg');

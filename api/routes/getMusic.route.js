@@ -7,6 +7,7 @@ module.exports = (router) => {
 	router.get('/getMusic/:name', (req, res) => {
 		UserModel.findOne({ name: req.params.name }, 'audio', function(err, user) {
 			if(err) {
+				console.log(err)
 				res.json({ 'status': 'error' });
 			}
 
@@ -15,6 +16,7 @@ module.exports = (router) => {
 				.sort({ date: -1 })
 				.exec((err, result) => {
 					if(err) {
+						console.log(err);
 						res.json({ 'status': 'error' });
 					}
 

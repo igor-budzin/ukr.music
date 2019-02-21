@@ -85,6 +85,7 @@ export default {
      // JavaScript
      {
        test: /\.js$/,
+       exclude: /node_modules/,
        loader: 'babel-loader',
        include: clientInclude
      },

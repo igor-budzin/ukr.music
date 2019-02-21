@@ -315,6 +315,7 @@ a {
 	border-radius: 4px;
 	cursor: pointer;
 	position: relative;
+	margin-bottom: 2px;
 
 	&.isPlay {
 		background-color: lighten(#e9f2ff, 2%);
@@ -413,14 +414,20 @@ a {
 	color: #333;
 	font-family: 'Roboto', Arial, sans-serif;
 	font-size: 14px;
-}
-.audio-row-desc a {
-	color: #333;
-	font-family: 'Roboto', Arial, sans-serif;
-	font-size: 14px;
-}
-.audio-row-desc .singer a {
-	font-weight: 600;
+
+	a {
+		color: #333;
+		font-family: 'Roboto', Arial, sans-serif;
+		font-size: 14px;
+	}
+
+	.singer {
+		margin-bottom: 2px;
+
+		a {
+			font-weight: 600;
+		}
+	}
 }
 .audio-row-desc .song a {
 	color: #888;
@@ -690,7 +697,12 @@ a {
 		float: left;
 		margin-right: 10px;
 		position: relative;
-		background-color: rgba(0, 0, 0, 0.6);
+		background-color: lighten(#e9f2ff, 2%);
+
+		&.empty {
+			background-image: url('../img/quaver.svg');
+			background-size: 20px;
+		}
 	}
 
 	.controls {
@@ -794,6 +806,26 @@ a {
 			position: absolute;
 			right: 0;
 			top: 5px;
+		}
+	}
+
+	.playlist-wrapper {
+		width: 600px;
+		height: 400px;
+		background-color: #fff;
+		box-shadow: 0px 1px 3px 1px rgba(4, 4, 4, 0.08);
+		position: absolute;
+		z-index: 10;
+		cursor: default;
+		padding: 20px;
+		position: relative;
+		right: 600px;
+		top: 0;
+
+		> div {
+			height: 100%;
+			overflow-y: scroll;
+			overflow-x: hidden;
 		}
 	}
 }

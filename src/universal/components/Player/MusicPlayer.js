@@ -3,16 +3,43 @@ import Slider from 'react-rangeslider';
 import { formatSeconds } from 'universal/utils';
 import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
+// Components
+import PlayList from 'universal/components/PlayList/PlayList';
 
 export default class MusicPlayer extends Component {
+	constructor(props, context) {
+		super(props, context);
+
+		this.state = {
+			playlistOpen: false
+		};
+	}
+
 	shouldComponentUpdate(nextProps, nextState) {
 		return !isEqual(this.props, nextProps);
 	}
 
+	onOpenPlaylist = () => {
+		this.setState({ playlistOpen: !this.state.playlistOpen });
+	}
+
 	render() {
+		const { 
+			_id,
+			picture,
+			artists,
+			title,
+			duration
+		} = this.props.currentMusic;
+
+		let style = {};
+		if(picture) {
+			style = { "backgroundImage": "url(data:image/png;base64," + picture + ")" };
+		}
+
 		return (
 			<div className="player">
-				<div className="cover" style={{"backgroundImage": "url(data:image/png;base64," + this.props.picture + ")"}}></div>
+				<div className={classNames('cover', picture ? null : 'empty')} style={style}></div>
 				<div className="controls controls--play">
 					<div className="btn prev" onClick={this.props.handlePrevAudio}></div>
 					{
@@ -25,17 +52,17 @@ export default class MusicPlayer extends Component {
 
 				<div className="progress-bar">
 					<div className="title">
-						{`${this.props.atrists} - ${this.props.title}`}
+						{`${artists} - ${title}`}
 					</div>
 					<div className="time">
 						<span className="current">{formatSeconds(this.props.currentTime)}</span>
 						<span> / </span>
-						<span className="duration">{formatSeconds(this.props.durationTime)}</span>
+						<span className="duration">{formatSeconds(duration)}</span>
 					</div>
 					<Slider
 						tooltip={false}
 						min={0}
-						max={this.props.durationTime}
+						max={duration}
 						step={1}
 						value={this.props.currentTime}
 						onChange={this.props.handleChangeCurrentTime}
@@ -64,7 +91,24 @@ export default class MusicPlayer extends Component {
 							/>
 						</div>
 					</div>
-					<div className="btn playlist"></div>
+					<div className="btn playlist" onClick={this.onOpenPlaylist}>
+						{
+							this.state.playlistOpen && (
+								<div className="playlist-wrapper">
+									<div>
+										<PlayList 
+											mini={true}
+											currentId={_id}
+											playlist={this.props.currentPlaylist}
+											handleChoseAudio={this.handleChoseAudio}
+											handleEditAudio={this.handleEditAudio}
+											isPlaying={this.props.isPlaying}
+										/>
+									</div>
+								</div>
+							)
+						}
+					</div>
 				</div>
 			</div>
 		);

@@ -70,6 +70,7 @@ export default {
       // Javascript
       {test: /\.js$/,
        loader: 'babel-loader',
+       exclude: /node_modules/,
        query: babelQuery,
        include: clientInclude
       },

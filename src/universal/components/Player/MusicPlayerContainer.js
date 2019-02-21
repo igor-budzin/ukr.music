@@ -126,11 +126,9 @@ class MusicPlayerContainer extends Component {
 	render() {
 		return (
 			<MusicPlayer
-				atrists={this.props.currentMusic.artists}
-				title={this.props.currentMusic.title}
-				picture={this.props.currentMusic.picture}
-				durationTime={this.props.currentMusic.duration}
+				currentMusic={this.props.currentMusic}
 				currentTime={this.state.currentTime}
+				currentPlaylist={this.props.currentPlaylist}
 				volume={this.state.volume}
 				repeat={this.state.repeat}
 				isPlaying={this.props.isPlaying}
@@ -143,6 +141,7 @@ class MusicPlayerContainer extends Component {
 				handleRepeat={this.handleRepeat}
 				handleNextAudio={this.handleNextAudio}
 				handlePrevAudio={this.handlePrevAudio}
+
 			/>
 		);
 	}

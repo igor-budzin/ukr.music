@@ -31,7 +31,11 @@ export default class MusicItem extends Component {
 		}
 
 		return (
-			<div className={classNames('audio-row', this.props.isPlay ? ' isPlay' : null)} onClick={this.onClick}>
+			<div
+				className={classNames('audio-row', (this.props.isPlay ? ' isPlay' : null), this.props.mini ? 'mini': null)}
+				onClick={this.onClick}
+				style={this.props.style ? this.props.style : {}}
+			>
 				<div className={classNames('audio-row-cover', this.props.picture ? null : 'empty')} style={style}>
 					{
 						this.props.isPlay && (
@@ -52,7 +56,11 @@ export default class MusicItem extends Component {
 				</div>
 				<div className="audio-row-time">{formatSeconds(this.props.duration)}</div>
 				<div className="audio-row-options">
-					<div className="edit" title="Редагувати" onClick={this.onEdit}></div>
+					{
+						typeof this.props.handleEditAudio === 'function' && (
+							<div className="edit" title="Редагувати" onClick={this.onEdit}></div>
+						)
+					}
 				</div>
 			</div>
 		);

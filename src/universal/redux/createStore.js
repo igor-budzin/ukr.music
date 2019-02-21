@@ -18,6 +18,12 @@ const request = requestMiddleware.withOptions(suffix, {
 	header: { 'Access-Control-Allow-Origin': '*' }
 });
 
+// const composeEnhancers = composeWithDevTools({
+//   serialize: {
+//   	options: false
+//   }
+// });
+
 export default (history) => {
 	const store = createStore(combineReducers({
 		...Reducers,

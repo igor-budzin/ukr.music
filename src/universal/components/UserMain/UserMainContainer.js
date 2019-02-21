@@ -132,8 +132,6 @@ export default class UserProfiletContainer extends Component {
 
 					<MusicPlayerContainer />
 
-					{/*<MusicFilter />*/}
-
 				</div>
 
 				<div className="filter-hr"></div>

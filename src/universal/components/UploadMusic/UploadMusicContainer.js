@@ -8,6 +8,7 @@ import axios from 'axios';
 // Components
 import Button from 'universal/components/Commons/Button';
 import UploaderContainer from './UploaderContainer';
+import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 // Actions
 import * as uploadMusicActions from './uploadMusicActions';
 
@@ -56,6 +57,14 @@ export default class UploadMusicContainer extends Component {
 		return (
 			<Fragment>
 				<h2 className="section-title">Завантаження файлів</h2>
+
+				<div className="container clearfix">
+
+					<MusicPlayerContainer />
+
+				</div>
+
+				<div className="filter-hr"></div>
 
 				<div className="content">
 					<div className="input-wrapper" style={{ width: '300px' }}>

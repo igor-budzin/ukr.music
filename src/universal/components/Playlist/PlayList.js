@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from 'react';
 import MusicItem from './MusicItem';
-import { List, AutoSizer, WindowScroller, CellMeasurer, CellMeasurerCache } from "react-virtualized";
+import { List, InfiniteLoader, WindowScroller, CellMeasurer, CellMeasurerCache } from "react-virtualized";
 
 export default class PlayList extends PureComponent  {
 	constructor() {
@@ -12,6 +12,10 @@ export default class PlayList extends PureComponent  {
 	    defaultWidth:622,
 	    defaultHeight: 55
 	  });
+	}
+
+	componentWillReceiveProps(){
+	  this.refs.forceUpdateGrid();
 	}
 
 	// shouldComponentUpdate(nextProps) {
@@ -50,27 +54,37 @@ export default class PlayList extends PureComponent  {
 		const rowHeight = this.props.mini ? 45 : 55;
 
 		return (
-				<WindowScroller>
-					{
-						({ height, isScrolling, registerChild, scrollTop }) => {
-							return (
-								<div className="playlist" ref={registerChild}>
-								<List
-									autoHeight
-									isScrolling={isScrolling}
-									scrollTop={scrollTop}
-									height={height}
-									rowHeight={rowHeight}
-									rowRenderer={this.renderRow}
-									rowCount={this.props.playlist.length}
-									overscanRowCount={5}
-									width={622}
-								/>
-								</div>
-							)
+			<InfiniteLoader
+				isRowLoaded={this._isRowLoaded}
+				loadMoreRows={this._loadMoreRows}
+				rowCount={this.props.playlist.length + 1 }
+				threshold={10}
+			>
+				{({ onRowsRendered, registerChild }) => (
+					<WindowScroller>
+						{
+							({ height, isScrolling, registerChild, scrollTop }) => {
+								return (
+									<div className="playlist" ref={registerChild}>
+									<List
+										autoHeight
+										isScrolling={isScrolling}
+										scrollTop={scrollTop}
+										height={height}
+										rowHeight={rowHeight}
+										rowRenderer={this.renderRow}
+										rowCount={this.props.playlist.length}
+										overscanRowCount={5}
+										width={622}
+										ref={ref => this.refs = ref}
+									/>
+									</div>
+								)
+							}
 						}
-					}
-				</WindowScroller>
+					</WindowScroller>
+				)}
+			</InfiniteLoader>
 		);
 	}
 }

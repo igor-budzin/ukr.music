@@ -3,6 +3,7 @@ import Slider from 'react-rangeslider';
 import { formatSeconds } from 'universal/utils';
 import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
+import { API_URL } from '../../../global.config';
 // Components
 import PlayList from 'universal/components/PlayList/PlayList';
 
@@ -34,7 +35,7 @@ export default class MusicPlayer extends Component {
 
 		let style = {};
 		if(picture) {
-			style = { "backgroundImage": "url(data:image/png;base64," + picture + ")" };
+			style = { "backgroundImage": `url(${API_URL}/getAudioCover/${picture})` };
 		}
 
 		return (

@@ -41,6 +41,7 @@ export default class UserProfiletContainer extends Component {
 		this.state = {
 			audioListReady: false,
 			audioDataReady: false,
+			page: 0,
 			showModal: false,
 			editField_Artist: '',
 			editField_Title: '',
@@ -61,7 +62,7 @@ export default class UserProfiletContainer extends Component {
 	}
 
 	getPageData = () => {
-		this.props.getMusic(this.props.locationParams.name)
+		this.props.getMusic(this.props.locationParams.name, this.state.page)
 		.then(response => {
 			this.setState({
 				audioListReady: true

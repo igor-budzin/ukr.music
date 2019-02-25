@@ -72,6 +72,7 @@ module.exports = (router, socket) => {
 
 					editor.load(buffer).then(() => {
 						const audioID = new mongoose.Types.ObjectId();
+						const coverName = editor.get('picture') ? file.originalFilename.replace('.mp3', '.jpg').replace(/ /g, '_') : null
 
 						const audio = new AudioModel({
 							_id: audioID,
@@ -83,29 +84,40 @@ module.exports = (router, socket) => {
 							year: editor.get('year') ? editor.get('year') : null,
 							genre: editor.get('genre') ? editor.get('genre') : null,
 							duration: durationTime,
-							picture: editor.get('picture') ? editor.get('picture').data.toString('base64') : null
+							picture: coverName
 						});
 
 						audio.save().then(result => {
 							UserModel.findOneAndUpdate(
-								{ name: currentUserName }, 
+								{ name: currentUserName },
 								{ $push: { audio: audioID } },
 								(error, success) => {
-									if (error) throw error;
+									if(error) throw error;
 
-									const params = {
-										Bucket: awsConfig.backetName,
+									s3.putObject({
+										Bucket: awsConfig.audioBacketName,
 										Key: newFileName,
 										Body: buffer
-									};
-
-									s3.putObject(params, function (error, pres) {
-										if (error) {
+									},
+									error => {
+										if(error) {
 											console.log("Проблема під час завантаження файла на AWS: ", error);
-										} else {
-											console.log("Successfully uploaded data to myBucket/myKey");
 										}
 									});
+
+									if(coverName) {
+										s3.putObject({
+											Bucket: awsConfig.audioCoverBacketName,
+											Key: coverName,
+											Body: editor.get('picture').data
+										},
+										error => {
+											if(error) {
+												console.log("Проблема під час завантаження файла на AWS: ", error);
+											}
+										});
+									}
+									
 								}
 							);
 						})

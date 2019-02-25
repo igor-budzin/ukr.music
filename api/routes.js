@@ -14,6 +14,8 @@ module.exports = (router, socket) => {
 	require('./routes/static/albumCover.route')(router); // Обкладинка альбому
 	require('./routes/static/getAudioFile.route')(router); // Аудіофайл
 
+	require('./routes/static/getAudioCover.route')(router); // Обкладинка треку
+
 	require('./routes/uploadAudioFiles.route')(router, socket); // Завантаження аудіофайлів
 
 	require('./routes/getMusic.route')(router); // Список треків

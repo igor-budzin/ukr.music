@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import isEqual from 'lodash.isequal';
 import classNames from 'classnames';
 import { formatSeconds } from 'universal/utils';
+import { API_URL } from '../../../global.config';
 
 export default class MusicItem extends Component {
 	onClick = () => {
@@ -16,7 +17,8 @@ export default class MusicItem extends Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return !isEqual(nextProps, this.props);
+		// return !isEqual(nextProps, this.props);
+		return this.props.isPlay !== nextProps.isPlay;
 	}
 
 	onEdit = event => {
@@ -27,7 +29,7 @@ export default class MusicItem extends Component {
 	render() {
 		let style = {};
 		if(this.props.picture) {
-			style = { "backgroundImage": "url(data:image/png;base64," + this.props.picture + ")" };
+			style = { "backgroundImage": `url(${API_URL}/getAudioCover/${this.props.picture})` };
 		}
 
 		return (

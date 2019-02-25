@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const audioSchema = mongoose.Schema({
 	_id: mongoose.Types.ObjectId,
@@ -19,5 +20,7 @@ const audioSchema = mongoose.Schema({
 		default: Date.now
 	}
 });
+
+audioSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Audio', audioSchema, 'audio');

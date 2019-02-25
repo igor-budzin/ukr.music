@@ -26,6 +26,7 @@ export function playAudio(currentMusic = undefined, playlist = undefined) {
 			window.audioInstance.src = `${API_URL}/getAudioFile/${currentMusic.link}`;
 			window.audioInstance.play().then(() => {
 				dispatch(playNewAudioAction(currentMusic));
+				document.title = currentMusic.title;
 				if(playlist) dispatch(setCurrentPlaylistAction(playlist));
 			});
 		}
@@ -39,6 +40,7 @@ export function playAudio(currentMusic = undefined, playlist = undefined) {
 export function pauseAudio() {
 	return dispatch => {
 		window.audioInstance.pause();
+		document.title = 'Cabine of Pilot';
 		dispatch(pauseAudioAction());
 	}
 }

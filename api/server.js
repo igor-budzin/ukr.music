@@ -43,7 +43,12 @@ router.get('/', function(req, res) {
 
 routes(router, socket);
 
-
+app.use((err, req, res, next) => {
+	console.log(err);
+	res.status(500).json({
+		'status': 'error'
+	});
+});
 
 httpsServer.listen(port);
 console.log('Magic happens on port ' + port);

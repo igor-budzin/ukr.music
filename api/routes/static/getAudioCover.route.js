@@ -9,9 +9,7 @@ module.exports = router => {
 		});
 
 		s3.listObjectsV2({MaxKeys: 1, Bucket: awsConfig.audioCoverBacketName, Prefix: req.params.link}, function(err, data) {
-				if (err) {
-						return res.sendStatus(404); 
-				}
+				if (err) next(err)
 
 				if (req != null && req.headers.range != null) {
 						const range = req.headers.range;

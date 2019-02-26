@@ -17,10 +17,12 @@ export function requestGetListMusic() {
 	}
 }
 
-export function requestGetMusicListSuccess(music) {
+export function requestGetMusicListSuccess(data, page) {
+	data.page = page;
+	
 	return {
 		type: REQUEST_GET_MUSIC_LIST_SUCCESS,
-		music
+		payload: data
 	}
 }
 
@@ -30,15 +32,15 @@ export function requestGetMusicListError() {
 	}
 }
 
-export function getMusicListAction(name, offset) {
+export function getMusicListAction(name, page) {
 	return (dispatch) => {
 		dispatch(requestGetListMusic());
 
 		return new Promise((resolve, reject) => {
-			axiosInstance.get(`getMusic/${name}/${offset}`)
+			axiosInstance.get(`getMusic/${name}/${page}`)
 			.then((response) => {
 				if(response.status === 200) {
-					dispatch(requestGetMusicListSuccess(response.data));
+					dispatch(requestGetMusicListSuccess(response.data, page));
 					resolve();
 				}
 				else {

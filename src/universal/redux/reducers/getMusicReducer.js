@@ -5,24 +5,27 @@
 } from '../consts';
 
 const initialState = {
-	music: []
+	music: [],
+	hasNextPage: false
 };
 
 export default function getMusicReducer(state = initialState, action) {
-	const { music } = action;
 	switch(action.type) {
 		case REQUEST_GET_MUSIC_LIST:
-			return {
-				music: []
-			};
+			return state;
+
 		case REQUEST_GET_MUSIC_LIST_SUCCESS:
-			return {
-				music
-			};
+			let arr = action.payload.music;
+
+			if(action.payload.page !== 1) {
+				arr = state.music.concat(action.payload.music);
+			}
+
+			return Object.assign({}, state, { music: arr, hasNextPage: action.payload.hasNextPage });
+
 		case REQUEST_GET_MUSIC_LIST_ERROR:
-			return {
-				music
-			};
+			return state;
+
 		default:
 			return state;
 	}

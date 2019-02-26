@@ -22,6 +22,7 @@ import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 const mapStateToProps = state => ({
 	playlist: state.getMusicReducer.music,
+	hasNextPage: state.getMusicReducer.hasNextPage,
 	currentMusic: state.controlMusicReducer.currentMusic,
 	currentPlaylist: state.controlMusicReducer,
 	isPlaying: state.controlMusicReducer.isPlaying,
@@ -41,7 +42,7 @@ export default class UserProfiletContainer extends Component {
 		this.state = {
 			audioListReady: false,
 			audioDataReady: false,
-			page: 0,
+			page: 1,
 			showModal: false,
 			editField_Artist: '',
 			editField_Title: '',
@@ -65,7 +66,8 @@ export default class UserProfiletContainer extends Component {
 		this.props.getMusic(this.props.locationParams.name, this.state.page)
 		.then(response => {
 			this.setState({
-				audioListReady: true
+				audioListReady: true,
+				page: this.state.page + 1
 			});
 		})
 		.catch(error => {
@@ -162,6 +164,9 @@ export default class UserProfiletContainer extends Component {
 										handleChoseAudio={this.handleChoseAudio}
 										handleEditAudio={this.handleEditAudio}
 										isPlaying={this.props.isPlaying}
+										hasNextPage={this.props.hasNextPage}
+										loadNextPage={this.getPageData}
+										isNextPageLoading={false}
 									/> :
 									<EmptyPlayList />
 								}

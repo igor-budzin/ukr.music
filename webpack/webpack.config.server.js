@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import qs from 'querystring';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import Uglify from 'uglifyjs-webpack-plugin';
 
 // Paths
 const root = process.cwd();
@@ -24,7 +25,7 @@ export default {
 	target: 'node',
 	output: {
 		path: build,
-		chunkFilename: '[name]_[chunkhash].js',
+		chunkFilename: '[name].js',
 		filename: '[name].js',
 		libraryTarget: 'commonjs2',
 		publicPath: '/static/'
@@ -36,7 +37,8 @@ export default {
 	plugins: [
 		new webpack.NoEmitOnErrorsPlugin(),
 		new ExtractTextPlugin('[name].css'),
-		new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}}),
+		// new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}}),
+		new Uglify(),
 		new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
 		new webpack.DefinePlugin({
 			'__CLIENT__': false,
@@ -74,7 +76,18 @@ export default {
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				include: serverInclude
+				include: serverInclude,
+				exclude: /node_modules/,
+				query: { compact: false }
+			},
+
+			{
+				test: /\.scss$/,
+				include: serverInclude,
+				loaders: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: "css-loader!sass-loader"
+				})
 			}
 
 		]

@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // Components
 import MusicFilter from 'universal/components/MusicFilter';
-import PlayList from 'universal/components/PlayList/PlayList';
+import PlayListFull from 'universal/components/PlayList/PlayListFull';
 import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
@@ -146,8 +146,6 @@ export default class UserProfiletContainer extends Component {
 					</div>
 
 					<Tabs>
-
-					
 						<TabList className="section-links" style={{"marginBottom": "40px"}}>
 							<Tab className="link" selectedClassName="active">Треки</Tab>
 							<Tab className="link" selectedClassName="active">Альбоми</Tab>
@@ -158,7 +156,7 @@ export default class UserProfiletContainer extends Component {
 							<ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
 								{
 									this.props.playlist && this.props.playlist.length > 0 ?
-									<PlayList
+									<PlayListFull
 										currentId={this.props.currentMusic._id}
 										playlist={this.props.playlist}
 										handleChoseAudio={this.handleChoseAudio}

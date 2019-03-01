@@ -4,6 +4,7 @@ import React, { Component, Fragment } from 'react';
 import Sidebar from 'universal/components/Sidebar/SidebarContainer';
 import UploadMusicContainer from 'universal/components/UploadMusic/UploadMusicContainer';
 import Header from 'universal/components/Header';
+import Footer from 'universal/components/Footer';
 
 export default class UploadMusicPage extends Component {
 	render() {

@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import Sidebar from 'universal/components/Sidebar/SidebarContainer';
 import UserMainContainer from 'universal/components/UserMain/UserMainContainer';
 import Header from 'universal/components/Header';
+import Footer from 'universal/components/Footer';
 
 const mapStateToProps = (state, props) => ({
 	follows: state.followsReducer.follows
@@ -28,6 +29,7 @@ export default class UserProfilePage extends Component {
 						localionPath={this.props.match.path}
 					/>
 				</main>
+				{/*<Footer />*/}
 			</div>
 		);
 	}

@@ -5,6 +5,7 @@ import qs from 'querystring';
 import autoprefixer from 'autoprefixer';
 import AssetsPlugin from 'assets-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import Uglify from 'uglifyjs-webpack-plugin';
 
 const root = process.cwd();
 const src  = path.join(root, 'src');
@@ -35,8 +36,8 @@ export default {
     vendor
   },
   output: {
-    filename: '[name]_[chunkhash].js',
-    chunkFilename: '[name]_[chunkhash].js',
+    filename: '[name].js',
+    chunkFilename: '[name].js',
     path: build,
     publicPath: '/static/'
   },
@@ -61,7 +62,8 @@ export default {
    /* minChunkSize should be 50000 for production apps
     * 10 is for this example */
    new webpack.optimize.MinChunkSizePlugin({minChunkSize: 10}),
-   new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}, comments: /(?:)/}),
+   // new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}, comments: /(?:)/}),
+   new Uglify(),
    new AssetsPlugin({path: build, filename: 'assets.json'}),
    new webpack.NoEmitOnErrorsPlugin(),
    new webpack.DefinePlugin({
@@ -87,7 +89,8 @@ export default {
        test: /\.js$/,
        exclude: /node_modules/,
        loader: 'babel-loader',
-       include: clientInclude
+       include: clientInclude,
+       query: { compact: false }
      },
 
      // JavaScript

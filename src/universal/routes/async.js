@@ -26,3 +26,39 @@ function asyncRoute(getComponent) {
     }
   }
 }
+
+export const LoginPage = asyncRoute(() => {
+  return System.import('../pages/LoginPage.js');
+});
+
+export const RegisterPage = asyncRoute(() => {
+  return System.import('../pages/RegisterPage.js');
+});
+
+export const ArtistProfilePage = asyncRoute(() => {
+  return System.import('../pages/ArtistProfilePage.js');
+});
+
+export const FollowListPage = asyncRoute(() => {
+  return System.import('../pages/FollowListPage.js');
+});
+
+export const HomePage = asyncRoute(() => {
+  return System.import('../pages/HomePage.js');
+});
+
+export const NotFoundPage = asyncRoute(() => {
+  return System.import('../pages/NotFoundPage.js');
+});
+
+export const SettingsPage = asyncRoute(() => {
+  return System.import('../pages/SettingsPage.js');
+});
+
+export const UploadMusicPage = asyncRoute(() => {
+  return System.import('../pages/UploadMusicPage.js');
+});
+
+export const UserMainPage = asyncRoute(() => {
+  return System.import('../pages/UserMainPage.js');
+});

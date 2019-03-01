@@ -1,0 +1,25 @@
+{
+	"apps": [
+		{
+			"name": "ssr server",
+			"script": "./src/server/server.babel.js",
+			"exec_mode": "cluster",
+			"watch": true,
+			"env": {
+				"NODE_PATH": "./src",
+				"NODE_ENV": "production",
+				"PORT": 3000
+			}
+		},
+		{
+			"name": "api server",
+			"script": "./api/server.js",
+			"exec_mode": "cluster",
+			"watch": true,
+			"env": {
+				"NODE_ENV": "production",
+				"PORT": 8000
+			}
+		}
+	]
+}

@@ -1,5 +1,6 @@
 import fs from 'fs';
-import https from 'https';
+// import https from 'https';
+import http from 'http';
 const privateKey  = fs.readFileSync('api/ssl/apache.key', 'utf8');
 const certificate = fs.readFileSync('api/ssl/apache.crt', 'utf8');
 import express from 'express';
@@ -46,7 +47,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-const httpsServer = https.createServer(credentials, app);
+const httpsServer = http.createServer(app);
 
 httpsServer.listen(3000, () => {
 	 console.log(`${'Server listening:'.yellow} ${'https://localhost:3000'.red}`);

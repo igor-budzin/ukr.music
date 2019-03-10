@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 import Select from 'react-select/lib/Async';
 import axios from 'axios';
+import { API_URL } from '../../../global.config';
+
 // Components
 import Button from 'universal/components/Commons/Button';
 import UploaderContainer from './UploaderContainer';
@@ -31,7 +33,7 @@ export default class UploadMusicContainer extends Component {
 	}
 
 	promiseOptions = inputValue => {
-		return axios.get('https://localhost:8080/api/getArtistList', {
+		return axios.get(`${API_URL}/getArtistList`, {
 				params: {
 					currentUserName: this.props.currentUserName
 				}

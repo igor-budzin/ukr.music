@@ -1,10 +1,19 @@
 const mongoose = require('mongoose');
+const config = require('./config/main.config');
 
-mongoose.connect('mongodb://localhost/musicDB', { useNewUrlParser: true }, (err) => {
+const mongoQuery = process.env.NODE_ENV === 'prodaction' ? 
+`mongodb://${config.mongo_main_user}:${config.mongo_main_pass}@127.0.0.1:27017/${config.mongo_main_db}` :
+'mongodb://localhost/musicDB';
+
+const mongoParams = {
+	useNewUrlParser: true,
+};
+
+mongoose.connect(mongoQuery, mongoParams, (err) => {
 	if(err) throw err;
-	console.log('Connected to musicDB')
+	console.log('Connected to musicDB');
 });
- 
+
 module.exports = (router, socket) => {
 
 	require('./routes/register.route')(router); // Реєстрація

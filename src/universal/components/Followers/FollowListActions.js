@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from '../../../global.config';
 
 import { 
 	REQUEST_GET_FOLLOWS,
@@ -10,7 +11,7 @@ import {
 } from '../../redux/consts';
 
 const axiosInstance = axios.create({
-	baseURL: 'https://localhost:8080/api/',
+	baseURL: `${API_URL}/`,
 	headers: {'Access-Control-Allow-Origin': '*'}
 });
 

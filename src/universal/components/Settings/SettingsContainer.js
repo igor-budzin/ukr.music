@@ -6,6 +6,7 @@ import { NotificationContainer, NotificationManager } from "react-light-notifica
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactModal from 'react-modal';
 import axios from 'axios';
+import { API_URL } from '../../../global.config';
 // Components
 import Button from 'universal/components/Commons/Button';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
@@ -42,7 +43,7 @@ export default class SettingstContainer extends Component {
 	};
 
 	handleCreateArtist = () => {
-		axios.post('https://localhost:8080/api/createArtist', {
+		axios.post(`${API_URL}/createArtist`, {
 			artistName: this.state.artistName,
 			currentUserName: this.props.currentUserName
 		})

@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone';
 import { formatBytes } from 'universal/utils';
 import io from 'socket.io-client';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
+import { globlaConfig as config } from '../../../global.config';
 // Components
 import Button from 'universal/components/Commons/Button';
 // Actions
@@ -31,7 +32,7 @@ export default class UploaderContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.socket = io('https://localhost:8080');
+		this.socket = io(`${config.protocol}://${config.host}:${config.apiPort}`);
 		this.socket.on('uploadProgress', this.updateUploadProgress);
 	}
 

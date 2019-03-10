@@ -7,6 +7,7 @@ import ReactPlaceholder from 'react-placeholder';
 import ReactModal from 'react-modal';
 import axios from 'axios';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { API_URL } from '../../../global.config';
 // Components
 import MusicFilter from 'universal/components/MusicFilter';
 import PlayListFull from 'universal/components/PlayList/PlayListFull';
@@ -100,7 +101,7 @@ export default class UserProfiletContainer extends Component {
 
 	handleEditAudio = (id) => {
 		this.setState({ showModal: true });
-		axios.post('https://localhost:8080/api/getAudioData', {
+		axios.post(`${API_URL}/getAudioData`, {
 			audioID: id
 		})
 		.then(response => {

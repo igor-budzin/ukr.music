@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
 import requestMiddleware from './middlewares/requestMiddleware.js'
 import thunk from 'redux-thunk';
+import { API_URL } from '../../global.config';
 
 import * as Reducers from './reducers/index.js';
 
@@ -14,7 +15,7 @@ const suffix = {
 }
 
 const request = requestMiddleware.withOptions(suffix, {
-	baseUrl: 'https://localhost:8080/api/', 
+	baseUrl: `${API_URL}/`, 
 	header: { 'Access-Control-Allow-Origin': '*' }
 });
 

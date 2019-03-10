@@ -36,7 +36,7 @@ export default class Header extends Component {
 						<ul className="header-nav">
 							<li><Link to="/">Головна</Link></li>
 							<li><Link to={`/profile/${this.props.currentUserName}`} className="active">Музика</Link></li>
-							<li><a href="#">Відео</a></li>
+							<li><a href="#">Афіша</a></li>
 							<li><a href="#">Контакти</a></li>
 						</ul>
 					</div>

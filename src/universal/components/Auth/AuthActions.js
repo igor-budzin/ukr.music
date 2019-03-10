@@ -1,6 +1,7 @@
 import axios from 'axios';
 import setAuthToken from './setAuthToken';
 import jwt_decode from 'jwt-decode';
+import { API_URL } from '../../../global.config';
 
 import {
 	GET_ERRORS,
@@ -14,7 +15,7 @@ import {
 } from '../../redux/consts';
 
 const axiosInstance = axios.create({
-	baseURL: 'https://localhost:8080/api/',
+	baseURL: `${API_URL}/`,
 	headers: {'Access-Control-Allow-Origin': '*'}
 });
 

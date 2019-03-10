@@ -28,9 +28,9 @@ export default class MusicItem extends Component {
 
 	render() {
 		let style = {};
-		if(this.props.picture) {
-			style = { "backgroundImage": `url(${API_URL}/getAudioCover/${this.props.picture})` };
-		}
+		// if(this.props.picture) {
+		// 	style = { "backgroundImage": `url(${API_URL}/getAudioCover/${this.props.picture})` };
+		// }
 
 		return (
 			<div

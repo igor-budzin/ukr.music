@@ -10,8 +10,9 @@ export default class PlayListFull extends PureComponent {
 			fixedWidth: true,
 			fixedHeight: true,
 			defaultWidth: 622,
-			defaultHeight: 55
+			defaultHeight: 65
 		});
+
 	}
 
 	componentWillReceiveProps(){
@@ -19,6 +20,7 @@ export default class PlayListFull extends PureComponent {
 	}
 
 	renderRow = ({ index, key, style, parent }) => {
+
 		return (
 			<CellMeasurer 
 				key={key}
@@ -27,27 +29,28 @@ export default class PlayListFull extends PureComponent {
 				columnIndex={0}
 				rowIndex={index}
 			>
-				<MusicItem
-					style={style}
-					handleChoseAudio={this.props.handleChoseAudio}
-					handleEditAudio={this.props.handleEditAudio}
-					isPlay={this.props.currentId === this.props.playlist[index]._id && this.props.isPlaying}
-					_id={this.props.playlist[index]._id}
-					link={this.props.playlist[index].link}
-					key={key}
-					artist={this.props.playlist[index].artists}
-					title={this.props.playlist[index].title}
-					time={this.props.playlist[index].duration}
-					picture={this.props.playlist[index].picture}
-					duration={this.props.playlist[index].duration}
-					mini={this.props.mini}
-				/>
+				<div style={style}>
+					<MusicItem
+						handleChoseAudio={this.props.handleChoseAudio}
+						handleEditAudio={this.props.handleEditAudio}
+						isPlay={this.props.currentId === this.props.playlist[index]._id && this.props.isPlaying}
+						_id={this.props.playlist[index]._id}
+						link={this.props.playlist[index].link}
+						key={key}
+						artist={this.props.playlist[index].artists}
+						title={this.props.playlist[index].title}
+						time={this.props.playlist[index].duration}
+						picture={this.props.playlist[index].picture}
+						duration={this.props.playlist[index].duration}
+						mini={this.props.mini}
+					/>
+				</div>
 			</CellMeasurer>
 		);
 	}
 
 	render() {
-		const rowHeight = this.props.mini ? 45 : 55;
+		const rowHeight = this.props.mini ? 45 : 57;
 		const size = this.props.playlist.length;
 		const loadMoreRows = this.props.isNextPageLoading ? () => {} : this.props.loadNextPage;
 		// const loadMoreRows = () => { console.log('111111111111') };

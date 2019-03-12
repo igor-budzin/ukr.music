@@ -135,7 +135,7 @@ export default class UploaderContainer extends Component {
 									className="dropzone"
 									onDrop={this.handleDrop}
 									maxSize={20000000}
-									accept="audio/mp3"
+									accept="audio/*"
 									disabled={this.props.isUploading}
 								/>
 							)

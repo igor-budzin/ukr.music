@@ -3,6 +3,7 @@ import isEqual from 'lodash.isequal';
 import classNames from 'classnames';
 import { formatSeconds } from 'universal/utils';
 import { API_URL } from '../../../global.config';
+import PropTypes from 'prop-types';
 
 export default class MusicItem extends Component {
 	onClick = () => {
@@ -27,7 +28,7 @@ export default class MusicItem extends Component {
 	}
 
 	render() {
-		const { 
+		const {
 			_id,
 			isPlaying,
 			isLoading,
@@ -39,11 +40,14 @@ export default class MusicItem extends Component {
 			artist,
 			duration
 		} = this.props;
+
 		let coverStyle = {};
-		// if(this.props.picture) {
-		// 	style = { "backgroundImage": `url(${API_URL}/getAudioCover/${this.props.picture})` };
+		// if(picture) {
+		// 	coverStyle = { "backgroundImage": `url(${API_URL}/getAudioCover/${picture})` };
 		// }
+		console.log(coverStyle.backgroundImage)
 		return (
+
 			<div
 				className={classNames(
 					'audio-row',
@@ -55,7 +59,12 @@ export default class MusicItem extends Component {
 				onClick={this.onClick}
 				style={style ? style : {}}
 			>
-				<div className={classNames('audio-row-cover', picture ? null : 'empty')} style={coverStyle}>
+				<div
+					className={classNames(
+						'audio-row-cover',
+						picture && coverStyle.backgroundImage !== undefined ? null : 'empty')
+					}
+					style={coverStyle.backgroundImage !== undefined ? coverStyle : null}>
 						<div className="loader">{musicLoader}</div>
 						<div className="bars">
 							<div className="bar"></div>
@@ -70,7 +79,11 @@ export default class MusicItem extends Component {
 					<div className="singer"><a href="javascript:void(0);">{artist}</a></div>
 					<div className="song"><a href="javascript:void(0);">{title}</a></div>
 				</div>
-				<div className="audio-row-time">{formatSeconds(duration)}</div>
+				{
+					!this.props.withoutTime && (
+						<div className="audio-row-time">{formatSeconds(duration)}</div>
+					)
+				}
 				<div className="audio-row-options">
 					{
 						typeof this.props.handleEditAudio === 'function' && (
@@ -83,15 +96,27 @@ export default class MusicItem extends Component {
 	}
 }
 
+MusicItem.propTypes = {
+	mini: PropTypes.bool,
+	withoutTime: PropTypes.bool,
+	_id: PropTypes.string,
+	isPlaying: PropTypes.bool,
+	isLoading: PropTypes.bool,
+	currentId: PropTypes.string,
+	style: PropTypes.object,
+	picture: PropTypes.string,
+	title: PropTypes.string,
+	artist: PropTypes.string
+};
+
 const svgLoaderStyle = {
 	left: '50%',
 	top: '50%',
 	marginTop: '23px',
-	width: '86px',
+	width: '80px',
 	position: 'absolute',
 	transform: 'translate(-50%, -50%) matrix(1, 0, 0, 1, 0, 0)',
-}
-
+};
 
 const musicLoader = (
 	<div style={{position: 'relative'}}>
@@ -102,4 +127,4 @@ const musicLoader = (
 						d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
 		</svg>
 	</div>
-)
+);

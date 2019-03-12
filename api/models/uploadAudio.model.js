@@ -18,6 +18,10 @@ const audioSchema = mongoose.Schema({
 	date: {
 		type: Date,
 		default: Date.now
+	},
+	listenCount: {
+		type: Number,
+		default: 0,
 	}
 });
 

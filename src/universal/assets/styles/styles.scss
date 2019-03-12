@@ -445,7 +445,7 @@ a {
 	float: left;
 	margin-right: 10px;
 	position: relative;
-	background-color: darken(#e9f2ff, 2%);
+	background-color: darken(#e9f2ff, 4%);
 	background-image: url('../img/quaver.svg');
 	background-repeat: no-repeat;
 	background-position: center;
@@ -626,107 +626,7 @@ a {
 
 
 .home {
-	.grid-row {
-		margin-bottom: 11px;
-		@extend .clearfix;
 
-		.grid-item {
-			width: 200px;
-			height: 150px;
-			background-color: #ccc;
-			margin-right: 11px;
-			float: left;
-			position: relative;
-			overflow: hidden;
-			cursor: pointer;
-			
-			.bg {
-				position: absolute;
-				background-repeat: no-repeat;
-				background-position: center;
-				background-size: cover;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				transition: filter 500ms ease, transform 500ms ease, rotate 500ms ease;
-				z-index: 1;
-			}
-
-			.title {
-				background-color: rgba(0, 0, 0, 0.7);
-				padding: 10px 16px;
-				position: absolute;
-				color: #fff;
-				font-weight: 300;
-				z-index: 2;
-			}
-
-			&.grid-item--double-h {
-				width: 411px;
-				float: left;
-			}
-
-			&.grid-item--double-v {
-				height: 311px;
-			}
-
-			&.offset-0 {
-				margin-right: 0;
-			}
-
-			&.offset-b {
-				margin-bottom: 11px;
-			}
-
-			&.offset-r {
-				margin-bottom: 11px;
-			}
-
-			&.popular-singer {
-				.bg {
-					background-image: url('../img/1.jpg');
-					filter: blur(2px);
-				}
-
-				.title {
-					font-size: 28px;
-					bottom: 20px;
-					left: 20px;
-				}
-			}
-
-			&.album {
-				.bg {
-					background-image: url('../img/2.jpg');
-					filter: blur(1px);
-				}
-				.title {
-					font-size: 18px;
-					bottom: 10px;
-					right: 10px;
-				}
-			}
-
-			&.top-songs {
-				.bg {
-					background-size: 100%;
-					background-image: url('../img/4.jpg');
-					filter: blur(1px);
-				}
-				.title {
-					font-size: 18px;
-					bottom: 10px;
-					left: 10px;
-				}
-			}
-
-			&:hover .bg {
-				filter: blur(0);
-				transform: scale(1.1);
-			}
-		}
-	}
 }
 
 .player {
@@ -971,135 +871,137 @@ a {
 		}
 	}
 
-	.profile-section {
-		@extend .clearfix;
-		margin-bottom: 40px;
-		font-family: 'Roboto';
+}
 
-		.title {
-			margin-bottom: 10px;
-			border-bottom: 1px solid #eaeaea;
-			padding-bottom: 10px;
-			position: relative;
+.section {
+	@extend .clearfix;
+	margin-bottom: 40px;
+	font-family: 'Roboto';
 
-			span {
-				font-weight: bold;
-			}
+	.title {
+		margin-bottom: 10px;
+		border-bottom: 1px solid #eaeaea;
+		padding-bottom: 10px;
+		position: relative;
 
-			.link {
-				float: right;
-				color: #ff4838;
-				font-size: 14px;
+		span {
+			font-weight: bold;
+		}
 
-				&:hover {
-					text-decoration: underline;
-				}
-			}
+		.link {
+			float: right;
+			color: #ff4838;
+			font-size: 14px;
 
-			.slider-control {
-				position: absolute;
-				right: 0;
-				top: -6px;
-
-				.arrow {
-					width: 28px;
-					height: 28px;
-					border: 1px solid #ccc;
-					float: left;
-					background-repeat: no-repeat;
-					background-position: center;
-					background-size: 16px;
-					cursor: pointer;
-					-moz-user-select: none;
-					-ms-user-select: none;
-					-o-user-select: none;
-					-webkit-user-select: none;
-
-					&:hover {
-						background-color: #ececec;
-					}
-
-					&.left {
-						background-image: url('../img/prev-arrow.svg');
-						border-radius: 12px 0 0 12px;
-					}
-					&.right {
-						background-image: url('../img/next-arrow.svg');
-						border-radius: 0 12px 12px 0;
-					}
-				}
+			&:hover {
+				text-decoration: underline;
 			}
 		}
 
-		// ТОП-треки
-		&.top-audio {
-			.audio-row {
-				width: 50%;
-				height: 45px;
+		.slider-control {
+			position: absolute;
+			right: 0;
+			top: -6px;
+
+			.arrow {
+				width: 28px;
+				height: 28px;
+				border: 1px solid #ccc;
 				float: left;
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 16px;
+				cursor: pointer;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				-o-user-select: none;
+				-webkit-user-select: none;
 
-				.audio-row-cover {
-					width: 36px;
-					height: 36px;
-				}
-			}
-
-			.audio-row-desc {
-				margin: 3px 0;
-				width: 250px;
-
-				.singer,
-				.song {
-					white-space: pre;
-					overflow: hidden;
+				&:hover {
+					background-color: #ececec;
 				}
 
-				a {
-					font-weight: 400;
+				&.left {
+					background-image: url('../img/prev-arrow.svg');
+					border-radius: 12px 0 0 12px;
+				}
+				&.right {
+					background-image: url('../img/next-arrow.svg');
+					border-radius: 0 12px 12px 0;
 				}
 			}
 		}
+	}
 
-		// Найближчий тур
-		&.tour {
-			.event {
-				height: 40px;
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				font-family: 'Roboto Condensed';
-				font-size: 18px;
+	// ТОП-треки
+	&.top-audio {
+		.audio-row {
+			width: 50%;
+			height: 45px;
+			float: left;
 
-				&:nth-child(even) {
-					background-color: lighten(#e9f2ff, 1.5%);
-				}
+			.audio-row-cover {
+				width: 36px;
+				height: 36px;
+			}
+		}
 
-				&:hover {
-					background-color: darken(#e9f2ff, 0.5%);
-				}
+		.audio-row-desc {
+			margin: 3px 0;
+			width: 250px;
 
-				.date {
-					width: 160px;
-					flex-grow: 0;
-					text-align: center;
-				}
-				.city {
-					padding: 0 10px;
-					flex: 5 1 auto;
-				}
-				.ticket {
-					padding-right: 10px;
-					a {
-						color: #ff4838;
-						&:hover {
-							text-decoration: underline;
-						}
+			.singer,
+			.song {
+				white-space: pre;
+				overflow: hidden;
+			}
+
+			a {
+				font-weight: 400;
+			}
+		}
+	}
+
+	// Найближчий тур
+	&.tour {
+		.event {
+			height: 40px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			font-family: 'Roboto Condensed';
+			font-size: 18px;
+
+			&:nth-child(even) {
+				background-color: lighten(#e9f2ff, 1.5%);
+			}
+
+			&:hover {
+				background-color: darken(#e9f2ff, 0.5%);
+			}
+
+			.date {
+				width: 160px;
+				flex-grow: 0;
+				text-align: center;
+			}
+			.city {
+				padding: 0 10px;
+				flex: 5 1 auto;
+			}
+			.ticket {
+				padding-right: 10px;
+				a {
+					color: #ff4838;
+					&:hover {
+						text-decoration: underline;
 					}
 				}
 			}
 		}
 	}
 }
+
 
 // Альбоми
 .albums {

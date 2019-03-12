@@ -8,7 +8,7 @@ import SlickSlider from "react-slick";
 import Button from '../Commons/Button';
 import AlbumsSection from 'universal/components/Sections/AlbumsSection';
 import TourSection from 'universal/components/Sections/TourSection';
-import TopMusicSection from 'universal/components/Sections/TopMusicSection';
+import MusicSection from 'universal/components/Sections/MusicSection';
 // Actions
 import * as ArtistProfile from './ArtistProfileActions';
 
@@ -42,7 +42,7 @@ export default class ArtistProfileContainer extends Component {
 
 						<div className="artist-title official"><span>{this.props.name}</span></div>
 
-						<TopMusicSection artistName={this.props.locationParams.name} limit="6" />
+						<MusicSection artistName={this.props.locationParams.name} limit="6" />
 						<AlbumsSection />
 						<TourSection />
 

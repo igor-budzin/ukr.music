@@ -20,7 +20,6 @@ export default class PlayListFull extends PureComponent {
 	}
 
 	renderRow = ({ index, key, style, parent }) => {
-
 		return (
 			<CellMeasurer 
 				key={key}
@@ -33,13 +32,14 @@ export default class PlayListFull extends PureComponent {
 					<MusicItem
 						handleChoseAudio={this.props.handleChoseAudio}
 						handleEditAudio={this.props.handleEditAudio}
-						isPlay={this.props.currentId === this.props.playlist[index]._id && this.props.isPlaying}
+						currentId={this.props.currentId}
+						isPlaying={this.props.isPlaying}
+						isLoading={this.props.isLoading}
 						_id={this.props.playlist[index]._id}
 						link={this.props.playlist[index].link}
 						key={key}
 						artist={this.props.playlist[index].artists}
 						title={this.props.playlist[index].title}
-						time={this.props.playlist[index].duration}
 						picture={this.props.playlist[index].picture}
 						duration={this.props.playlist[index].duration}
 						mini={this.props.mini}

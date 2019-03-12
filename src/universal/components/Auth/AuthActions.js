@@ -38,26 +38,29 @@ function requestLoginUserError(err) {
 	}
 }
 
-export const loginUser = (user) => dispatch => {
+export const loginUser = user => dispatch => {
 	dispatch(requestLoginUser());
 
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			axiosInstance.post('/login', user)
 			.then(res => {
-				const { token } = res.data;
-				localStorage.setItem('jwtToken', token);
-				setAuthToken(token);
-				const decoded = jwt_decode(token);
+				if(res.data.status) {
+					const { token } = res.data;
+					localStorage.setItem('jwtToken', token);
+					setAuthToken(token);
+					const decoded = jwt_decode(token);
 
-				dispatch(setCurrentUser(decoded));
-				dispatch(requestLoginUserSuccess());
-				resolve();
+					dispatch(setCurrentUser(decoded));
+					dispatch(requestLoginUserSuccess());
+					resolve();
+				}
+				else reject();
 			})
 			.catch(err => {
 				console.log(err)
-				// dispatch(requestLoginUserError(err));
-				resolve();
+				dispatch(requestLoginUserError(err));
+				reject();
 			});
 		}, 1500);
 	});

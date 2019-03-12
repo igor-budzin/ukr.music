@@ -7,15 +7,13 @@ import { AnimatedSwitch } from 'react-router-transition';
 
 import styles from 'universal/assets/styles/styles.scss';
 
-// Routes
 // For Development only
-// import * as RouteMap from '../routes/static.js';
-
+import * as RouteMap from '../routes/static.js';
 // This is used in production for code splitting via `wepback.config.server.js`
-import * as RouteMap from 'universal/routes/async.js';
+// import * as RouteMap from 'universal/routes/async.js';
 
 const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, location, ...rest }) => {
-
+	if(location.pathname !== '/login') {
 		return (
 			<Route {...rest} render={props => {
 					return (
@@ -27,7 +25,8 @@ const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, 
 				}}
 			/>
 		)
-
+	}
+	else return null;
 }
 
 @connect(mapStateToProps)

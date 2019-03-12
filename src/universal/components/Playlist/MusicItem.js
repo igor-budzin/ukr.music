@@ -16,10 +16,10 @@ export default class MusicItem extends Component {
 		});
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
+	// shouldComponentUpdate(nextProps, nextState) {
 		// return !isEqual(nextProps, this.props);
-		return this.props.isPlay !== nextProps.isPlay;
-	}
+		// return this.props.isPlaying !== nextProps.isPlaying || this.props.isLoading !== nextProps.isLoading;
+	// }
 
 	onEdit = event => {
 		event.stopPropagation();
@@ -27,36 +27,50 @@ export default class MusicItem extends Component {
 	}
 
 	render() {
-		let style = {};
+		const { 
+			_id,
+			isPlaying,
+			isLoading,
+			currentId,
+			style,
+			picture,
+			title,
+			mini,
+			artist,
+			duration
+		} = this.props;
+		let coverStyle = {};
 		// if(this.props.picture) {
 		// 	style = { "backgroundImage": `url(${API_URL}/getAudioCover/${this.props.picture})` };
 		// }
-
 		return (
 			<div
-				className={classNames('audio-row', (this.props.isPlay ? ' isPlay' : null), this.props.mini ? 'mini': null)}
+				className={classNames(
+					'audio-row',
+					currentId === _id ? 'isCurrent' : null,
+					isPlaying && currentId === _id ? 'isPlaying' : null,
+					mini ? 'mini': null,
+					isLoading && currentId === _id ? 'isLoading' : null
+				)}
 				onClick={this.onClick}
-				style={this.props.style ? this.props.style : {}}
+				style={style ? style : {}}
 			>
-				<div className={classNames('audio-row-cover', this.props.picture ? null : 'empty')} style={style}>
-					{
-						this.props.isPlay && (
-							<div className="bars">
-								<div className="bar"></div>
-								<div className="bar"></div>
-								<div className="bar"></div>
-								<div className="bar"></div>
-								<div className="bar"></div>
-							</div>
-						)
-					}
+				<div className={classNames('audio-row-cover', picture ? null : 'empty')} style={coverStyle}>
+						<div className="loader">{musicLoader}</div>
+						<div className="bars">
+							<div className="bar"></div>
+							<div className="bar"></div>
+							<div className="bar"></div>
+							<div className="bar"></div>
+							<div className="bar"></div>
+						</div>
 					<div className="bg"></div>
 				</div>
 				<div className="audio-row-desc">
-					<div className="singer"><a href="javascript:void(0);">{this.props.artist}</a></div>
-					<div className="song"><a href="javascript:void(0);">{this.props.title}</a></div>
+					<div className="singer"><a href="javascript:void(0);">{artist}</a></div>
+					<div className="song"><a href="javascript:void(0);">{title}</a></div>
 				</div>
-				<div className="audio-row-time">{formatSeconds(this.props.duration)}</div>
+				<div className="audio-row-time">{formatSeconds(duration)}</div>
 				<div className="audio-row-options">
 					{
 						typeof this.props.handleEditAudio === 'function' && (
@@ -69,3 +83,23 @@ export default class MusicItem extends Component {
 	}
 }
 
+const svgLoaderStyle = {
+	left: '50%',
+	top: '50%',
+	marginTop: '23px',
+	width: '86px',
+	position: 'absolute',
+	transform: 'translate(-50%, -50%) matrix(1, 0, 0, 1, 0, 0)',
+}
+
+
+const musicLoader = (
+	<div style={{position: 'relative'}}>
+		<svg viewBox="0 0 187.3 93.7" preserveAspectRatio="xMidYMid meet" style={svgLoaderStyle}>
+			<path stroke="#ff4838" id="outline" fill="none" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" 
+						d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
+			<path id="outline-bg" opacity="0.5" fill="none" stroke="#ededed" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" 
+						d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 				c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
+		</svg>
+	</div>
+)

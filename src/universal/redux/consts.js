@@ -13,6 +13,7 @@ export const PLAY_NEW_AUDIO = 'PLAY_NEW_AUDIO';
 export const PLAY_AUDIO = 'PLAY_AUDIO';
 export const PAUSE_AUDIO = 'PAUSE_AUDIO';
 export const SET_CURRENT_PLAYLIST = 'SET_CURRENT_PLAYLIST';
+export const SET_CURRENT_AUDIO = 'SET_CURRENT_AUDIO';
 
 // Auth
 export const GET_ERRORS = 'GET_ERRORS';

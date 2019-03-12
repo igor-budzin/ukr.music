@@ -38,7 +38,10 @@ export default class LoginContainer extends Component {
 		this.props.loginUser(user)
 		.then(() => {
 			this.setState({ redirect: true });
-		});
+		})
+		.catch(err => {
+			console.log(err);
+		})
 	};
 
 	render() {

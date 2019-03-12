@@ -27,6 +27,7 @@ const mapStateToProps = state => ({
 	currentMusic: state.controlMusicReducer.currentMusic,
 	currentPlaylist: state.controlMusicReducer,
 	isPlaying: state.controlMusicReducer.isPlaying,
+	isLoading: state.controlMusicReducer.isLoading,
 	currentUserName: state.AuthReducer.user.name,
 	userId: state.AuthReducer.user.id,
 	visibleUserName: state.visibleUserDataReducer.name,
@@ -147,7 +148,7 @@ export default class UserProfiletContainer extends Component {
 					</div>
 
 					<Tabs>
-						<TabList className="section-links" style={{"marginBottom": "40px"}}>
+						<TabList className="section-links" style={{ marginBottom: "40px" }}>
 							<Tab className="link" selectedClassName="active">Треки</Tab>
 							<Tab className="link" selectedClassName="active">Альбоми</Tab>
 							<Tab className="link" selectedClassName="active">Плейлисти</Tab>
@@ -163,6 +164,7 @@ export default class UserProfiletContainer extends Component {
 										handleChoseAudio={this.handleChoseAudio}
 										handleEditAudio={this.handleEditAudio}
 										isPlaying={this.props.isPlaying}
+										isLoading={this.props.isLoading}
 										hasNextPage={this.props.hasNextPage}
 										loadNextPage={this.getPageData}
 										isNextPageLoading={false}

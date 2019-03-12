@@ -333,19 +333,51 @@ a {
 	cursor: pointer;
 	position: relative;
 
-	&.isPlay {
+	.loader {
+		display: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 2;
+	}
+
+	.bg {
+		display: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color: rgba(0, 0, 0, 0.7);
+		z-index: 1;
+	}
+
+	&.isPlaying {
 		background-color: lighten(#e9f2ff, 2%);
+
+		.bars {
+			display: block;
+		}
 
 		.bg {
 			display: block;
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			background-color: rgba(0, 0, 0, 0.7);
-			z-index: 1;
 		}
+	}
+
+	&.isLoading {
+		.loader {
+			display: block;
+		}
+
+		.bg {
+			display: block;
+		}
+	}
+
+	&.isCurrent {
+		background-color: lighten(#e9f2ff, 2%);
 	}
 
 	&.mini {
@@ -492,6 +524,7 @@ a {
 	margin-top: -9px;
 	margin-left: -11px;
 	z-index: 2;
+	display: none;
 }
 .bar {
 	 background: #fff;

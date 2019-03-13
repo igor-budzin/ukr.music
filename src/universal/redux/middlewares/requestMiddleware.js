@@ -5,7 +5,6 @@ const errorMessages = {
 	callAPI: 'Expected callAPI to be a function.',
 	formatData: 'Expected formatData to be a function.',
 	formatDataReturn: 'Expected formatData to return an object.',
-	meta: 'Expected meta to be an object',
 	options: 'Expected each suffix to be a string',
 	payload: 'Expected payload to be an object',
 	shouldCallAPI: 'Expected shouldCallAPI to be a function.',
@@ -19,7 +18,6 @@ function validateInput(
 		types,
 		formatData = res => res,
 		payload = {},
-		meta = {},
 	},
 	options,
 ) {
@@ -36,9 +34,6 @@ function validateInput(
 	}
 	if (typeof payload !== 'object') {
 		throw new Error(errorMessages.payload);
-	}
-	if (typeof meta !== 'object') {
-		throw new Error(errorMessages.meta);
 	}
 }
 
@@ -80,7 +75,6 @@ function createRequestMiddleware(options, settings) {
 			types,
 			endpoint,
 			payload = {},
-			meta = {},
 			method = 'get',
 			data,
 			handleSuccess,
@@ -133,12 +127,10 @@ function createRequestMiddleware(options, settings) {
 						payload: {
 							...payload,
 							...response.data
-						},
-						meta,
+						}
 					}
 				: {
-						type: successType,
-						meta,
+						type: successType
 					};
 
 			if (isFSACompliant && !isFSA(successAction)) next(action);
@@ -154,19 +146,17 @@ function createRequestMiddleware(options, settings) {
 				? {
 						payload: error,
 						error: true,
-						type: errorType,
-						meta,
+						type: errorType
 					}
 				: {
 						message: error.message,
 						error: true,
-						type: errorType,
-						meta,
+						type: errorType
 					};
 
 			if (isFSACompliant && !isFSA(errorAction)) next(action);
 			else {
-				if(typeof handleError === 'function') handleError();
+				if(typeof handleError === 'function') handleError(error);
 				dispatch(errorAction)
 			}
 

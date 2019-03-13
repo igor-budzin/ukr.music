@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const AudioModel = require('../models/uploadAudio.model');
+const AudioModel = require('../models/Audio.model');
 
 module.exports = (router) => {
 	router.post('/getAudioData', (req, res) => {

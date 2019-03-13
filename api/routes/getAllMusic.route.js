@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const AudioModel = require('../models/uploadAudio.model');
+const AudioModel = require('../models/Audio.model');
 const UserModel = require('../models/user.model');
 
 module.exports = (router) => {

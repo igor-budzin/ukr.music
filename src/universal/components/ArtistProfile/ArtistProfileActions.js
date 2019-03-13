@@ -27,7 +27,6 @@ export function getArtistData(artist) {
 }
 
 export function getArtistList(currentUserName) {
-	console.log('getArtistList action')
 	return {
 		typePrefix: 'GET_ARTIST_LIST',
 		endpoint: 'getArtistList',

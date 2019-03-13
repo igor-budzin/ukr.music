@@ -6,7 +6,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const AWS = require('aws-sdk')
 
-const AudioModel = require('../models/uploadAudio.model');
+const AudioModel = require('../models/Audio.model');
 const UserModel = require('../models/user.model');
 
 const awsConfig = require('../config/AWS.config');

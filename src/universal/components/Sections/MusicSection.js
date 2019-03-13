@@ -23,16 +23,16 @@ const MusicSection = props => {
               <MusicItem
                 key={index}
                 mini={true}
-                withoutTime={true}
-                currentId={item.currentId}
-                isPlaying={item.isPlaying}
-                isLoading={item.isLoading}
+                currentId={props.currentId}
+                isPlaying={props.isPlaying}
+                isLoading={props.isLoading}
                 _id={item._id}
                 link={item.link}
                 artist={item.artists}
                 title={item.title}
                 picture={item.picture}
                 duration={item.duration}
+                handleChoseAudio={props.handleChoseAudio}
               />
             )
           })

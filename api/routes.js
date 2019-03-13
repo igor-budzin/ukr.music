@@ -40,4 +40,8 @@ module.exports = (router, socket) => {
 	require('./routes/getArtistMusicList.route')(router);
 	require('./routes/getArtistList.route')(router);
 
+	/*------------------------------------------------------------*/
+
+	require('./routes/music/getMusicList.route')(router);
+ 
 };

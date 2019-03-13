@@ -34,7 +34,9 @@ const mapStateToProps = state => ({
 	visibleUserID: state.visibleUserDataReducer._id
 });
 
-const mapDispatchToProps = dispatch =>  bindActionCreators({ ...AudioActions, getMusic: getMusicListAction }, dispatch);
+const mapDispatchToProps = dispatch => {
+	return bindActionCreators({ ...AudioActions, getMusic: getMusicListAction }, dispatch);
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class UserProfiletContainer extends Component {

@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-export function getArtistMusicList(userName, limit = 30) {
-	return {
-		typePrefix: 'GET_MUSIC_LIST',
-		endpoint: 'getArtistMusicList',
-		data: {
-			name: userName,
-			limit: limit
-		}
-	};
+export function getMusicList({ userName = null, limit = 30, page = 1, sortBy = null }) {
+  return {
+    typePrefix: 'REQUEST_GET_MUSIC_LIST',
+    endpoint: 'getMusicList',
+    data: { userName, limit, page, sortBy },
+    handleSuccess: response => {
+      console.log('handleSuccess', response);
+    },
+    handleError: error => {
+      console.log('handleError');
+      console.log(error);
+    }
+  }
 }

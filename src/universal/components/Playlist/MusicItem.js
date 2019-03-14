@@ -42,9 +42,9 @@ export default class MusicItem extends Component {
     } = this.props;
 
     let coverStyle = {};
-    // if(picture) {
-    //  coverStyle = { "backgroundImage": `url(${API_URL}/getAudioCover/${picture})` };
-    // }
+    if(picture) {
+     coverStyle = { "backgroundImage": `url(${API_URL}/getAudioCover/${picture})` };
+    }
     return (
 
       <div

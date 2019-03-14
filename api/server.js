@@ -21,6 +21,8 @@ const httpsServer = https.createServer(credentials, app);
 
 const socket = require('socket.io')(httpsServer);
 
+global.__root = __dirname;
+
 // required for passport
 app.use(passport.initialize());
 require('./auth/passport')(passport);

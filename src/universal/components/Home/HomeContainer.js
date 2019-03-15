@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 // Components
 import MusicSection from 'universal/components/Sections/MusicSection';
 import AlbumsSection from 'universal/components/Sections/AlbumsSection';
+import CollectionSection from 'universal/components/Sections/CollectionSection';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 // Actions
 import { getMusicList } from 'universal/redux/actions/musicDataActions';
@@ -59,17 +60,39 @@ export default class HomeContainer extends Component {
 
         <div className="filter-hr"></div>
 
-        <div className="content">
-          <MusicSection
-            title="Набувають популярності"
-            data={this.props.playlist}
-            handleChoseAudio={this.handleChoseAudio}
-            isPlaying={this.props.isPlaying}
-            isLoading={this.props.isLoading}
-            currentId={this.props.currentMusic._id}
-          />
-          
+        <div className="clearfix">
+          <div className="content">
+            <MusicSection
+              title="Набувають популярності"
+              data={this.props.playlist}
+              handleChoseAudio={this.handleChoseAudio}
+              isPlaying={this.props.isPlaying}
+              isLoading={this.props.isLoading}
+              currentId={this.props.currentMusic._id}
+            />
+            
+          </div>
         </div>
+
+        <div>
+          <AlbumsSection />
+        </div>
+
+        <div>
+          <div style={{"width": "49%", "float": "left"}}>
+            <CollectionSection
+              cover="collection1.jpg"
+              label2="Within Temptation"
+            />
+          </div>
+          <div style={{"width": "49%", "float": "right"}}>
+            <CollectionSection
+              cover="collection2.jpg"
+              label2="The Hardkiss"
+            />
+          </div>
+        </div>
+
       </main>
     );
   }

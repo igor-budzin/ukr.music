@@ -1,11 +1,7 @@
 // Libraries
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import axios from 'axios';
 // Components
-import Button from '../Commons/Button';
 import MusicItem from 'universal/components/Playlist/MusicItem';
 
 const MusicSection = props => {

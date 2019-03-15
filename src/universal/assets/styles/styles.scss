@@ -915,6 +915,7 @@ a {
       float: right;
       color: #ff4838;
       font-size: 14px;
+      line-height: 18px;
 
       &:hover {
         text-decoration: underline;
@@ -984,6 +985,97 @@ a {
     }
   }
 
+  &.collection {
+    height: 210px;
+    overflow: hidden;
+    position: relative;
+    background-color: #e8effb;
+    border-radius: 3px;
+
+    .layer {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      cursor: pointer;
+
+      .play-btn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #000;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        transition-property: opacity;
+        transition-duration: 200ms;
+        background-image: url('../img/play.svg');
+        background-position: 20px center;
+        background-repeat: no-repeat;
+        background-size: 40%;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .cover {
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      float: left;
+      position: relative;
+
+      &:after {
+        display: block;
+        content: "";
+        position: absolute;
+        right: -1px;
+        height: 100%;
+        top: 0;
+        background: #e8effb;
+        -webkit-clip-path: polygon(100% 0, 85% 100%, 100% 100%);
+        clip-path: polygon(100% 0, 80% 100%, 100% 100%);
+        width: 100%;
+      }
+
+      img {
+        width: auto;
+        height: 100%;
+      }
+    }
+
+    .description {
+      position: absolute;
+      display: inline-block;
+      top: 50%;
+      right: 20px;
+      text-align: right;
+      transform: translateY(-50%);
+      line-height: 20px;
+
+      .label {
+        font-size: 16px;
+      }
+
+      .label2 {
+        font-size: 20px;
+      }
+    }
+
+    &:hover {
+      .layer {
+        display: block;
+      }
+    }
+  }
+
   // Найближчий тур
   &.tour {
     .event {
@@ -1027,15 +1119,20 @@ a {
 
 // Альбоми
 .albums {
+  .body {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
   .album {
     width: 200px;
     cursor: pointer;
-    padding-right: 11px;
+    padding: 0 5px;
+    position: relative;
 
     img {
       width: 100%;
       height: auto;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
 
     .album-name {
@@ -1043,10 +1140,38 @@ a {
       font-family: 'Roboto Condensed';
     }
 
-    .album-year {
+    .album-artist {
       font-family: 'Roboto Condensed';
-      font-size: 12px;
+      font-size: 14px;
       margin-bottom: 5px;
+      float: left;
+      margin-right: 10px;
+    }
+
+    .album-amount {
+      font-family: 'Roboto Condensed';
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .bg {
+      position: relative;
+    }
+
+    .layer {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5 );
+    }
+
+    &:hover {
+      .layer {
+        display: block;
+      }
     }
   }
 

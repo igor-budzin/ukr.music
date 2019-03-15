@@ -34,6 +34,7 @@ module.exports = router => {
       .paginate(userAudio.lenght > 0 ? { _id: { $in: userAudio }} : {}, options)
       .then(result => {
         responseData.music = result.docs;
+        responseData.page = page;
         responseData.hasNextPage = countAudio > page * limit;
         res.json(responseData);
       })

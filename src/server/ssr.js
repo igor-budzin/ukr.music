@@ -17,7 +17,7 @@ function renderApp(url, res, store, assets) {
 	resetIdCounter();
 	const html = renderToString(
 		<Html
-			title='💥'
+			title='Cabin of Pilot'
 			store={store}
 			url={url}
 			context={context}

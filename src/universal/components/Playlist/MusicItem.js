@@ -43,10 +43,10 @@ export default class MusicItem extends Component {
 
     let coverStyle = {};
     if(picture) {
-     coverStyle = { "backgroundImage": `url(${API_URL}/getAudioCover/${picture})` };
+     coverStyle = { "backgroundImage": `url("${API_URL}/getAudioCover/${picture}")` };
     }
+    
     return (
-
       <div
         className={classNames(
           'audio-row',

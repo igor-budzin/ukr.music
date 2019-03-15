@@ -30,7 +30,7 @@ export default class Header extends Component {
 			<header id="header" className="header">
 				<div className="container">
 					<div className="item-left">
-						<a href="#" className="header-logo">ukr.music</a>
+						<a href="#" className="header-logo">Cabin of pilot</a>
 					</div>
 					<div className="item-left">
 						<ul className="header-nav">

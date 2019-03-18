@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
@@ -34,8 +34,8 @@ export default class Header extends Component {
 					</div>
 					<div className="item-left">
 						<ul className="header-nav">
-							<li><Link to="/">Головна</Link></li>
-							<li><Link to={`/profile/${this.props.currentUserName}`} className="active">Музика</Link></li>
+							<li><NavLink to="/" activeClassName="active" exact>Головна</NavLink></li>
+							<li><NavLink to={`/profile/${this.props.currentUserName}`} activeClassName="active">Музика</NavLink></li>
 							<li><a href="#">Афіша</a></li>
 							<li><a href="#">Контакти</a></li>
 						</ul>

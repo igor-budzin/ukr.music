@@ -669,7 +669,7 @@ a {
     float: left;
     margin-right: 10px;
     position: relative;
-    background-color: lighten(#e9f2ff, 2%);
+    background-color: darken(#e9f2ff, 4%);
 
     &.empty {
       background-image: url('../img/quaver.svg');

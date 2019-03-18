@@ -1,7 +1,6 @@
 .DS_Store
 node_modules
 build
-files
 *.log.*
 map-routes.sublime-workspace
 ngrok.exe

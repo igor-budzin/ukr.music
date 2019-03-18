@@ -42,6 +42,8 @@ class MusicPlayerContainer extends Component {
   }
 
   handleKeyPress = event => {
+    if(event.target.localName === 'input') return false;
+
     const { isPlaying } = this.props;
     const duration = window.audioInstance.duration;
     let newTime = 0;

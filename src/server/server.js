@@ -50,5 +50,5 @@ app.use(function(err, req, res, next) {
 const httpsServer = http.createServer(app);
 
 httpsServer.listen(3000, () => {
-	 console.log(`${'Server listening:'.yellow} ${'https://localhost:3000'.red}`);
+	 console.log(`${'Server listening:'.yellow} ${'http://localhost:3000'.red}`);
  });

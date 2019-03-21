@@ -32,6 +32,7 @@ export default class PlayListFull extends PureComponent {
 					<MusicItem
 						handleChoseAudio={this.props.handleChoseAudio}
 						handleEditAudio={this.props.handleEditAudio}
+						handleGetPlaylists={this.props.handleGetPlaylists}
 						currentId={this.props.currentId}
 						isPlaying={this.props.isPlaying}
 						isLoading={this.props.isLoading}

@@ -9,40 +9,45 @@ import { API_URL } from '../../global.config';
 import * as Reducers from './reducers/index.js';
 
 const suffix = {
-	pendingSuffix: '_REQUEST',
-	successSuffix: '_SUCCESS',
-	errorSuffix: '_ERROR'
+  pendingSuffix: '_REQUEST',
+  successSuffix: '_SUCCESS',
+  errorSuffix: '_ERROR'
 }
 
 const request = requestMiddleware.withOptions(suffix, {
-	baseUrl: `${API_URL}/`, 
-	header: { 'Access-Control-Allow-Origin': '*' }
+  baseUrl: `${API_URL}/`,
+  withCredentials: true,
+  header: { 
+    'Access-Control-Allow-Origin': '*',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  }
 });
 
 // const composeEnhancers = composeWithDevTools({
 //   serialize: {
-//   	options: false
+//    options: false
 //   }
 // });
 
 export default (history) => {
-	const store = createStore(combineReducers({
-		...Reducers,
-		router: routerReducer
-	}), composeWithDevTools(applyMiddleware(routerMiddleware(history), request, thunk, logger)));
+  const store = createStore(combineReducers({
+    ...Reducers,
+    router: routerReducer
+  }), composeWithDevTools(applyMiddleware(routerMiddleware(history), request, thunk, logger)));
 
-	if (module.hot) {
-		// Enable Webpack hot module replacement for reducers
-		module.hot.accept('./reducers', () => {
-			const nextReducers = require('./reducers/index.js');
-			const rootReducer = combineReducers({
-				...nextReducers,
-				router: routerReducer
-			});
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('./reducers', () => {
+      const nextReducers = require('./reducers/index.js');
+      const rootReducer = combineReducers({
+        ...nextReducers,
+        router: routerReducer
+      });
 
-			store.replaceReducer(rootReducer);
-		});
-	}
+      store.replaceReducer(rootReducer);
+    });
+  }
 
-	return store;
+  return store;
 }

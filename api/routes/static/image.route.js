@@ -5,16 +5,16 @@ const coverFilesPath = path.resolve(__root, '..', '..', 'files', 'collection');
 
 module.exports = (router) => {
 	router.get('/image/:link', (req, res) => {
-    const filePath = path.resolve(coverFilesPath, req.params.link);
-    const stat = fs.statSync(filePath);
+        const filePath = path.resolve(coverFilesPath, req.params.link);
+        const stat = fs.statSync(filePath);
 
-    res.writeHead(200, {
-        'Content-Type': 'image/jpeg',
-        'Content-Length': stat.size
-    });
+        res.writeHead(200, {
+            'Content-Type': 'image/jpeg',
+            'Content-Length': stat.size
+        });
 
-    const readStream = fs.createReadStream(filePath);
+        const readStream = fs.createReadStream(filePath);
 
-    readStream.pipe(res);
+        readStream.pipe(res);
 	});
 }

@@ -1,6 +1,7 @@
 // Libraries
 import React, { Component } from 'react';
 import SlickSlider from "react-slick";
+import { API_URL } from '../../../global.config';
 
 export default class AlbumsSection extends Component {
   handleRightSlide = () => {
@@ -43,7 +44,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/MAXIMALISM.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/MAXIMALISM.jpg`} alt=""/>
               </div>
               <div className="album-name">Perfection Is a Lie</div>
               <div className="album-artist">The Hardkiss</div>
@@ -51,7 +52,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/epolets-album.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/epolets-album.jpg`} alt=""/>
               </div>
               <div className="album-name">Cold Altair</div>
               <div className="album-artist">The Hardkiss</div>
@@ -59,7 +60,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/thehardkiss-album.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/thehardkiss-album.jpg`} alt=""/>
               </div>
               <div className="album-name">Stones and Honey</div>
               <div className="album-artist">The Hardkiss</div>
@@ -67,7 +68,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/ThePrettyReckless.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/ThePrettyReckless.jpg`} alt=""/>
               </div>
               <div className="album-name">Залізна ластівка</div>
               <div className="album-artist">The Hardkiss</div>
@@ -75,7 +76,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/color-album.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/color-album.jpg`} alt=""/>
               </div>
               <div className="album-name">Lovers</div>
               <div className="album-artist">The Hardkiss</div>
@@ -83,7 +84,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/mort-album.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/mort-album.jpg`} alt=""/>
               </div>
               <div className="album-name">Stones and Honey</div>
               <div className="album-artist">The Hardkiss</div>
@@ -91,7 +92,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/MAXIMALISM.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/MAXIMALISM.jpg`} alt=""/>
               </div>
               <div className="album-name">Perfection Is a Lie</div>
               <div className="album-artist">The Hardkiss</div>
@@ -99,7 +100,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/epolets-album.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/epolets-album.jpg`} alt=""/>
               </div>
               <div className="album-name">Cold Altair</div>
               <div className="album-artist">The Hardkiss</div>
@@ -107,7 +108,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/thehardkiss-album.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/thehardkiss-album.jpg`} alt=""/>
               </div>
               <div className="album-name">Stones and Honey</div>
               <div className="album-artist">The Hardkiss</div>
@@ -115,7 +116,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/ThePrettyReckless.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/ThePrettyReckless.jpg`} alt=""/>
               </div>
               <div className="album-name">Залізна ластівка</div>
               <div className="album-artist">The Hardkiss</div>
@@ -123,7 +124,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/color-album.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/color-album.jpg`} alt=""/>
               </div>
               <div className="album-name">Lovers</div>
               <div className="album-artist">The Hardkiss</div>
@@ -131,7 +132,7 @@ export default class AlbumsSection extends Component {
             <div className="album">
               <div className="bg">
                 <div className="layer"></div>
-                <img src="https://localhost:8080/api/albumCover/mort-album.jpg" alt=""/>
+                <img src={`${API_URL}/albumCover/mort-album.jpg`} alt=""/>
               </div>
               <div className="album-name">Stones and Honey</div>
               <div className="album-artist">The Hardkiss</div>

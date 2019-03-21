@@ -78,7 +78,8 @@ function createRequestMiddleware(options, settings) {
 			method = 'get',
 			data,
 			handleSuccess,
-			handleError
+			handleError,
+			dispatchSuccess
 		} = action;
 
 		const isFSACompliant
@@ -135,8 +136,8 @@ function createRequestMiddleware(options, settings) {
 
 			if (isFSACompliant && !isFSA(successAction)) next(action);
 			else {
-				if(typeof handleSuccess === 'function') handleSuccess();
-				dispatch(successAction);
+				if(typeof handleSuccess === 'function') handleSuccess(response, dispatch);
+				if(!dispatchSuccess) dispatch(successAction);
 			}
 
 			return Promise.resolve(getState());

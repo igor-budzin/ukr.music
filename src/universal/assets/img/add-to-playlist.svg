@@ -1,0 +1,35 @@
+<svg width="285.667" height="200" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="202" width="287.667" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_1">
+   <g stroke="null" id="svg_2">
+    <g stroke="null" id="svg_3">
+     <rect stroke-width="0" stroke="#000" x="0" fill="#a0bce4" stroke-dasharray="2,2" id="svg_4" height="28.566902" width="171.40007" y="0"/>
+     <rect stroke-width="0" stroke="#000" x="0" fill="#a0bce4" stroke-dasharray="2,2" id="svg_5" height="28.566902" width="171.40007" y="57.133134"/>
+     <rect stroke-width="0" stroke="#000" x="0" fill="#a0bce4" stroke-dasharray="2,2" id="svg_6" height="28.566902" width="114.266937" y="114.266937"/>
+     <polygon stroke-width="0" stroke="#000" fill="#a0bce4" stroke-dasharray="2,2" id="svg_7" points="228.533203125,114.26693344116211 228.533203125,57.133113861083984 199.96697998046875,57.133113861083984 199.96697998046875,114.26693344116211 142.83316040039062,114.26693344116211 142.83316040039062,142.83318710327148 199.96697998046875,142.83318710327148 199.96697998046875,199.96697616577148 228.533203125,199.96697616577148 228.533203125,142.83318710327148 285.6669921875,142.83318710327148 285.6669921875,114.26693344116211 "/>
+    </g>
+   </g>
+  </g>
+  <g id="svg_8"/>
+  <g id="svg_9"/>
+  <g id="svg_10"/>
+  <g id="svg_11"/>
+  <g id="svg_12"/>
+  <g id="svg_13"/>
+  <g id="svg_14"/>
+  <g id="svg_15"/>
+  <g id="svg_16"/>
+  <g id="svg_17"/>
+  <g id="svg_18"/>
+  <g id="svg_19"/>
+  <g id="svg_20"/>
+  <g id="svg_21"/>
+  <g id="svg_22"/>
+ </g>
+</svg>

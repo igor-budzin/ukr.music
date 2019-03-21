@@ -1,5 +1,5 @@
 const fs = require('fs');
-const https = require('https');
+const http = require('http');
 const express = require('express');
 const app = express();
 
@@ -17,9 +17,9 @@ const credentials = {key: privateKey, cert: certificate, passphrase: 'local'};
 
 const routes = require('./routes');
 
-const httpsServer = https.createServer(credentials, app);
+const httpServer = http.createServer(app);
 
-const socket = require('socket.io')(httpsServer);
+const socket = require('socket.io')(httpServer);
 
 global.__root = __dirname;
 
@@ -52,5 +52,5 @@ app.use((err, req, res, next) => {
 	});
 });
 
-httpsServer.listen(port);
+httpServer.listen(port);
 console.log('Magic happens on port ' + port);

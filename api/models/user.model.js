@@ -33,6 +33,9 @@ const UserSchema = new Schema({
 	},
 	artists: {
 		type: []
+	},
+	playlist: {
+		type: []
 	}
 });
 

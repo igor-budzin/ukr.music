@@ -406,6 +406,12 @@ a {
         font-weight: 400;
       }
     }
+
+    .audio-row-options {
+      .add-to-playlist {
+        background-position: center 3px;
+      }
+    }
   }
 
   &.active {
@@ -502,16 +508,30 @@ a {
   line-height: 100%;
   border-radius: 0 4px 4px 0;
   background-color: #e9f2ff;
+  cursor: default;
 
-  .edit {
+  .item {
     width: 25px;
     height: 25px;
+    float: left;
+    cursor: pointer;
+  }
+
+  .edit {
     background-image: url('../img/play-controls/edit.svg');
-    background-size: 20px;
+    background-size: 16px;
     background-position: center;
     background-repeat: no-repeat;
     margin: 14px 5px;
-    float: left;
+    
+  }
+
+  .add-to-playlist {
+    background-image: url('../img/add-to-playlist.svg');
+    background-size: 20px;
+    background-position: center 8px;
+    background-repeat: no-repeat;
+    margin: 14px 5px;
   }
 }
 .bars {
@@ -1133,6 +1153,7 @@ a {
       width: 100%;
       height: auto;
       margin-bottom: 8px;
+      border-radius: 3px;
     }
 
     .album-name {
@@ -1165,7 +1186,7 @@ a {
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5 );
+      background-color: rgba(0, 0, 0, 0.5);
     }
 
     &:hover {
@@ -1195,12 +1216,13 @@ a {
 .play-lists {
   .playlist {
     width: 148px;
+    height: 188px;
     float: left;
     padding-right: 0px;
     margin-bottom: 10px;
     margin-right: 10px;
 
-    &:nth-child(4) {
+    &:nth-child(4n) {
       margin-right: 0;
     }
 
@@ -1208,22 +1230,68 @@ a {
       position: relative;
       width: 148px;
       height: 148px;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      background-size: 40px;
+      border-radius: 3px;
+      overflow: hidden;
+
+      &.empty {
+        background-image: url('../img/playlist.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: lighten(#d5e6ff, 2%);
+      }
 
       &:hover {
         .bg {
-          display: block;
+          opacity: 1;
         }
       }
       
       .bg {
-        display: none;
+        opacity: 0;
+        transition: opacity 200ms ease;
+        display: block;
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+
+        .count {
+          color: #fff;
+          font-size: 14px;
+          position: absolute;
+          bottom: 5px;
+          left: 10px;
+        }
+
+        .btn {
+          &.play {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-image: url('../img/play.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+          }
+
+          &.edit {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 10px;
+            right: 8px;
+            background-image: url('../img/play-controls/edit2.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+          }
+        }
       }
 
       img {
@@ -1240,13 +1308,14 @@ a {
         background-image: url('../img/add-song.svg');
         background-repeat: no-repeat;
         background-position: center;
+        background-color: lighten(#d5e6ff, 2%);
         background-size: 30px;
-        border: 1px solid lighten(#00b0eb, 35%);
+        border-radius: 3px;
         cursor: pointer;
 
         &:hover {
-          border-color: lighten(#00b0eb, 25%);
-          background-color: lighten(#00b0eb, 50%);
+          background-color: lighten(#d5e6ff, 3%);
+          background-size: 35px;
         }
       }
     }
@@ -1546,7 +1615,7 @@ a {
 
 
     .desc {
-      width: 320px;
+      width: 100%;
       float: left;
     }
   }
@@ -1590,8 +1659,6 @@ a {
 
 
 .modal.create-playlist {
-  max-height: 70%;
-
   .desc {
     overflow: hidden;
   }
@@ -1604,4 +1671,20 @@ a {
 
 .ReactVirtualized__List {
   outline: none;
+}
+
+
+.playlist-list {
+  .playlist-item {
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    padding: 0 20px;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: darken(#e9f2ff, 8%);
+    }
+  }
 }

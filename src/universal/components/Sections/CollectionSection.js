@@ -1,6 +1,7 @@
 // Libraries
 import React from 'react';
 import PropTypes from 'prop-types';
+import { API_URL } from '../../../global.config';
 // Components
 import MusicItem from 'universal/components/Playlist/MusicItem';
 
@@ -12,7 +13,7 @@ const CollectionSection = props => {
         <div className="play-btn"></div>
       </div>
       <div className="cover">
-        <img src={`https://localhost:8080/api/image/${props.cover}`} />
+        <img src={`${API_URL}/image/${props.cover}`} />
       </div>
       <div className="description">
         <span className="label">{label ? label : 'Краще від'}</span><br />

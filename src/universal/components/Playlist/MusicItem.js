@@ -17,6 +17,15 @@ export default class MusicItem extends Component {
     });
   }
 
+  onAddToPlaylist = event => {
+    event.stopPropagation();
+    const { handleGetPlaylists } = this.props;
+    
+    if(typeof handleGetPlaylists === 'function') {
+      handleGetPlaylists(this.props._id);
+    }
+  }
+
   // shouldComponentUpdate(nextProps, nextState) {
     // return !isEqual(nextProps, this.props);
     // return this.props.isPlaying !== nextProps.isPlaying || this.props.isLoading !== nextProps.isLoading;
@@ -84,9 +93,10 @@ export default class MusicItem extends Component {
           )
         }
         <div className="audio-row-options">
+          <div className="item add-to-playlist" title="Додати в плейлист" onClick={this.onAddToPlaylist}></div>
           {
             typeof this.props.handleEditAudio === 'function' && (
-              <div className="edit" title="Редагувати" onClick={this.onEdit}></div>
+              <div className="item edit" title="Редагувати" onClick={this.onEdit}></div>
             )
           }
         </div>

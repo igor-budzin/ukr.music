@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('./config/main.config');
 
-const mongoQuery = process.env.NODE_ENV === 'prodaction' ? 
+const mongoQuery = process.env.NODE_ENV === 'production' ? 
 `mongodb://${config.mongo_main_user}:${config.mongo_main_pass}@127.0.0.1:27017/${config.mongo_main_db}` :
 'mongodb://localhost/musicDB';
 
@@ -43,4 +43,5 @@ module.exports = (router, socket) => {
   require('./routes/files/getAudioFile.route')(router); // Аудіофайл
   require('./routes/files/getAudioCover.route')(router); // Обкладинка треку
 
+  require('./routes/playlist/playlist.route')(router);
 };

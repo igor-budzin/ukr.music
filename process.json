@@ -15,6 +15,7 @@
 			"name": "api server",
 			"script": "./api/server.js",
 			"exec_mode": "cluster",
+			"interpreter": "/root/.nvm/versions/node/v10.15.3/bin/node",
 			"watch": true,
 			"env": {
 				"NODE_ENV": "production",

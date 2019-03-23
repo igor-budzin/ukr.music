@@ -12,6 +12,7 @@ const credentials = {key: privateKey, cert: certificate, passphrase: 'local'};
 import { renderPage, renderDevPage } from './ssr.js';
 
 const PROD = process.env.NODE_ENV === 'production';
+const port = 80;
 
 const app = express();
 
@@ -49,6 +50,6 @@ app.use(function(err, req, res, next) {
 
 const httpsServer = http.createServer(app);
 
-httpsServer.listen(3000, () => {
-	 console.log(`${'Server listening:'.yellow} ${'http://localhost:3000'.red}`);
+httpsServer.listen(port, () => {
+	 console.log(`${'Server listening:'.yellow} ${`http://localhost:${port}`.red}`);
  });

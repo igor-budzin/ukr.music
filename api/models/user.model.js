@@ -4,16 +4,14 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
 	name: {
-		type: String,
-		required: true
+		type: String
 	},
+	googleId: String,
 	email: {
-		type: String,
-		required: true
+		type: String
 	},
 	password: {
-		type: String,
-		required: true
+		type: String
 	},
 	avatar: {
 		type: String
@@ -38,5 +36,13 @@ const UserSchema = new Schema({
 		type: []
 	}
 });
+
+UserSchema.statics.findOneOrCreate = function findOneOrCreate(condition, callback) {
+    const self = this
+
+    self.findOne(condition, (err, result) => {
+        return result ? callback(err, result) : self.create(condition, (err, result) => { return callback(err, result) })
+    })
+}
 
 module.exports = mongoose.model('users', UserSchema);

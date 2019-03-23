@@ -39,31 +39,52 @@ function requestLoginUserError(err) {
 }
 
 export const loginUser = user => dispatch => {
+	window.addEventListener("message", receiveMessage, false);
+
+	function receiveMessage(event)
+	{
+	 console.log(event)
+
+		const { accessToken } = event.data;
+		localStorage.setItem('jwtToken', accessToken);
+		setAuthToken(accessToken);
+		const decoded = jwt_decode(accessToken);
+
+		dispatch(setCurrentUser(decoded));
+		dispatch(requestLoginUserSuccess());
+	}
 	dispatch(requestLoginUser());
+	 window.open(`${API_URL}/auth/google`,"mywindow","location=1,status=1,scrollbars=1, width=800,height=800");
+		let listener = window.addEventListener('message', (message) => {
+		  //message will contain facebook user and details
+		});
 
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			axiosInstance.post('/login', user)
-			.then(res => {
-				if(res.data.status) {
-					const { token } = res.data;
-					localStorage.setItem('jwtToken', token);
-					setAuthToken(token);
-					const decoded = jwt_decode(token);
+	// dispatch(requestLoginUser());
 
-					dispatch(setCurrentUser(decoded));
-					dispatch(requestLoginUserSuccess());
-					resolve();
-				}
-				else reject();
-			})
-			.catch(err => {
-				console.log(err)
-				dispatch(requestLoginUserError(err));
-				reject();
-			});
-		}, 1500);
-	});
+	// return new Promise((resolve, reject) => {
+	// 	setTimeout(() => {
+	// 		axiosInstance.get('/auth/google', user)
+	// 		.then(res => {
+	// 			if(res.data.status) {
+	// 				console.log(res.data)
+	// 				const { token } = res.data;
+	// 				localStorage.setItem('jwtToken', token);
+	// 				setAuthToken(token);
+	// 				const decoded = jwt_decode(token);
+
+	// 				dispatch(setCurrentUser(decoded));
+	// 				dispatch(requestLoginUserSuccess());
+	// 				resolve();
+	// 			}
+	// 			else reject();
+	// 		})
+	// 		.catch(err => {
+	// 			console.log(err)
+	// 			dispatch(requestLoginUserError(err));
+	// 			reject();
+	// 		});
+	// 	}, 1500);
+	// });
 }
 
 function requestRegisterUser() {

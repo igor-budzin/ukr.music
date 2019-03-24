@@ -29,8 +29,9 @@ const mapStateToProps = state => ({
   isPlaying: state.controlMusicReducer.isPlaying,
   isLoading: state.controlMusicReducer.isLoading,
   currentUserName: state.AuthReducer.user.name,
+  currentUserLogin: state.AuthReducer.user.login,
   userId: state.AuthReducer.user.id,
-  visibleUserName: state.visibleUserDataReducer.name,
+  visibleUserLogin: state.visibleUserDataReducer.login,
   visibleUserID: state.visibleUserDataReducer._id
 });
 
@@ -60,13 +61,13 @@ export default class UserProfiletContainer extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(this.props.locationPath !== prevProps.locationPath
-      || this.props.locationParams.name !== prevProps.locationParams.name) {
+      || this.props.locationParams.login !== prevProps.locationParams.login) {
       this.getPageData();
     }
   }
 
   getPageData = () => {
-    this.props.getMusic(this.props.locationParams.name, this.state.page)
+    this.props.getMusic(this.props.locationParams.login, this.state.page)
     .then(response => {
       this.setState({
         audioListReady: true,
@@ -109,7 +110,7 @@ export default class UserProfiletContainer extends Component {
     api.request({
       path: '/playlist',
       data: {
-        userName: this.props.currentUserName
+        userLogin: this.props.currentUserLogin
       },
       handleSuccess: data => {
         this.setState({

@@ -4,7 +4,7 @@ const UserModel = require('../models/user.model');
 const AudioModel = require('../models/Audio.model');
 
 module.exports = (router) => {
-	router.get('/getMusic/:name/:page', (req, res) => {
+	router.get('/getMusic/:login/:page', (req, res) => {
 		const page = parseInt(req.params.page, 10);
 		const data = {};
 		const limit = 40;
@@ -17,7 +17,7 @@ module.exports = (router) => {
 			sort: { date: -1 }
 		};
 
-		UserModel.findOne({ name: req.params.name }, 'audio', function(err, user) {
+		UserModel.findOne({ login: req.params.login }, 'audio', function(err, user) {
 			if(err) next(err);
 
 			AudioModel

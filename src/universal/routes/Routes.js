@@ -42,10 +42,10 @@ export default class Routes extends Component {
 					className="switch-wrapper"
 				>
 					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/profile/:name' component={RouteMap.UserMainPage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/profile/:login' component={RouteMap.UserMainPage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/upload/' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/artist/:name' component={RouteMap.ArtistProfilePage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/followers/:name' component={RouteMap.FollowListPage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/artist/:login' component={RouteMap.ArtistProfilePage} isAuthenticated={this.props.isAuthenticated} />
+					<PrivateRoute exact location={location} path='/followers/:login' component={RouteMap.FollowListPage} isAuthenticated={this.props.isAuthenticated} />
 					<PrivateRoute exact location={location} path='/settings' component={RouteMap.SettingsPage} isAuthenticated={this.props.isAuthenticated} />
 
 					<Route exact location={location} path='/login' component={RouteMap.LoginPage} />

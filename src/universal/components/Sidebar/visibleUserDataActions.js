@@ -12,16 +12,16 @@ const axiosInstance = axios.create({
 	headers: { 'Access-Control-Allow-Origin': '*' }
 });
 
-export function getVisibleUserData(currentUserName, visibleUserName) {
+export function getVisibleUserData(currentUserLogin, visibleUserLogin) {
 	return dispatch => {
 		dispatch({ type: REQUEST_GET_USERDATA });
 
 		return new Promise((resolve, reject) => {
 			axiosInstance.post('getUserData', {
-				currentUserName: currentUserName,
-				userName: visibleUserName
+				currentUserLogin,
+				userLogin: visibleUserLogin
 			})
-			.then(response => {response.data
+			.then(response => {
 				dispatch({
 					type: REQUEST_GET_USERDATA_SUCCESS,
 					payload: response.data

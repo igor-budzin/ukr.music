@@ -18,9 +18,9 @@ module.exports = router => {
       limit
     };
 
-    if(req.query.userName !== undefined) {
+    if(req.query.userLogin !== undefined) {
       await UserModel
-        .findOne({ name: req.query.userName }, 'audio')
+        .findOne({ login: req.query.userLogin }, 'audio')
         .then(user => { userAudio = user.audio; })
         .catch(err => next(err));
 

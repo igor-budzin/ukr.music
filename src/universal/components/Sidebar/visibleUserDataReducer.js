@@ -8,6 +8,7 @@ const initialState = {
 	audioCount: 0,
 	followersCount: 0,
 	canUserFollow: null,
+	login: null,
 	name: null
 };
 export default function visibleUserDataReducer(state = initialState, action) {

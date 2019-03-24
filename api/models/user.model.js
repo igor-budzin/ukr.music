@@ -6,11 +6,14 @@ const UserSchema = new Schema({
 	name: {
 		type: String
 	},
+	login: {
+		type: String
+	},
 	googleId: String,
 	email: {
 		type: String
 	},
-	password: {
+	photo: {
 		type: String
 	},
 	avatar: {

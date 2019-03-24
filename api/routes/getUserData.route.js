@@ -3,16 +3,16 @@ const UserModel = require('../models/user.model.js');
 
 module.exports = (router) => {
 	router.post('/getUserData', (req, res) => {
-		if(!req.body.currentUserName || !req.body.userName) {
+		if(!req.body.currentUserLogin || !req.body.userLogin) {
 			res.status(500).send({ 'status': 'error' });
 			return false;
 		}
 
 		UserModel
 			.aggregate()
-			.match({ name: req.body.userName })
+			.match({ login: req.body.userLogin })
 			.project({
-				name: '$name',
+				login: '$login',
 				audioCount: { $size:"$audio" },
 				followersCount: { $size:"$followers" }
 			})
@@ -24,9 +24,9 @@ module.exports = (router) => {
 				
 				UserModel
 					.aggregate()
-					.match({ name: req.body.currentUserName })
+					.match({ login: req.body.currentUserLogin })
 					.project({ follows: '$follows' })
-					.match({ "follows": { '$in': [user[0].name] } })
+					.match({ "follows": { '$in': [user[0].login] } })
 					.project({ canFollowUser: { $size: "$follows" } })
 					.exec((err, docs) => {
 						if(err) {

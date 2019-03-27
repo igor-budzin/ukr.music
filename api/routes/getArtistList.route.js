@@ -7,7 +7,7 @@ const ArtistModel = require('../models/Artist.model.js');
 module.exports = router => {
 	router.get('/getArtistList', passport.authenticate('jwt', { session: false }), (req, res) => {
 		UserModel
-			.findOne({ name: req.query.currentUserName }, 'artists')
+			.findOne({ name: req.query.currentUserLogin }, 'artists')
 			.exec((err, user) => {
 				if(err) console.log(err);
 

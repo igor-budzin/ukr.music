@@ -16,10 +16,10 @@ opts.issuer = authConfig.jwt.issuer;
 module.exports = passport => {
   passport.use(new JWTStrategy(opts, (jwt_payload, done) => {
     UserModel
-      .findById(jwt_payload.id)
+      .findOne({ googleId: jwt_payload.sub }, '_id login name googleId')
       .then(user => {
         if(user) {
-          return done(null, user);
+          return done(null, {a: '1111'});
         }
         return done(null, false);
       })

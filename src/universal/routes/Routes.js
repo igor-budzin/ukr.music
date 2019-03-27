@@ -12,53 +12,54 @@ import * as RouteMap from '../routes/static.js';
 // This is used in production for code splitting via `wepback.config.server.js`
 // import * as RouteMap from 'universal/routes/async.js';
 
-const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, location, ...rest }) => {
-	if(location.pathname !== '/login') {
-		return (
-			<Route {...rest} render={props => {
-					return (
-						isAuthenticated ?
-						(<Component {...props} location={location} />) :
-						(<Redirect to={{pathname: '/login', state: { from: props.location }}} />)
-					)
+const PrivateRoute = ({ component: Component, isAuthenticated, location, ...rest }) => {
+  if(location.pathname !== '/login') {
+    return (
+      <Route {...rest} render={props => {
+          return (
+            isAuthenticated ?
+            (<Component {...props} location={location} />) :
+            (<Redirect to={{pathname: '/login', state: { from: props.location }}} />)
+          )
 
-				}}
-			/>
-		)
-	}
-	else return null;
+        }}
+      />
+    )
+  }
+  else return null;
 }
 
 @connect(mapStateToProps)
 export default class Routes extends Component {
-	render() {
-		const { location } = this.props;
-		return (
-			<Fragment>
-				<AnimatedSwitch
-					atEnter={{ opacity: 0 }}
-					atLeave={{ opacity: 0 }}
-					atActive={{ opacity: 1 }}
-					className="switch-wrapper"
-				>
-					<PrivateRoute exact location={location} path="/" component={RouteMap.HomePage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/profile/:login' component={RouteMap.UserMainPage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/upload/' component={RouteMap.UploadMusicPage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/artist/:login' component={RouteMap.ArtistProfilePage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/followers/:login' component={RouteMap.FollowListPage} isAuthenticated={this.props.isAuthenticated} />
-					<PrivateRoute exact location={location} path='/settings' component={RouteMap.SettingsPage} isAuthenticated={this.props.isAuthenticated} />
+  render() {
+    const { location, isAuthenticated } = this.props;
+    return (
+      <Fragment>
+        <AnimatedSwitch
+          atEnter={{ opacity: 0 }}
+          atLeave={{ opacity: 0 }}
+          atActive={{ opacity: 1 }}
+          className="switch-wrapper"
+        >
+          <PrivateRoute exact path="/" component={RouteMap.HomePage} {...this.props} />
+          <PrivateRoute exact path='/profile/:login' component={RouteMap.UserMainPage} {...this.props} />
+          <PrivateRoute exact path='/upload/' component={RouteMap.UploadMusicPage} {...this.props} />
+          <PrivateRoute exact path='/artist/:login' component={RouteMap.ArtistProfilePage} {...this.props} />
+          <PrivateRoute exact path='/followers/:login' component={RouteMap.FollowListPage} {...this.props} />
+          <PrivateRoute exact path='/settings' component={RouteMap.SettingsPage} {...this.props} />
+          <PrivateRoute exact path='/musiclist/:type' component={RouteMap.MusicListPage} {...this.props} />
 
-					<Route exact location={location} path='/login' component={RouteMap.LoginPage} />
-					<Route exact location={location} path='/register' component={RouteMap.RegisterPage} />
-					<Route exact location={location} component={RouteMap.NotFoundPage} />
-				</AnimatedSwitch>
-			</Fragment>
-		);
-	}
+          <Route exact path='/login' component={RouteMap.LoginPage} {...this.props} />
+          <Route exact path='/register' component={RouteMap.RegisterPage} {...this.props} />
+          <Route exact component={RouteMap.NotFoundPage} {...this.props} />
+        </AnimatedSwitch>
+      </Fragment>
+    );
+  }
 }
 
 function mapStateToProps(state, props) {
-	return {
-		isAuthenticated: state.AuthReducer.isAuthenticated
-	};
+  return {
+    isAuthenticated: state.AuthReducer.isAuthenticated
+  };
 }

@@ -6,17 +6,14 @@ import { NotificationContainer, NotificationManager } from "react-light-notifica
 import ReactPlaceholder from 'react-placeholder';
 import ReactModal from 'react-modal';
 import api from 'universal/utils/api';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { API_URL } from '../../../global.config';
 // Components
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
 import PlayListFull from 'universal/components/PlayList/PlayListFull';
-import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
-import PlayLists from './PlayLists';
 // Actions
-import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
+import { getMusicList } from 'universal/redux/actions/musicDataActions';
 
 const mapStateToProps = state => ({
   playlist: state.getMusicReducer.music,
@@ -25,24 +22,20 @@ const mapStateToProps = state => ({
   currentPlaylist: state.controlMusicReducer,
   isPlaying: state.controlMusicReducer.isPlaying,
   isLoading: state.controlMusicReducer.isLoading,
-  currentUserName: state.AuthReducer.user.name,
   currentUserLogin: state.AuthReducer.user.login,
-  userId: state.AuthReducer.user.id,
   visibleUserLogin: state.visibleUserDataReducer.login,
-  visibleUserID: state.visibleUserDataReducer._id
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getMusic: getMusicListAction }, dispatch);
+  return bindActionCreators({ getMusicList }, dispatch);
 };
 
-class UserProfiletContainer extends Component {
+class MusicListContainer extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
       audioListReady: false,
-      audioDataReady: false,
       page: 1,
       isOpenModalPlaylist: false,
       dataPlaylist: [],
@@ -51,7 +44,20 @@ class UserProfiletContainer extends Component {
   }
 
   componentDidMount() {
-    this.getPageData();
+    const { getMusicList } = this.props;
+
+    const callback = res => {
+      this.setState({
+        audioListReady: true
+      });
+    }
+
+    getMusicList({ 
+      limit: 50,
+      sortBy: 'listenCount',
+      callback
+    })
+
     ReactModal.setAppElement(document.getElementById('root'));
   }
 
@@ -136,112 +142,74 @@ class UserProfiletContainer extends Component {
     return (
       <Fragment>
         <h2 className="section-title">
-          {
-            this.props.userId !== this.props.visibleUserID && this.props.visibleUserName ?
-            this.props.visibleUserName : 'Моя музика'
-          }
+          <div className="btn-back"></div>
+          Набувають популярності
         </h2>
 
         <div className="container clearfix">
-
           <MusicPlayerContainer />
-
         </div>
 
         <div className="filter-hr"></div>
 
         <div className="content">
 
-          <div style={{"margin": "0 0 30px 0"}}>
-            <SearchField />
-          </div>
+        <div style={{"margin": "0 0 30px 0"}}>
+          <SearchField />
+        </div>
 
-          <Tabs
-            defaultIndex={parseInt(localStorage.getItem('Tab-UserMainPage'), 10) || 0}
-            onSelect={this.onSelectTab}
-          >
-            <TabList className="section-links" style={{ marginBottom: "40px" }}>
-              <Tab className="link" selectedClassName="active">Треки</Tab>
-              <Tab className="link" selectedClassName="active">Альбоми</Tab>
-              <Tab className="link" selectedClassName="active">Плейлисти</Tab>
-              <Tab className="link" selectedClassName="active">Історія</Tab>
-            </TabList>
-
-            <TabPanel>
-              <ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
-                {
-                  this.props.playlist && this.props.playlist.length > 0 ?
-                  <PlayListFull
-                    currentId={this.props.currentMusic._id}
-                    playlist={this.props.playlist}
-                    handleChoseAudio={this.props.handleChoseAudio}
-                    handleEditAudio={this.handleEditAudio}
-                    handleGetPlaylists={this.handleGetPlaylists}
-                    isPlaying={this.props.isPlaying}
-                    isLoading={this.props.isLoading}
-                    hasNextPage={this.props.hasNextPage}
-                    loadNextPage={this.getPageData}
-                    isNextPageLoading={false}
-                  /> :
-                  <EmptyPlayList />
-                }
-              </ReactPlaceholder>
-            </TabPanel>
-
-            <TabPanel>
-              <div className="albums albums-list">
-                <div className="album">
-                  <img src="https://localhost:8080/api/albumCover/MAXIMALISM.jpg" alt=""/>
-                  <div className="album-name">Perfection Is a Lie</div>
-                  <div className="album-year">2017</div>
-                </div>
-              </div>
-            </TabPanel>
-
-            <TabPanel>
-              <PlayLists />
-            </TabPanel>
-
-            <TabPanel>
-              Історія
-            </TabPanel>
-          </Tabs>
-
+        <ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
+          {
+            this.props.playlist && this.props.playlist.length > 0 ?
+            <PlayListFull
+              currentId={this.props.currentMusic._id}
+              playlist={this.props.playlist}
+              handleChoseAudio={this.props.handleChoseAudio}
+              handleEditAudio={this.handleEditAudio}
+              handleGetPlaylists={this.handleGetPlaylists}
+              isPlaying={this.props.isPlaying}
+              isLoading={this.props.isLoading}
+              hasNextPage={this.props.hasNextPage}
+              loadNextPage={this.getPageData}
+              isNextPageLoading={false}
+            /> : <div></div>
+          }
+        </ReactPlaceholder>
         </div>
 
 
-          <ReactModal
-            isOpen={this.state.isOpenModalPlaylist}
-            className="modal edit-audio"
-            overlayClassName="overlay"
-          >
-            <div className="title">
-              Виберіть плейлист із списку
-              <div className="close" onClick={this.onCloseModalPlaylist}></div>
-            </div>
+        <ReactModal
+          isOpen={this.state.isOpenModalPlaylist}
+          className="modal edit-audio"
+          overlayClassName="overlay"
+        >
+          <div className="title">
+            Виберіть плейлист із списку
+            <div className="close" onClick={this.onCloseModalPlaylist}></div>
+          </div>
 
-            <div className="desc playlist-list">
-              {
-                dataPlaylist.length && (dataPlaylist.map((item, index) => {
-                  return (
-                    <div
-                      className="playlist-item"
-                      onClick={this.handleAddToPlaylist.bind(null, item._id)}
-                      key={item._id + index}
-                    >
-                      {item.title}
-                    </div>
-                  )
-                }))
-              }
-
-              {
-                (dataPlaylist.length === 0) && (
-                  <p>У вас поки немаэ жодного плейлиста</p>
+          <div className="desc playlist-list">
+            {
+              dataPlaylist.length && (dataPlaylist.map((item, index) => {
+                return (
+                  <div
+                    className="playlist-item"
+                    onClick={this.handleAddToPlaylist.bind(null, item._id)}
+                    key={item._id + index}
+                  >
+                    {item.title}
+                  </div>
                 )
-              }
-            </div>
-          </ReactModal>
+              }))
+            }
+
+            {
+              (dataPlaylist.length === 0) && (
+                <p>У вас поки немаэ жодного плейлиста</p>
+              )
+            }
+          </div>
+        </ReactModal>
 
 
         <NotificationContainer />
@@ -270,4 +238,4 @@ const musicLoader = (
   </div>
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(withPlayerFunctional(UserProfiletContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withPlayerFunctional(MusicListContainer));

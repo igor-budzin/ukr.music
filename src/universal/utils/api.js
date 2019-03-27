@@ -39,7 +39,7 @@ class API {
     if(handleSuccess === undefined) {
       return requestPromise;
     }
-    else  {
+    else {
       requestPromise
         .then(response => {
           if(typeof handleSuccess === 'function') {

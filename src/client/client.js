@@ -24,7 +24,7 @@ window.audioInstance.muted = localStorage.getItem('isMuted') !== null ? stringTo
 if(localStorage.jwtToken) {
 	setAuthToken(localStorage.jwtToken);
 	const decoded = jwt_decode(localStorage.jwtToken);
-	store.dispatch(setCurrentUser(decoded));
+	store.dispatch(setCurrentUser(decoded.userData));
 
 	const currentTime = Date.now() / 1000;
 	if(decoded.exp < currentTime) {

@@ -61,7 +61,7 @@ router.get('/auth/google/callback',
     let responseHTML = '<html><head><title>Авторизація</title></head><body></body><script>res = %value%; window.opener.postMessage(res, "*");window.close();</script></html>'
     responseHTML = responseHTML.replace('%value%', JSON.stringify({
         user: req.user,
-        accessToken: generateAccessToken(req.user.googleId)
+        accessToken: generateAccessToken(req.user)
     }));
     res.status(200).send(responseHTML);
 });
@@ -72,6 +72,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     'status': 'error'
   });
+  return;
 });
 
 httpServer.listen(port);

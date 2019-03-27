@@ -12,3 +12,5 @@ export { default as UserMainPage } from 'universal/pages/UserMainPage.js';
 export { default as FollowListPage } from 'universal/pages/FollowListPage.js';
 
 export { default as SettingsPage } from 'universal/pages/SettingsPage.js';
+
+export { default as MusicListPage } from 'universal/pages/MusicListPage.js';

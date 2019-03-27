@@ -36,7 +36,7 @@ exports.addToPlaylist = async (req, res, next) => {
 };
 
 exports.getPlaylists = async (req, res, next) => {
-  const { userName } = req.query;
+  const { userLogin } = req.query;
   let playlistArr = [];
   let data = {};
 
@@ -48,14 +48,15 @@ exports.getPlaylists = async (req, res, next) => {
   };
 
   await User
-    .findOne({ name: userName }, 'playlist')
+    .findOne({ login: userLogin }, 'playlist')
     .then(response => playlistArr = response.playlist)
     .catch(err => next(err));
 
   await Playlist
-    .paginate({ ownerName: userName}, options)
+    .paginate({ ownerName: userLogin}, options)
     .then(response => {
       data.playlists = response.docs;
       res.json(data);
     })
+    .catch(err => next(err));
 };

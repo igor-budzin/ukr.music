@@ -1,6 +1,7 @@
 // Libraries
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 // Components
 import MusicItem from 'universal/components/Playlist/MusicItem';
 
@@ -9,7 +10,7 @@ const MusicSection = props => {
     <div className="section top-audio">
       <div className="title">
         <span>{props.title ? props.title : 'ТОП-треки'}</span>
-        <a className="link" href="javascript:void(0)">Всі треки</a>
+        <Link className="link" to={`musiclist/${props.fullListLink}`}>Всі треки</Link>
       </div>
 
       <div className="body">

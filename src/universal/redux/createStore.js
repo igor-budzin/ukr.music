@@ -21,6 +21,7 @@ const request = requestMiddleware.withOptions(suffix, {
     'Access-Control-Allow-Origin': '*',
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+    'Authorization': typeof localStorage === undefined ? null : localStorage.getItem('jwtToken')
   }
 });
 

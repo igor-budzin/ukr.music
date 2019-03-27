@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // Components
+import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
 import MusicSection from 'universal/components/Sections/MusicSection';
 import AlbumsSection from 'universal/components/Sections/AlbumsSection';
 import CollectionSection from 'universal/components/Sections/CollectionSection';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 // Actions
 import { getMusicList } from 'universal/redux/actions/musicDataActions';
-import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 const mapStateToProps = state => ({
   playlist: state.getMusicReducer.music,
@@ -21,33 +21,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ ...AudioActions, getMusicList }, dispatch);
+  return bindActionCreators({ getMusicList }, dispatch);
 };
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class HomeContainer extends Component {
+class HomeContainer extends Component {
   componentDidMount() {
     this.props.getMusicList({ limit: 8, sortBy: 'listenCount' });
   }
-
-  handleChoseAudio = audioData => {
-    if(this.props.currentMusic.link.length === 0) {
-      this.props.playAudio(audioData, this.props.playlist);
-    }
-    else {
-      if(this.props.currentMusic.link === audioData.link) {
-        if(this.props.isPlaying) {
-          this.props.pauseAudio();
-        }
-        else {
-          this.props.playAudio();
-        }
-      }
-      else {
-        this.props.playAudio(audioData, this.props.playlist);
-      }
-    }
-  };
 
   render() {
     return (
@@ -65,10 +45,11 @@ export default class HomeContainer extends Component {
             <MusicSection
               title="Набувають популярності"
               data={this.props.playlist}
-              handleChoseAudio={this.handleChoseAudio}
+              handleChoseAudio={this.props.handleChoseAudio}
               isPlaying={this.props.isPlaying}
               isLoading={this.props.isLoading}
               currentId={this.props.currentMusic._id}
+              fullListLink="popular"
             />
             
           </div>
@@ -98,5 +79,4 @@ export default class HomeContainer extends Component {
   }
 }
 
-
-const data =[{"_id":"5c879cdd0b050b1810a2b686","link":"1552391387977_Кораблі_-_The_Hardkiss.mp3","title":"Кораблі","artists":"The Hardkiss","duration":203.938,"picture":"Кораблі_-_The_Hardkiss.jpg"},{"_id":"5c8798965cf9c11f68e05886","link":"1552390292464_Free_Me_-_The_Hardkiss.mp3","title":"Free Me","artists":"The Hardkiss","duration":192.313,"picture":"Free_Me_-_The_Hardkiss.jpg"},{"_id":"5c87965e5cf9c11f68e05885","link":"1552389725705_Привіт_-_The_Hardkiss.mp3","title":"Привіт","artists":"The Hardkiss","duration":49.92,"picture":"Привіт_-_The_Hardkiss.jpg"},{"_id":"5c8793025cf9c11f68e05884","link":"1552388864333_Журавлі_-_The_Hardkiss_.mp3","title":"Журавлі","artists":"The Hardkiss","duration":169.117,"picture":"Журавлі_-_The_Hardkiss_.jpg"}];
+export default connect(mapStateToProps, mapDispatchToProps)(withPlayerFunctional(HomeContainer));

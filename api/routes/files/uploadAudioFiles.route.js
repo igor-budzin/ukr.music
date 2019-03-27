@@ -19,7 +19,7 @@ module.exports = (router, socket) => {
     let progress = 0;
     let persent = 0;
     let fileName = '';
-    let currentUserName = '';
+    let currentUserLogin = '';
     let currentUserID = '';
     let durationTime = null;
 
@@ -38,8 +38,8 @@ module.exports = (router, socket) => {
 
     form.on('field', (name, value) => {
       switch(name) {
-        case 'currentUserName':
-          currentUserName = value;
+        case 'currentUserLogin':
+          currentUserLogin = value;
         break;
 
         case 'currentUserID':
@@ -97,7 +97,7 @@ module.exports = (router, socket) => {
           .catch(err => next(err));
 
         await UserModel
-          .findOneAndUpdate({ name: currentUserName }, { $push: { audio: audioID } })
+          .findOneAndUpdate({ login: currentUserLogin }, { $push: { audio: audioID } })
           .catch(err => next(err));
       });
     });

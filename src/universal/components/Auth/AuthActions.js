@@ -44,13 +44,16 @@ export const loginUser = user => dispatch => {
 
     function receiveMessage(event)  {
       const { accessToken } = event.data;
-      console.log(event.data)
-      if(!accessToken) reject();
+      console.log('login action ', event.data)
+      if(!accessToken.length) {
+        reject();
+        return;
+      }
 
       localStorage.setItem('jwtToken', `Bearer ${accessToken}`);
       setAuthToken(accessToken);
       const decoded = jwt_decode(accessToken);
-
+      console.log(event.data)
       dispatch(setCurrentUser(event.data.user));
       dispatch(requestLoginUserSuccess());
 

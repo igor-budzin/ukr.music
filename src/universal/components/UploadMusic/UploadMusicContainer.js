@@ -14,76 +14,76 @@ import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContain
 // Actions
 import * as uploadMusicActions from './uploadMusicActions';
 
-const mapStateToProps = (state, props) => ({
-	userId: state.AuthReducer.user.id,
-	currentUserName: state.AuthReducer.user.name
+const mapStateToProps = state => ({
+  userId: state.AuthReducer.user.id,
+  currentUserLogin: state.AuthReducer.user.login
 });
 
-const mapDispatchToProps = (dispatch, props) => bindActionCreators(uploadMusicActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(uploadMusicActions, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class UploadMusicContainer extends Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			uploadType: 'user',
-			uploadUserName: ''
-		};
-	}
+    this.state = {
+      uploadType: 'user',
+      uploadUserLogin: ''
+    };
+  }
 
-	promiseOptions = inputValue => {
-		return axios.get(`${API_URL}/getArtistList`, {
-				params: {
-					currentUserName: this.props.currentUserName
-				}
-			})
-			.then(response => {
-				const arr = response.data.artistList.map(item => {
-					return {
-						value: item.name,
-						label: item.name
-					}
-				})
-				arr.unshift({
-					value: this.props.currentUserName,
-					label: 'Свій плейлист'
-				});
-				return arr;
-			});
+  // promiseOptions = inputValue => {
+  //   return axios.get(`${API_URL}/getArtistList`, {
+  //       params: {
+  //         currentUserLogin: this.props.currentUserLogin
+  //       }
+  //     })
+  //     .then(response => {
+  //       const arr = response.data.artistList.map(item => {
+  //         return {
+  //           value: item.name,
+  //           label: item.name
+  //         }
+  //       })
+  //       arr.unshift({
+  //         value: this.props.currentUserLogin,
+  //         label: 'Свій плейлист'
+  //       });
+  //       return arr;
+  //     });
 
-	}
+  // }
 
-	render() {
-		const files = this.state.uploadedFiles;
-		return (
-			<Fragment>
-				<h2 className="section-title">Завантаження файлів</h2>
+  render() {
+    const files = this.state.uploadedFiles;
+    return (
+      <Fragment>
+        <h2 className="section-title">Завантаження файлів</h2>
 
-				<div className="container clearfix">
+        <div className="container clearfix">
 
-					<MusicPlayerContainer />
+          <MusicPlayerContainer />
 
-				</div>
+        </div>
 
-				<div className="filter-hr"></div>
+        <div className="filter-hr"></div>
 
-				<div className="content">
-					<div className="input-wrapper" style={{ width: '300px' }}>
-						<label>Завантажити в:</label>
-						<Select
-							defaultOptions
-							className="react-select-container"
-							classNamePrefix="react-select"
-							loadOptions={this.promiseOptions}
-						/>
-					</div>
+        <div className="content">
+          <div className="input-wrapper" style={{ width: '300px' }}>
+{/*            <label>Завантажити в:</label>
+            <Select
+              defaultOptions
+              className="react-select-container"
+              classNamePrefix="react-select"
+              loadOptions={this.promiseOptions}
+            />
+*/}          </div>
 
-					<UploaderContainer />
-				</div>
+          <UploaderContainer />
+        </div>
 
-				<NotificationContainer />
-			</Fragment>
-		);
-	}
+        <NotificationContainer />
+      </Fragment>
+    );
+  }
 }

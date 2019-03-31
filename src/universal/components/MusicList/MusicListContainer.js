@@ -6,7 +6,7 @@ import { NotificationContainer, NotificationManager } from "react-light-notifica
 import ReactPlaceholder from 'react-placeholder';
 import ReactModal from 'react-modal';
 import api from 'universal/utils/api';
-import { API_URL } from '../../../global.config';
+import { Link } from 'react-router-dom';
 // Components
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
 import PlayListFull from 'universal/components/PlayList/PlayListFull';
@@ -142,7 +142,7 @@ class MusicListContainer extends Component {
     return (
       <Fragment>
         <h2 className="section-title">
-          <div className="btn-back"></div>
+          <Link className="btn-back" to="/"></Link>
           Набувають популярності
         </h2>
 

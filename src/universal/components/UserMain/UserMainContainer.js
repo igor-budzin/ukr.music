@@ -14,15 +14,15 @@ import PlayListFull from 'universal/components/PlayList/PlayListFull';
 import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
-import PlayLists from './PlayLists';
+import PlayLists from './Playlist/PlayLists';
+import PlayListView from './Playlist/PlayListView';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 
 const mapStateToProps = state => ({
-  playlist: state.getMusicReducer.music,
+  audioList: state.getMusicReducer.music,
   hasNextPage: state.getMusicReducer.hasNextPage,
   currentMusic: state.controlMusicReducer.currentMusic,
-  currentPlaylist: state.controlMusicReducer,
   isPlaying: state.controlMusicReducer.isPlaying,
   isLoading: state.controlMusicReducer.isLoading,
   currentUserName: state.AuthReducer.user.name,
@@ -36,9 +36,16 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({ getMusic: getMusicListAction }, dispatch);
 };
 
-class UserProfiletContainer extends Component {
+class UserProfileContainer extends Component {
   constructor(props, context) {
     super(props, context);
+
+    this.tabIndexes = {
+      tracks: 0,
+      albums: 1,
+      playlists: 2,
+      history: 3
+    };
 
     this.state = {
       audioListReady: false,
@@ -46,7 +53,8 @@ class UserProfiletContainer extends Component {
       page: 1,
       isOpenModalPlaylist: false,
       dataPlaylist: [],
-      idAudioForPlaylist: ''
+      idAudioForPlaylist: '',
+      currentPlaylistId: ''
     }
   }
 
@@ -92,7 +100,7 @@ class UserProfiletContainer extends Component {
       handleSuccess: data => {
         this.setState({
           isOpenModalPlaylist: true,
-          dataPlaylist: data.playlists,
+          dataPlaylist: data,
           idAudioForPlaylist: id
         });
       }
@@ -128,7 +136,12 @@ class UserProfiletContainer extends Component {
   }
 
   onSelectTab = index => {
+    if(index === this.tabIndexes.playlists) this.setState({ currentPlaylistId: '' });
     localStorage.setItem('Tab-UserMainPage', index);
+  }
+
+  handleViewPlaylist = id => {
+    this.setState({ currentPlaylistId: id });
   }
 
   render() {
@@ -199,7 +212,15 @@ class UserProfiletContainer extends Component {
             </TabPanel>
 
             <TabPanel>
-              <PlayLists />
+              {
+                this.state.currentPlaylistId ? 
+                <PlayListView
+                  currentPlaylistId={this.state.currentPlaylistId}
+                /> :
+                <PlayLists
+                  handleViewPlaylist={this.handleViewPlaylist}
+                />
+              }
             </TabPanel>
 
             <TabPanel>
@@ -222,7 +243,7 @@ class UserProfiletContainer extends Component {
 
             <div className="desc playlist-list">
               {
-                dataPlaylist.length && (dataPlaylist.map((item, index) => {
+                dataPlaylist.map((item, index) => {
                   return (
                     <div
                       className="playlist-item"
@@ -232,7 +253,7 @@ class UserProfiletContainer extends Component {
                       {item.title}
                     </div>
                   )
-                }))
+                })
               }
 
               {
@@ -270,4 +291,4 @@ const musicLoader = (
   </div>
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(withPlayerFunctional(UserProfiletContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withPlayerFunctional(UserProfileContainer));

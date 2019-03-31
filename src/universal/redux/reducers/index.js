@@ -7,4 +7,5 @@ export {default as visibleUserDataReducer} from '../../components/Sidebar/visibl
 export {default as ArtistProfileReducer} from '../../components/ArtistProfile/ArtistProfileReducer';
 
 export {default as musicDataReducer} from './musicDataReducer';
+export {default as playlistDataReducer} from '../../components/UserMain/Playlist/PlayListsReducer';
 export {default as artistListReducer} from './artistListReducer';

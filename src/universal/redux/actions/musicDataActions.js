@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-export function getMusicList({ userLogin = null, limit = 30, page = 1, sortBy = null, callback}) {
+export function getMusicList({ userLogin = null, limit = 30, page = 1, sortBy = null, callback }) {
   return {
     typePrefix: 'REQUEST_GET_MUSIC_LIST',
     endpoint: 'getMusicList',

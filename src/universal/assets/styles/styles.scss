@@ -1738,7 +1738,7 @@ a {
   }
 
   &.create-playlist {
-    width: 500px;
+    width: 600px;
 
     .desc {
       width: 100%;
@@ -1779,6 +1779,79 @@ a {
   .desc {
     overflow: hidden;
   }
+
+  .cover {
+    position: relative;
+    width: 148px;
+    height: 148px;
+    background-size: 40px;
+    border-radius: 3px;
+    overflow: hidden;
+    display: inline-block;
+
+    &.empty {
+      background-image: url('../img/playlist.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: lighten(#d5e6ff, 2%);
+    }
+
+    &:hover {
+      .bg {
+        opacity: 1;
+      }
+    }
+    
+    .bg {
+      opacity: 0;
+      transition: opacity 200ms ease;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+
+      .count {
+        color: #fff;
+        font-size: 14px;
+        position: absolute;
+        bottom: 5px;
+        left: 10px;
+      }
+
+      .btn {
+        &.play {
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-image: url('../img/play.svg');
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+
+        &.edit {
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          top: 10px;
+          right: 8px;
+          background-image: url('../img/play-controls/edit2.svg');
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+
+    img {
+      width: 100%;
+    }
+  }
 }
 .audio-list {
     margin-bottom: 20px;
@@ -1803,5 +1876,34 @@ a {
     &:hover {
       background-color: darken(#e9f2ff, 8%);
     }
+  }
+}
+
+.playlist-view {
+  margin-bottom: 20px;
+  
+  .cover {
+    img {
+      width: 148px;
+    }
+  }
+
+  h6 {
+    margin: 5px 0 10px 0;
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #969696;
+  }
+
+  .button {
+    margin-right: 10px;
+  }
+
+  .options {
+    position: absolute;
+    bottom: 3px;
   }
 }

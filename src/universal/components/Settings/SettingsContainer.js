@@ -60,11 +60,7 @@ export default class SettingstContainer extends Component {
 				<h2 className="section-title">Налаштування</h2>
 
 				<div className="container clearfix">
-
 					<MusicPlayerContainer />
-
-					{/*<MusicFilter />*/}
-
 				</div>
 
 				<div className="filter-hr"></div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
@@ -34,8 +34,8 @@ export default class Header extends Component {
 					</div>
 					<div className="item-left">
 						<ul className="header-nav">
-							<li><NavLink to="/" activeClassName="active" exact>Головна</NavLink></li>
-							<li><NavLink to={`/profile/${this.props.currentUserLogin}`} activeClassName="active">Музика</NavLink></li>
+							<li><Link to="/">Головна</Link></li>
+							<li><Link to={`/profile/${this.props.currentUserId}`}>Музика</Link></li>
 							<li><a href="#">Афіша</a></li>
 							<li><a href="#">Блог</a></li>
 							<li><a href="#">Контакти</a></li>
@@ -59,7 +59,7 @@ export default class Header extends Component {
 
 function mapStateToProps(state, props) {
 	return {
-		currentUserLogin: state.AuthReducer.user.login
+		currentUserId: state.AuthReducer.user.id
 	};
 }
 

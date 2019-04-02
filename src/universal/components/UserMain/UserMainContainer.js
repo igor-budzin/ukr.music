@@ -26,10 +26,8 @@ const mapStateToProps = state => ({
   isPlaying: state.controlMusicReducer.isPlaying,
   isLoading: state.controlMusicReducer.isLoading,
   currentUserName: state.AuthReducer.user.name,
-  currentUserLogin: state.AuthReducer.user.login,
-  userId: state.AuthReducer.user.id,
-  visibleUserLogin: state.visibleUserDataReducer.login,
-  visibleUserID: state.visibleUserDataReducer._id
+  currentUserId: state.AuthReducer.user.id,
+  visibleUserId: state.visibleUserDataReducer.id
 });
 
 const mapDispatchToProps = dispatch => {
@@ -65,13 +63,13 @@ class UserProfileContainer extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(this.props.locationPath !== prevProps.locationPath
-      || this.props.locationParams.login !== prevProps.locationParams.login) {
+      || this.props.locationParams.id !== prevProps.locationParams.id) {
       this.getPageData();
     }
   }
 
   getPageData = () => {
-    this.props.getMusic(this.props.locationParams.login, this.state.page)
+    this.props.getMusic(this.props.locationParams.id, this.state.page)
     .then(response => {
       this.setState({
         audioListReady: true,
@@ -95,7 +93,7 @@ class UserProfileContainer extends Component {
     api.request({
       path: '/playlist',
       data: {
-        userLogin: this.props.currentUserLogin
+        userId: this.props.currentUserId
       },
       handleSuccess: data => {
         this.setState({
@@ -183,10 +181,10 @@ class UserProfileContainer extends Component {
             <TabPanel>
               <ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
                 {
-                  this.props.playlist && this.props.playlist.length > 0 ?
+                  this.props.audioList && this.props.audioList.length > 0 ?
                   <PlayListFull
                     currentId={this.props.currentMusic._id}
-                    playlist={this.props.playlist}
+                    playlist={this.props.audioList}
                     handleChoseAudio={this.props.handleChoseAudio}
                     handleEditAudio={this.handleEditAudio}
                     handleGetPlaylists={this.handleGetPlaylists}

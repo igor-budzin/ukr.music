@@ -15,7 +15,6 @@ import { getArtistList } from 'universal/components/ArtistProfile/ArtistProfileA
 
 const mapStateToProps = (state, props) => ({
   currentUserName: state.AuthReducer.user.name,
-  currentUserLogin: state.AuthReducer.user.login,
   currentUserId: state.AuthReducer.user.id,
   followersCount: state.visibleUserDataReducer.followersCount,
   audioCount: state.visibleUserDataReducer.audioCount,
@@ -43,13 +42,13 @@ export default class SidebarContainer extends Component {
 
   componentDidMount() {
     this.props.getVisibleUserData(
-        this.props.currentUserLogin,
-        this.props.locationParams.login !== undefined ? this.props.locationParams.login : this.props.currentUserLogin
+        this.props.currentUserId,
+        this.props.locationParams.login !== undefined ? this.props.locationParams.login : this.props.currentUserId
     )
     .then(response => {
       if(this.mounted) this.setState({ dataReady: true });
     });
-    // this.props.getArtistList(this.props.currentUserLogin);
+    // this.props.getArtistList(this.props.currentUserId);
   }
 
 
@@ -59,7 +58,7 @@ export default class SidebarContainer extends Component {
   }
 
   handleFollow = () => {
-    this.props.followUser(this.props.currentUserLogin, this.props.locationParams.login);
+    this.props.followUser(this.props.currentUserId, this.props.locationParams.login);
   };
 
   handleUnfollow = () => {
@@ -90,7 +89,7 @@ export default class SidebarContainer extends Component {
 
         <div className="sidebar-wrapper">
           {
-            this.props.locationParams.login && this.props.currentUserLogin !== this.props.locationParams.login &&
+            this.props.locationParams.login && this.props.currentUserId !== this.props.locationParams.login &&
             (<div className="sidebar-wrapper">
               {
                 this.props.canFollowUser ?
@@ -101,12 +100,12 @@ export default class SidebarContainer extends Component {
           }
 
           <div className="sidebar-link">
-            <Link to={`../profile/${this.props.currentUserLogin}`} className="link my">Мої треки</Link>
+            <Link to={`../profile/${this.props.currentUserId}`} className="link my">Мої треки</Link>
             <Link to="../upload/" className="link upload">Завантажити аудіозаписи</Link>
             <Link to="/recommend" className="link recommend">Рекомендації</Link>
-            <Link to={`../followers/${this.props.currentUserLogin}`} className="link follow">Слухаю їх</Link>
+            <Link to={`../followers/${this.props.currentUserId}`} className="link follow">Слухаю їх</Link>
             <Link to="/update" className="link update">Оновлення</Link>
-            <Link to={`../stats/${this.props.currentUserLogin}`} className="link stats">Статистика</Link>
+            <Link to={`../stats/${this.props.currentUserId}`} className="link stats">Статистика</Link>
             <Link to="/settings" className="link settings">Налаштування</Link>
             {
               this.props.artistList.length ? <div className="divider"></div> : null
@@ -116,7 +115,7 @@ export default class SidebarContainer extends Component {
                 return (
                   <Link
                     key={item._id}
-                    to={`/artist/${item.login}`}
+                    to={`/artist/${item.id}`}
                     className="link"
                   >
                     {item.name}

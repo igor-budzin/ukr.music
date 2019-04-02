@@ -16,7 +16,7 @@ opts.issuer = authConfig.jwt.issuer;
 module.exports = passport => {
   passport.use(new JWTStrategy(opts, (jwt_payload, done) => {
     UserModel
-      .findOne({ googleId: jwt_payload.sub }, '_id login name googleId')
+      .findOne({ googleId: jwt_payload.sub }, 'id name')
       .then(user => {
         if(user) {
           return done(null, {a: '1111'});
@@ -35,9 +35,7 @@ module.exports = passport => {
       let userObj = null;
 
       await UserModel
-        .findOne({
-          googleId: profile.id
-        }, '_id login name googleId')
+        .findOne({ googleId: profile.id }, 'id name googleId')
         .then(user => userObj = user)
         .catch(err => console.error(err));
 
@@ -49,7 +47,6 @@ module.exports = passport => {
           name: profile.displayName,
           email: profile.emails[0].value,
           photo: profile.photos[0].value,
-          login: profile.emails[0].value.split('@')[0]
         })
         .then(user => cb(false, user))
         .catch(err => console.error(err));

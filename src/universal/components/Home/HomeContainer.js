@@ -13,7 +13,7 @@ import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContain
 import { getMusicList } from 'universal/redux/actions/musicDataActions';
 
 const mapStateToProps = state => ({
-  playlist: state.getMusicReducer.music,
+  audioList: state.getMusicReducer.music,
   hasNextPage: state.getMusicReducer.hasNextPage,
   currentMusic: state.controlMusicReducer.currentMusic,
   isPlaying: state.controlMusicReducer.isPlaying,
@@ -44,7 +44,7 @@ class HomeContainer extends Component {
           <div className="content">
             <MusicSection
               title="Набувають популярності"
-              data={this.props.playlist}
+              data={this.props.audioList}
               handleChoseAudio={this.props.handleChoseAudio}
               isPlaying={this.props.isPlaying}
               isLoading={this.props.isLoading}

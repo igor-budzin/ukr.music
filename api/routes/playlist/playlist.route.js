@@ -4,6 +4,7 @@ const passport = require('passport');
 module.exports = router => {
   router
     .get('/playlist', controller.getPlaylists)
+    // .get('/playlist/:id', controller.getPlaylistData)
     .get('/playlist/:id', controller.getPlaylistAudio)
     .post('/playlist', passport.authenticate('jwt', { session: false }), controller.createPlaylist)
     .put('/playlist', passport.authenticate('jwt', { session: false }), controller.addToPlaylist)

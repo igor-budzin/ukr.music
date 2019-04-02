@@ -13,8 +13,7 @@ import Button from 'universal/components/Commons/Button';
 import * as uploadMusicActions from './uploadMusicActions';
 
 const mapStateToProps = state => ({
-  currentUserLogin: state.AuthReducer.user.login,
-  currentUserID: state.AuthReducer.user._id
+  currentUserId: state.AuthReducer.user.id
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(uploadMusicActions, dispatch);
@@ -70,8 +69,7 @@ export default class UploaderContainer extends Component {
       const data = new FormData();
 
       data.append('fileName', file.fileName);
-      data.append('currentUserID', this.props.currentUserID);
-      data.append('currentUserLogin', this.props.currentUserLogin);
+      data.append('currentUserId', this.props.currentUserId);
       data.append("files", file.file);
 
       this.props.requestUploadMusic(data, () => {});

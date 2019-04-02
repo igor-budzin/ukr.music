@@ -15,8 +15,7 @@ import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContain
 import * as uploadMusicActions from './uploadMusicActions';
 
 const mapStateToProps = state => ({
-  userId: state.AuthReducer.user.id,
-  currentUserLogin: state.AuthReducer.user.login
+  currentUserId: state.AuthReducer.user.id
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(uploadMusicActions, dispatch);
@@ -28,7 +27,7 @@ export default class UploadMusicContainer extends Component {
 
     this.state = {
       uploadType: 'user',
-      uploadUserLogin: ''
+      uploadUserId: ''
     };
   }
 
@@ -61,9 +60,7 @@ export default class UploadMusicContainer extends Component {
         <h2 className="section-title">Завантаження файлів</h2>
 
         <div className="container clearfix">
-
           <MusicPlayerContainer />
-
         </div>
 
         <div className="filter-hr"></div>

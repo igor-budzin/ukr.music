@@ -1,51 +1,42 @@
 const mongoose = require('mongoose');
+const autoIncremental = require('../utils/modelAutoInc');
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-	name: {
-		type: String
-	},
-	login: {
-		type: String
-	},
-	googleId: String,
-	email: {
-		type: String
-	},
-	photo: {
-		type: String
-	},
-	avatar: {
-		type: String
-	},
-	date: {
-		type: Date,
-		default: Date.now
-	},
-	audio: {
-		type: []
-	},
-	follows: {
-		type: []
-	},
-	followers: {
-		type: []
-	},
-	artists: {
-		type: []
-	},
-	playlist: {
-		type: []
-	}
+  id: {
+    type: Number
+  },
+  name: String,
+  googleId: String,
+  email: String,
+  photo: String,
+  avatar: String,
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  audio: Array,
+  follows: Array,
+  followers: Array,
+  artists: Array,
+  playlist: Array
+});
+
+UserSchema.pre('save', function(next) {
+    autoIncremental(model, this, next);
+    // model: The model const here below
+    // this: The schema, the body of the document you wan to save
+    // next: next fn to continue
 });
 
 UserSchema.statics.findOneOrCreate = function findOneOrCreate(condition, callback) {
-    const self = this
+  const self = this
 
-    self.findOne(condition, (err, result) => {
-        return result ? callback(err, result) : self.create(condition, (err, result) => { return callback(err, result) })
-    })
+  self.findOne(condition, (err, result) => {
+    return result ? callback(err, result) : self.create(condition, (err, result) => { return callback(err, result) })
+  })
 }
 
-module.exports = mongoose.model('users', UserSchema);
+const model = mongoose.model('users', UserSchema);
+module.exports = model;

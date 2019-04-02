@@ -5,20 +5,18 @@ const Playlist = require('../models/Playlist.model');
 const Audio = require('../models/Audio.model');
 
 exports.createPlaylist = async (req, res, next) => {
-  const { userLogin, title } = req.body;
-  let userId;
+  let { userId, title } = req.body;
   let playlistId = new mongoose.Types.ObjectId();
 
   await User
-    .findOneAndUpdate({ login: userLogin }, { $push: { playlist: playlistId } })
-    .then(response => { userId = response._id })
+    .findOneAndUpdate({ id: userId }, { $push: { playlist: playlistId } })
+    .then(response => { userId = response.id })
     .catch(err => next(err));
 
   const playlist = new Playlist({
     _id: playlistId,
     title,
-    ownerId: userId,
-    ownerName: userLogin
+    ownerId: userId
   });
 
   await playlist.save()
@@ -37,13 +35,13 @@ exports.addToPlaylist = async (req, res, next) => {
 };
 
 exports.getPlaylists = async (req, res, next) => {
-  const { userLogin } = req.query;
+  const { userId } = req.query;
   let playlistArr = [];
   let data = {};
 
   await Playlist
     .aggregate()
-    .match({ ownerName: userLogin })
+    .match({ ownerId: userId })
     .project({
       title: '$title',
       cover: '$cover',
@@ -61,31 +59,31 @@ exports.getPlaylistAudio = async (req, res, next) => {
   let countAudio = 0;
   const page = req.query.page ? parseInt(req.query.page, 10) : 1;
   const limit = req.query.limit ? parseInt(req.query.limit, 10) : 30;
-  const options = {};
   const responseData = {};
 
+  const options = {
+     select: '_id link title artists duration picture',
+     sort: req.query.sortBy ? { [req.query.sortBy]: -1 } : { date: 1 },
+     page,
+     limit
+   };
 
   await Playlist
     .findById(req.params.id)
     .then(response => playlist = response)
     .catch(err => next(err));
 
-  if(playlist.audio.lenght > 0) {
-    options = {
-      select: '_id link title artists duration picture',
-      sort: req.query.sortBy ? { [req.query.sortBy]: -1 } : { date: -1 },
-      page,
-      limit
-    };
-  }
+  await Audio
+    .paginate(playlist.audio.length > 0 ? { _id: { $in: playlist.audio }} : {}, options)
+    .then(response => res.json(response.docs))
+    .catch(err => next(err));
+}
 
-  Audio
-    .paginate({ _id: { $in: playlist.audio }}, options)
+exports.getPlaylistData = async (req, res, next) => {
+  Playlist
+    .findById(req.params.id)
     .then(response => {
-      responseData.music = response.docs;
-      responseData.page = page;
-      responseData.hasNextPage = playlist.audio.lenght > page * limit;
-      res.json(responseData);
+      console.log(response)
     })
     .catch(err => next(err));
 }

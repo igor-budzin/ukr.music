@@ -11,20 +11,14 @@ const playlistSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  ownerName: {
-    type: String,
-    required: true
-  },
   cover: String,
   date: {
     type: Date,
-    required: true,
     default: Date.now
   },
   audio: Array,
   privat: {
     type: Boolean,
-    required: true,
     default: false
   }
 });

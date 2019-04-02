@@ -16,14 +16,13 @@ import SearchField from 'universal/components/SearchField';
 import { getMusicList } from 'universal/redux/actions/musicDataActions';
 
 const mapStateToProps = state => ({
-  playlist: state.getMusicReducer.music,
+  audioList: state.getMusicReducer.music,
   hasNextPage: state.getMusicReducer.hasNextPage,
   currentMusic: state.controlMusicReducer.currentMusic,
   currentPlaylist: state.controlMusicReducer,
   isPlaying: state.controlMusicReducer.isPlaying,
   isLoading: state.controlMusicReducer.isLoading,
-  currentUserLogin: state.AuthReducer.user.login,
-  visibleUserLogin: state.visibleUserDataReducer.login,
+  currentUserId: state.AuthReducer.user.id
 });
 
 const mapDispatchToProps = dispatch => {
@@ -63,13 +62,13 @@ class MusicListContainer extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(this.props.locationPath !== prevProps.locationPath
-      || this.props.locationParams.login !== prevProps.locationParams.login) {
+      || this.props.locationParams.id !== prevProps.locationParams.id) {
       this.getPageData();
     }
   }
 
   getPageData = () => {
-    this.props.getMusic(this.props.locationParams.login, this.state.page)
+    this.props.getMusic(this.props.locationParams.id, this.state.page)
     .then(response => {
       this.setState({
         audioListReady: true,
@@ -93,7 +92,7 @@ class MusicListContainer extends Component {
     api.request({
       path: '/playlist',
       data: {
-        userLogin: this.props.currentUserLogin
+        userLogin: this.props.currentUserId
       },
       handleSuccess: data => {
         this.setState({
@@ -160,10 +159,10 @@ class MusicListContainer extends Component {
 
         <ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
           {
-            this.props.playlist && this.props.playlist.length > 0 ?
+            this.props.audioList && this.props.audioList.length > 0 ?
             <PlayListFull
               currentId={this.props.currentMusic._id}
-              playlist={this.props.playlist}
+              playlist={this.props.audioList}
               handleChoseAudio={this.props.handleChoseAudio}
               handleEditAudio={this.handleEditAudio}
               handleGetPlaylists={this.handleGetPlaylists}

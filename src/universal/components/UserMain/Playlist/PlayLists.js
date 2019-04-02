@@ -14,7 +14,7 @@ import Select from 'universal/components/Commons/Select';
 // import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 const mapStateToProps = (state, props) => ({
-  currentUserLogin: state.AuthReducer.user.login
+  currentUserId: state.AuthReducer.user.id
 });
 
 @connect(mapStateToProps)
@@ -39,7 +39,7 @@ export default class PlayLists extends Component {
       method: 'get',
       path: '/playlist',
       data: {
-        userLogin: this.props.currentUserLogin
+        userId: this.props.currentUserId
       },
       handleSuccess: data => {
         this.setState({
@@ -62,7 +62,7 @@ export default class PlayLists extends Component {
       method: 'post',
       path: '/playlist',
       data: {
-        userLogin: this.props.currentUserLogin,
+        userId: this.props.currentUserId,
         title: this.state.title
       },
       handleSuccess: (data, status) => {

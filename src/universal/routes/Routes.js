@@ -42,10 +42,10 @@ export default class Routes extends Component {
           className="switch-wrapper"
         >
           <PrivateRoute exact path="/" component={RouteMap.HomePage} {...this.props} />
-          <PrivateRoute exact path='/profile/:login' component={RouteMap.UserMainPage} {...this.props} />
+          <PrivateRoute exact path='/profile/:id' component={RouteMap.UserMainPage} {...this.props} />
           <PrivateRoute exact path='/upload/' component={RouteMap.UploadMusicPage} {...this.props} />
-          <PrivateRoute exact path='/artist/:login' component={RouteMap.ArtistProfilePage} {...this.props} />
-          <PrivateRoute exact path='/followers/:login' component={RouteMap.FollowListPage} {...this.props} />
+          <PrivateRoute exact path='/artist/:id' component={RouteMap.ArtistProfilePage} {...this.props} />
+          <PrivateRoute exact path='/followers/:id' component={RouteMap.FollowListPage} {...this.props} />
           <PrivateRoute exact path='/settings' component={RouteMap.SettingsPage} {...this.props} />
           <PrivateRoute exact path='/musiclist/:type' component={RouteMap.MusicListPage} {...this.props} />
 

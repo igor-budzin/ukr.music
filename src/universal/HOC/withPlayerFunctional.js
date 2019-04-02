@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 const mapStateToProps = state => ({
-  playlist: state.getMusicReducer.music,
+  audioList: state.getMusicReducer.music,
   currentMusic: state.controlMusicReducer.currentMusic,
   currentPlaylist: state.controlMusicReducer,
   isPlaying: state.controlMusicReducer.isPlaying,
@@ -22,7 +22,7 @@ export default function withPlayerFunctional(PassedComponent) {
 
     handleChoseAudio = audioData => {
       if(this.props.currentMusic.link.length === 0) {
-        this.props.playAudio(audioData, this.props.playlist);
+        this.props.playAudio(audioData, this.props.audioList);
       }
       else {
         if(this.props.currentMusic.link === audioData.link) {
@@ -34,7 +34,7 @@ export default function withPlayerFunctional(PassedComponent) {
           }
         }
         else {
-          this.props.playAudio(audioData, this.props.playlist);
+          this.props.playAudio(audioData, this.props.audioList);
         }
       }
     }

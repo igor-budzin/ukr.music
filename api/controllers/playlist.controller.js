@@ -27,9 +27,20 @@ exports.createPlaylist = async (req, res, next) => {
 
 exports.addToPlaylist = async (req, res, next) => {
   const { playlistId, audioId } = req.body;
+  let durationTime = 0;
+
+  await Audio
+    .findOne({ _id: mongoose.Types.ObjectId(audioId) })
+    .then(response => durationTime = response.duration)
+    .catch(err => next(err));
+
+
 
   await Playlist
-    .findOneAndUpdate({ _id: mongoose.Types.ObjectId(playlistId) }, { $push: { audio: audioId } })
+    .findOneAndUpdate({ _id: mongoose.Types.ObjectId(playlistId) }, { 
+      $push: { audio: audioId },
+      $inc: { duration: durationTime }
+    })
     .then(response => res.json({ "status": true }))
     .catch(err => next(err));
 };
@@ -73,17 +84,29 @@ exports.getPlaylistAudio = async (req, res, next) => {
     .then(response => playlist = response)
     .catch(err => next(err));
 
-  await Audio
-    .paginate(playlist.audio.length > 0 ? { _id: { $in: playlist.audio }} : {}, options)
-    .then(response => res.json(response.docs))
-    .catch(err => next(err));
+  if(playlist.audio) {
+    Audio
+      .paginate({ _id: { $in: playlist.audio }}, options)
+      .then(response => {
+        res.json({
+          music: response.docs,
+          page,
+          hasNextPage: playlist.audio.length > page * limit
+        });
+      })
+      .catch(err => next(err));
+  }
+  else res.json([]);
 }
 
 exports.getPlaylistData = async (req, res, next) => {
   Playlist
     .findById(req.params.id)
     .then(response => {
-      console.log(response)
+      const { _id, title, privat, cover, duration } = response;
+      const audioCount = response.audio.length;
+
+      res.json({ _id, title, privat, cover, duration, audioCount });
     })
     .catch(err => next(err));
 }

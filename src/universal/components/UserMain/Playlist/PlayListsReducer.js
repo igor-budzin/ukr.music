@@ -2,7 +2,9 @@ const initialState = {
   music: [],
   hasNextPage: false,
   audioCount: 0,
-  title: ''
+  title: '',
+  privat: false,
+  cover: ''
 };
 
 export default function playlistReducer(state = initialState, action) {
@@ -29,8 +31,12 @@ export default function playlistReducer(state = initialState, action) {
 
     case 'REQUEST_GET_PLAYLIST_DATA_SUCCESS':
       return Object.assign({}, state, {
+        _id: action.payload._id,
         audioCount: action.payload.audioCount,
-        title: action.payload.title
+        title: action.payload.title,
+        privat: action.payload.privat,
+        cover: action.payload.cover,
+        duration: action.payload.duration
       });
 
     case 'REQUEST_GET_PLAYLIST_DATA_ERROR':

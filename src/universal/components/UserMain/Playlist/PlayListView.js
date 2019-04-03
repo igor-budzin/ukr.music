@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { formatSeconds } from 'universal/utils';
 
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
 import PlayListFull from 'universal/components/PlayList/PlayListFull';
@@ -14,15 +15,12 @@ const mapStateToProps = state => ({
   currentMusic: state.controlMusicReducer.currentMusic,
   isPlaying: state.controlMusicReducer.isPlaying,
   isLoading: state.controlMusicReducer.isLoading,
-  currentUserName: state.AuthReducer.user.name,
-  currentUserLogin: state.AuthReducer.user.login,
-  userId: state.AuthReducer.user.id,
-  visibleUserLogin: state.visibleUserDataReducer.login,
+  currentUserId: state.AuthReducer.user.id,
   visibleUserID: state.visibleUserDataReducer._id
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getPlaylist }, dispatch);
+  return bindActionCreators({ getPlaylistAudio, getPlaylistData }, dispatch);
 };
 
 class PlayListView extends Component {
@@ -36,15 +34,14 @@ class PlayListView extends Component {
 
     this.props.getPlaylistAudio({
       playlistId: currentPlaylistId
-
     });
 
     this.props.getPlaylistData(currentPlaylistId);
   }
 
   render() {
-    const { music, hasNextPage, audioCount } = this.props.playlist;
-    
+    const { music, hasNextPage, audioCount, title, duration } = this.props.playlist;
+    console.log(music)
     return (
       <Fragment>
         <div className="media-wrapper playlist-view">
@@ -53,13 +50,13 @@ class PlayListView extends Component {
               <div className="bg">
                 <div className="btn-add-image"></div>
               </div>
-              <img src="http://localhost:8080/api/albumCover/thehardkiss-album.jpg" alt=""/>
+              <img src="http://localhost:8080/api/albumCover/thehardkiss-album.jpg" />
             </div>
           </div>
 
           <div className="media-right">
-            <h6>The Hardkiss blabal balbal</h6>
-            <p>Треків: {audioCount} &nbsp;&bull;&nbsp; 42 хв</p>
+            <h6>{title}</h6>
+            <p>Треків: {audioCount} &nbsp;&bull;&nbsp; {formatSeconds(duration)}</p>
 
             <div className="options">
               <Button className="mini default">Редагувати</Button>

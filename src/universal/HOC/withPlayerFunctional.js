@@ -8,9 +8,7 @@ import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 const mapStateToProps = state => ({
   audioList: state.getMusicReducer.music,
   currentMusic: state.controlMusicReducer.currentMusic,
-  currentPlaylist: state.controlMusicReducer,
-  isPlaying: state.controlMusicReducer.isPlaying,
-  isLoading: state.controlMusicReducer.isLoading
+  isPlaying: state.controlMusicReducer.isPlaying
 });
 
 const mapDispatchToProps = (dispatch, props) => {

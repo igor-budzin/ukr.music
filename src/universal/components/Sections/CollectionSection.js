@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { API_URL } from '../../../global.config';
 // Components
-import MusicItem from 'universal/components/Playlist/MusicItem';
+import MusicItem from 'universal/components/AudioList/MusicItem';
 
 const CollectionSection = props => {
   const { label, label2 } = props;

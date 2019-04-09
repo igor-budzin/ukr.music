@@ -44,4 +44,6 @@ module.exports = (router, socket) => {
   require('./routes/files/getAudioCover.route')(router); // Обкладинка треку
 
   require('./routes/playlist/playlist.route')(router);
+
+  require('./routes/cover/cover.route')(router);
 };

@@ -48,6 +48,7 @@ export default class Routes extends Component {
           <PrivateRoute exact path='/followers/:id' component={RouteMap.FollowListPage} {...this.props} />
           <PrivateRoute exact path='/settings' component={RouteMap.SettingsPage} {...this.props} />
           <PrivateRoute exact path='/musiclist/:type' component={RouteMap.MusicListPage} {...this.props} />
+          <PrivateRoute exact path='/playlist/:id' component={RouteMap.PlaylistViewPage} {...this.props} />
 
           <Route exact path='/login' component={RouteMap.LoginPage} {...this.props} />
           <Route exact path='/register' component={RouteMap.RegisterPage} {...this.props} />

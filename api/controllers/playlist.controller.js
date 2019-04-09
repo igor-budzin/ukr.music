@@ -1,28 +1,92 @@
 const mongoose = require('mongoose');
+const multiparty = require('multiparty');
+const fs = require('fs');
+const path = require('path');
 
 const User = require('../models/user.model');
 const Playlist = require('../models/Playlist.model');
 const Audio = require('../models/Audio.model');
 
+const coverFilesPath = path.resolve(__root, '..', '..', 'files', 'playlist-cover');
+
 exports.createPlaylist = async (req, res, next) => {
-  let { userId, title } = req.body;
   let playlistId = new mongoose.Types.ObjectId();
+  let currentUserId, title;
+  let coverName = null;
+
+
+
+const form = new multiparty.Form();
+
+form.on('error', (err) => { 
+  if(err) next(err);
+});
+
+
+form.on('field', (name, value) => {
+  switch(name) {
+    case 'currentUserId':
+      currentUserId = value;
+    break;
+
+    case 'title':
+      title = value;
+    break;
+  }
+});
+
+form.on('file', async (name, file) => {
+  
+  if(file.path) {
+    const data = fs.readFileSync(file.path);
+
+    const extArr = file.originalFilename.split('.');
+    coverName = `${playlistId}.${extArr[extArr.length - 1]}`;
+
+    fs.writeFileSync(path.resolve(coverFilesPath, coverName), data);
+  }
 
   await User
-    .findOneAndUpdate({ id: userId }, { $push: { playlist: playlistId } })
-    .then(response => { userId = response.id })
+    .findOneAndUpdate({ id: currentUserId }, { $push: { playlist: playlistId } })
     .catch(err => next(err));
 
   const playlist = new Playlist({
     _id: playlistId,
     title,
-    ownerId: userId
+    ownerId: currentUserId,
+    cover: coverName
   });
 
   await playlist.save()
+    .then(res => {
+      console.log('save')
+    })
     .catch(err => next(err));
 
-  res.json({ status: true });
+  
+});
+
+form.on('close', function() {
+  res.send({ "status": "true" });
+});
+
+
+form.parse(req);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // res.json({ status: true });
 };
 
 exports.addToPlaylist = async (req, res, next) => {

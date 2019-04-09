@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactModal from 'react-modal';
-import axios from 'axios';
+import { Redirect } from 'react-router';
 import classNames from 'classnames';
 import api from 'universal/utils/api';
 // Components
@@ -25,7 +25,10 @@ export default class PlayLists extends Component {
     this.state = {
       showModal: false,
       title: '',
-      playlists: []
+      playlists: [],
+      redirectToPlaylist: false,
+      playlistId: '',
+      coverImage: ''
     }
   }
 
@@ -54,63 +57,92 @@ export default class PlayLists extends Component {
   }
 
   onCloseModal = () => {
-    this.setState({ showModal: false });
+    this.setState({
+      showModal: false,
+      title: '',
+      coverImage: ''
+    });
   }
 
   handleCreatePlaylist = () => {
+    const data = new FormData();
+
+    data.append('currentUserId', this.props.currentUserId);
+    data.append('title', this.state.title);
+    data.append("files", document.getElementById('file').files[0]);
+    // console.log(data);
     api.request({
       method: 'post',
       path: '/playlist',
-      data: {
-        userId: this.props.currentUserId,
-        title: this.state.title
-      },
+      data,
       handleSuccess: (data, status) => {
         if(status === 200) {
-          this.onCloseModal();
           this.getPlayLists();
         }
+        this.onCloseModal();
       }
     });
   }
 
+  onChooseAlbum(id, event) {
+    event.stopPropagation();
+    this.setState({
+      playlistId: id,
+      redirectToPlaylist: true
+    })
+  }
+
+  onAddImage = event => {
+    if(event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = event => {
+        this.setState({ coverImage: event.target.result })
+      }
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
   render() {
+    if(this.state.redirectToPlaylist) return (
+      <Redirect to={`/playlist/${this.state.playlistId}`} />
+    )
+
     return (
       <div className="play-lists">
         <div className="playlist" id="new-playlist" onClick={this.onOpenModal}>
-          <div className="cover">
-          </div>
+          <div className="cover"></div>
           <div className="playlist-name">Новий список відтворення</div>
         </div>
-        {
-          this.state.playlists.map((item, index) => {
-            return(
-              <div 
-                className="playlist"
-                key={item._id + index}
-                onClick={this.props.handleViewPlaylist.bind(null, item._id)}
+        {this.state.playlists.map((item, index) => {
+          return(
+            <div 
+              className="playlist"
+              key={item._id + index}
+            >
+              <div
+                className={classNames({
+                  'cover': true,
+                  'empty': !item.cover
+                })}
+                onClick={(e) => this.onChooseAlbum(item._id, e)}
               >
-                <div className="cover empty">
-                  <div className="bg">
-                    <div className="btn play"></div>
-                    <div className="btn edit"></div>
-                    <span className="count">Треків: {item.audioCount}</span>
-                  </div>
-                  {
-                    item.cover && (
-                      <img src={`http://localhost:8080/api/albumCover/${item.cover}`} />
-                    )
-                  }
+                <div className="bg">
+                  <div className="btn play"></div>
+                  <div className="btn edit"></div>
+                  <span className="count">Треків: {item.audioCount}</span>
                 </div>
-                <div className="playlist-name">{item.title}</div>
+                {item.cover && (
+                  <img src={`http://localhost:8080/api/cover/playlist/${item.cover}`} />
+                )}
               </div>
-            )
-          })
-        }
-
+              <div className="playlist-name">{item.title}</div>
+            </div>
+          )
+        })}
         <ReactModal
           isOpen={this.state.showModal}
-          onAfterOpen={this.handleOpenEditModal}
           className="modal create-playlist"
           overlayClassName="overlay"
         >
@@ -122,11 +154,27 @@ export default class PlayLists extends Component {
           <div className="desc">
             <div className="media-wrapper">
               <div className="media-left">
-                <div className="cover empty">
+                <div
+                  className="cover empty"
+                  onClick={() => document.getElementById('file').click()}
+                >
                   <div className="bg">
                     <div className="btn-add-image"></div>
                   </div>
-                  <img src="http://localhost:8080/api/albumCover/thehardkiss-album.jpg" alt=""/>
+                  <img
+                    src={
+                      this.state.coverImage ? this.state.coverImage :
+                      "http://localhost:8080/api/albumCover/thehardkiss-album.jpg"
+                    }
+                    id="cover-image"
+                  />
+                  <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    style={{display: 'none'}}
+                    onChange={e => this.onAddImage(e)}
+                  />
                 </div>
               </div>
 

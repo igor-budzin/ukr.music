@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
 import { API_URL } from '../../../global.config';
 // Components
-import PlayList from 'universal/components/PlayList/PlayList';
+import PlayList from 'universal/components/AudioList/PlayList';
 
 export default class MusicPlayer extends Component {
 	constructor(props, context) {

@@ -1,6 +1,6 @@
 export function getPlaylistAudio({ playlistId, limit = 30, page = 1, sortBy = null, callback }) {
   return {
-    typePrefix: 'REQUEST_GET_PLAYLIST_AUDIO',
+    typePrefix: 'GET_PLAYLIST_AUDIO',
     endpoint: `playlist/audio/${playlistId}`,
     data: { limit, page, sortBy },
     handleSuccess: response => {
@@ -15,7 +15,7 @@ export function getPlaylistAudio({ playlistId, limit = 30, page = 1, sortBy = nu
 
 export function getPlaylistData(playlistId) {
   return {
-    typePrefix: 'REQUEST_GET_PLAYLIST_DATA',
+    typePrefix: 'GET_PLAYLIST_DATA',
     endpoint: `playlist/${playlistId}`,
     data: {},
     handleSuccess: response => {

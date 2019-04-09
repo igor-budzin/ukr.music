@@ -7,15 +7,13 @@ import ReactPlaceholder from 'react-placeholder';
 import ReactModal from 'react-modal';
 import api from 'universal/utils/api';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { API_URL } from '../../../global.config';
 // Components
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
-import PlayListFull from 'universal/components/PlayList/PlayListFull';
-import EmptyPlayList from 'universal/components/PlayList/EmptyPlayList';
+import PlayListFull from 'universal/components/AudioList/PlayListFull';
+import EmptyPlayList from 'universal/components/AudioList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
-import PlayLists from './Playlist/PlayLists';
-import PlayListView from './Playlist/PlayListView';
+import PlayLists from './PlayLists';
 // Actions
 import { getMusicListAction } from 'universal/redux/actions/getMusicListActions';
 
@@ -52,7 +50,6 @@ class UserProfileContainer extends Component {
       isOpenModalPlaylist: false,
       dataPlaylist: [],
       idAudioForPlaylist: '',
-      currentPlaylistId: ''
     }
   }
 
@@ -134,12 +131,11 @@ class UserProfileContainer extends Component {
   }
 
   onSelectTab = index => {
-    if(index === this.tabIndexes.playlists) this.setState({ currentPlaylistId: '' });
     localStorage.setItem('Tab-UserMainPage', index);
   }
 
-  handleViewPlaylist = id => {
-    this.setState({ currentPlaylistId: id });
+  onChoseAudio = audioData => {
+    this.props.handleChoseAudio(audioData, this.props.audioList);
   }
 
   render() {
@@ -154,9 +150,7 @@ class UserProfileContainer extends Component {
         </h2>
 
         <div className="container clearfix">
-
           <MusicPlayerContainer />
-
         </div>
 
         <div className="filter-hr"></div>
@@ -185,7 +179,7 @@ class UserProfileContainer extends Component {
                   <PlayListFull
                     currentId={this.props.currentMusic._id}
                     playlist={this.props.audioList}
-                    handleChoseAudio={this.props.handleChoseAudio}
+                    handleChoseAudio={this.onChoseAudio}
                     handleEditAudio={this.handleEditAudio}
                     handleGetPlaylists={this.handleGetPlaylists}
                     isPlaying={this.props.isPlaying}
@@ -210,15 +204,7 @@ class UserProfileContainer extends Component {
             </TabPanel>
 
             <TabPanel>
-              {
-                this.state.currentPlaylistId ? 
-                <PlayListView
-                  currentPlaylistId={this.state.currentPlaylistId}
-                /> :
-                <PlayLists
-                  handleViewPlaylist={this.handleViewPlaylist}
-                />
-              }
+              <PlayLists />
             </TabPanel>
 
             <TabPanel>
@@ -284,7 +270,7 @@ const musicLoader = (
       <path stroke="#ff4838" id="outline" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" 
             d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1        c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
       <path id="outline-bg" opacity="0.5" fill="none" stroke="#ededed" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" 
-            d="       M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1         c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
+            d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1         c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
     </svg>
   </div>
 )

@@ -1881,8 +1881,19 @@ a {
 
 .playlist-view {
   margin-bottom: 20px;
-  
+
   .cover {
+    height: 148px;
+    width: 148px;
+
+    &.empty {
+      background-image: url('../img/playlist.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: lighten(#d5e6ff, 2%);
+      background-size: 40px;
+    }
+
     img {
       width: 148px;
     }

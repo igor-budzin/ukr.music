@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 
 const mapStateToProps = state => ({
-  audioList: state.getMusicReducer.music,
   currentMusic: state.controlMusicReducer.currentMusic,
   isPlaying: state.controlMusicReducer.isPlaying
 });
@@ -18,9 +17,11 @@ const mapDispatchToProps = (dispatch, props) => {
 export default function withPlayerFunctional(PassedComponent) {
   class WithPlayerFunctional extends Component {
 
-    handleChoseAudio = audioData => {
+    handleChoseAudio = (audioData, audioList) => {
+      if(audioList === undefined) throw new Error('"audioList" is not defined');
+
       if(this.props.currentMusic.link.length === 0) {
-        this.props.playAudio(audioData, this.props.audioList);
+        this.props.playAudio(audioData, audioList);
       }
       else {
         if(this.props.currentMusic.link === audioData.link) {
@@ -32,7 +33,7 @@ export default function withPlayerFunctional(PassedComponent) {
           }
         }
         else {
-          this.props.playAudio(audioData, this.props.audioList);
+          this.props.playAudio(audioData, audioList);
         }
       }
     }

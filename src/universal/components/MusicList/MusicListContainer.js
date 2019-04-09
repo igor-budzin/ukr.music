@@ -9,7 +9,7 @@ import api from 'universal/utils/api';
 import { Link } from 'react-router-dom';
 // Components
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
-import PlayListFull from 'universal/components/PlayList/PlayListFull';
+import PlayListFull from 'universal/components/AudioList/PlayListFull';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
 // Actions

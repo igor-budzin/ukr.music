@@ -66,3 +66,8 @@ export const UserMainPage = asyncRoute(() => {
 export const MusicListPage = asyncRoute(() => {
   return System.import('../pages/MusicListPage.js');
 });
+
+export const PlaylistViewPage = asyncRoute(() => {
+  return System.import('../pages/PlaylistViewPage.js');
+});
+

@@ -11,8 +11,7 @@ import Button from '../Commons/Button';
 import * as AuthAction from './AuthActions';
 
 const mapStateToProps = state => ({
-  userId: state.AuthReducer.user.id,
-  currentUserLogin: state.AuthReducer.user.login,
+  currentUserId: state.AuthReducer.user.id,
   isLoginLoading: state.AuthReducer.isLoginLoading,
   errors: state.AuthReducer.errors
 });
@@ -67,7 +66,7 @@ export default class LoginContainer extends Component {
   };
 
   render() {
-    if(this.state.redirect) return <Redirect to={`/profile/${this.props.currentUserLogin}`} />
+    if(this.state.redirect) return <Redirect to={`/profile/${this.props.currentUserId}`} />
 
     return (
       <div className="auth-wrapper clearfix">

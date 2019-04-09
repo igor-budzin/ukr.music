@@ -10,11 +10,11 @@ const initialState = {
 export default function playlistReducer(state = initialState, action) {
   
   switch(action.type) {
-    case 'REQUEST_GET_PLAYLIST_AUDIO':
-    case 'REQUEST_GET_PLAYLIST_DATA':
+    case 'GET_PLAYLIST_AUDIO_REQUEST':
+    case 'GET_PLAYLIST_DATA_REQUEST':
       return state;
 
-    case 'REQUEST_GET_PLAYLIST_AUDIO_SUCCESS':
+    case 'GET_PLAYLIST_AUDIO_SUCCESS':
       let arr = action.payload.music;
 
       if(action.payload.page !== 1) {
@@ -26,10 +26,10 @@ export default function playlistReducer(state = initialState, action) {
         hasNextPage: action.payload.hasNextPage
       });
 
-    case 'REQUEST_GET_PLAYLIST_AUDIO_ERROR':
+    case 'GET_PLAYLIST_AUDIO_ERROR':
       return state;
 
-    case 'REQUEST_GET_PLAYLIST_DATA_SUCCESS':
+    case 'GET_PLAYLIST_DATA_SUCCESS':
       return Object.assign({}, state, {
         _id: action.payload._id,
         audioCount: action.payload.audioCount,
@@ -39,7 +39,7 @@ export default function playlistReducer(state = initialState, action) {
         duration: action.payload.duration
       });
 
-    case 'REQUEST_GET_PLAYLIST_DATA_ERROR':
+    case 'GET_PLAYLIST_DATA_ERROR':
       return state;
 
     default:

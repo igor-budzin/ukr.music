@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { formatSeconds } from 'universal/utils';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
+import ReactModal from 'react-modal';
 import ReactPlaceholder from 'react-placeholder';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 
@@ -11,7 +13,7 @@ import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
 import PlayListFull from 'universal/components/AudioList/PlayListFull';
 import Button from 'universal/components/Commons/Button';
 // Actions
-import { getPlaylistAudio, getPlaylistData } from './PlayListsActions';
+import { getPlaylistAudio, getPlaylistData, deletePlaylist } from './PlayListsActions';
 
 const mapStateToProps = state => ({
   playlist: state.playlistDataReducer,
@@ -24,7 +26,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getPlaylistAudio, getPlaylistData }, dispatch);
+  return bindActionCreators({ getPlaylistAudio, getPlaylistData, deletePlaylist }, dispatch);
 };
 
 class PlayListView extends Component {
@@ -32,7 +34,9 @@ class PlayListView extends Component {
     super(props, context);
 
     this.state = {
-      playlistReady: false
+      playlistReady: false,
+      showDeleteModal: false,
+      redirect: false
     }
   }
 
@@ -58,6 +62,21 @@ class PlayListView extends Component {
     this.props.handleChoseAudio(audioData, this.props.playlist.music);
   }
 
+  onCloseModalPlaylist = () => {
+    this.setState({ showDeleteModal: false })
+  }
+
+  handleDeletePlaylist = () => {
+    this.props.deletePlaylist({
+      playlistId: this.props.params.id,
+      callback: () => {
+        this.setState({
+          redirect: true
+        })
+      }
+    })
+  }
+
   render() {
     const {
       music,
@@ -68,11 +87,13 @@ class PlayListView extends Component {
       duration
     } = this.props.playlist;
 
+    if(this.state.redirect) return <Redirect to={`/profile/${this.props.currentUserId}`} />
+
     return (
       <Fragment>
         <h2 className="section-title">
           <Link className="btn-back" to={`/profile/${this.props.currentUserId}`}></Link>
-          Альбом
+          Плейлист
         </h2>
 
         <div className="container clearfix">
@@ -88,7 +109,7 @@ class PlayListView extends Component {
                 <div className="bg">
                   <div className="btn-add-image"></div>
                 </div>
-                {cover && <img src={`http://localhost:8080/api/albumCover/${cover}`} />}
+                {cover && <img src={`http://localhost:8080/api/cover/playlist/${cover}`} />}
               </div>
             </div>
 
@@ -97,8 +118,13 @@ class PlayListView extends Component {
               <p>Треків: {audioCount} &nbsp;&bull;&nbsp; {formatSeconds(duration)}</p>
 
               <div className="options">
-                <Button className="mini default">Редагувати</Button>
-                <Button className="mini default">Видалити</Button>
+                <Button className="mini">Редагувати</Button>
+                <Button
+                  className="mini"
+                  onClick={() => this.setState({ showDeleteModal: true })}
+                >
+                  Видалити
+                </Button>
               </div>
             </div>
           </div>
@@ -120,6 +146,31 @@ class PlayListView extends Component {
             }
           </ReactPlaceholder>
         </div>
+
+        <ReactModal
+          isOpen={this.state.showDeleteModal}
+          overlayClassName="overlay"
+          className="modal delete-playlist__modal"
+        >
+          <div className="title">
+            Видалення плейлиста
+            <div className="close" onClick={this.onCloseModalPlaylist}></div>
+          </div>
+
+          <div className="desc">
+            <p>
+              Ви справді хочете видалити плейлист <b>{title}</b>?<br />
+              Він <b>зникне</b> у всіх користувачів, які вже додали його собі.
+            </p>
+
+            <div className="devider"></div>
+
+            <div className="input-wrapper right">
+              <Button className="mini default" onClick={this.onCloseModalPlaylist}>Скасувати</Button>
+              <Button className="mini red" onClick={this.handleDeletePlaylist}>Так, видалити</Button>
+            </div>
+          </div>
+        </ReactModal>
         <NotificationContainer />
       </Fragment>
     )

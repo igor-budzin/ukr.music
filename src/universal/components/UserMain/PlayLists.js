@@ -104,6 +104,11 @@ export default class PlayLists extends Component {
     }
   }
 
+  onEditAlbum = (event) => {
+    event.stopPropagation();
+    console.log('onEditAlbum')
+  }
+
   render() {
     if(this.state.redirectToPlaylist) return (
       <Redirect to={`/playlist/${this.state.playlistId}`} />
@@ -130,7 +135,7 @@ export default class PlayLists extends Component {
               >
                 <div className="bg">
                   <div className="btn play"></div>
-                  <div className="btn edit"></div>
+                  <div className="btn edit" onClick={this.onEditAlbum}></div>
                   <span className="count">Треків: {item.audioCount}</span>
                 </div>
                 {item.cover && (

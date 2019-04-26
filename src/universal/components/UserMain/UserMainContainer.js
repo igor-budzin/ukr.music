@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 import ReactPlaceholder from 'react-placeholder';
-import ReactModal from 'react-modal';
 import api from 'universal/utils/api';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // Components
@@ -46,16 +45,12 @@ class UserProfileContainer extends Component {
     this.state = {
       audioListReady: false,
       audioDataReady: false,
-      page: 1,
-      isOpenModalPlaylist: false,
-      dataPlaylist: [],
-      idAudioForPlaylist: '',
+      page: 1
     }
   }
 
   componentDidMount() {
     this.getPageData();
-    ReactModal.setAppElement(document.getElementById('root'));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -82,52 +77,8 @@ class UserProfileContainer extends Component {
     })
   };
 
-  handleEditAudio = (id) => {
-
-  }
-
-  handleGetPlaylists = id => {
-    api.request({
-      path: '/playlist',
-      data: {
-        userId: this.props.currentUserId
-      },
-      handleSuccess: data => {
-        this.setState({
-          isOpenModalPlaylist: true,
-          dataPlaylist: data,
-          idAudioForPlaylist: id
-        });
-      }
-    });
-  }
-
-  handleAddToPlaylist = playlistId => {
-    api.request({
-      method: 'put',
-      path: '/playlist',
-      data: {
-        playlistId,
-        audioId: this.state.idAudioForPlaylist
-      },
-      handleSuccess: (response, status) => {
-        if(status === 200) {
-          this.setState({
-            isOpenModalPlaylist: false,
-            dataPlaylist: [],
-            idAudioForPlaylist: ''
-          });
-        }
-      }
-    });
-  }
-
-  onCloseModalPlaylist = () => {
-    this.setState({
-      isOpenModalPlaylist: false,
-      dataPlaylist: [],
-      idAudioForPlaylist: ''
-    });
+  handleAddToUser = (id) => {
+    console.log('handleAddToUser')
   }
 
   onSelectTab = index => {
@@ -140,6 +91,7 @@ class UserProfileContainer extends Component {
 
   render() {
     const { dataPlaylist } = this.state;
+
     return (
       <Fragment>
         <h2 className="section-title">
@@ -180,8 +132,8 @@ class UserProfileContainer extends Component {
                     currentId={this.props.currentMusic._id}
                     playlist={this.props.audioList}
                     handleChoseAudio={this.onChoseAudio}
-                    handleEditAudio={this.handleEditAudio}
-                    handleGetPlaylists={this.handleGetPlaylists}
+                    handleAddToUser={this.handleAddToUser}
+                    handleGetPlaylists={this.props.handleGetPlaylists}
                     isPlaying={this.props.isPlaying}
                     isLoading={this.props.isLoading}
                     hasNextPage={this.props.hasNextPage}
@@ -213,40 +165,6 @@ class UserProfileContainer extends Component {
           </Tabs>
 
         </div>
-
-
-          <ReactModal
-            isOpen={this.state.isOpenModalPlaylist}
-            className="modal edit-audio"
-            overlayClassName="overlay"
-          >
-            <div className="title">
-              Виберіть плейлист із списку
-              <div className="close" onClick={this.onCloseModalPlaylist}></div>
-            </div>
-
-            <div className="desc playlist-list">
-              {
-                dataPlaylist.map((item, index) => {
-                  return (
-                    <div
-                      className="playlist-item"
-                      onClick={this.handleAddToPlaylist.bind(null, item._id)}
-                      key={item._id + index}
-                    >
-                      {item.title}
-                    </div>
-                  )
-                })
-              }
-
-              {
-                (dataPlaylist.length === 0) && (
-                  <p>У вас поки немаэ жодного плейлиста</p>
-                )
-              }
-            </div>
-          </ReactModal>
 
 
         <NotificationContainer />

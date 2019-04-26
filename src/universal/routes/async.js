@@ -71,3 +71,6 @@ export const PlaylistViewPage = asyncRoute(() => {
   return System.import('../pages/PlaylistViewPage.js');
 });
 
+export const ContactPage = asyncRoute(() => {
+  return System.import('../pages/ContactPage.js');
+});

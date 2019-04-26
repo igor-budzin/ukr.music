@@ -18,7 +18,7 @@ const MusicSection = props => {
           props.data.map((item, index) => {
             return (
               <MusicItem
-                key={index}
+                key={item._id + index}
                 mini={true}
                 currentId={props.currentId}
                 isPlaying={props.isPlaying}
@@ -30,6 +30,7 @@ const MusicSection = props => {
                 picture={item.picture}
                 duration={item.duration}
                 handleChoseAudio={props.handleChoseAudio}
+                handleGetPlaylists={props.handleGetPlaylists}
               />
             )
           })

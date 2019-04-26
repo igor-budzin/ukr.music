@@ -20,20 +20,19 @@ export default class MusicItem extends Component {
   onAddToPlaylist = event => {
     event.stopPropagation();
     const { handleGetPlaylists } = this.props;
-    
+
     if(typeof handleGetPlaylists === 'function') {
       handleGetPlaylists(this.props._id);
     }
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-    // return !isEqual(nextProps, this.props);
-    // return this.props.isPlaying !== nextProps.isPlaying || this.props.isLoading !== nextProps.isLoading;
-  // }
-
-  onEdit = event => {
+  onAdd = event => {
     event.stopPropagation();
-    this.props.handleEditAudio(this.props._id);
+    const { handleAddToUser } = this.props;
+
+    if(typeof handleAddToUser === 'function') {
+      handleAddToUser(this.props._id);
+    }
   }
 
   render() {
@@ -52,9 +51,9 @@ export default class MusicItem extends Component {
 
     let coverStyle = {};
     if(picture) {
-     coverStyle = { "backgroundImage": `url("${API_URL}/getAudioCover/${picture}")` };
+     coverStyle = { "backgroundImage": `url("${API_URL}/cover/audio/${picture}")` };
     }
-    
+
     return (
       <div
         className={classNames(
@@ -95,8 +94,8 @@ export default class MusicItem extends Component {
         <div className="audio-row-options">
           <div className="item add-to-playlist" title="Додати в плейлист" onClick={this.onAddToPlaylist}></div>
           {
-            typeof this.props.handleEditAudio === 'function' && (
-              <div className="item edit" title="Редагувати" onClick={this.onEdit}></div>
+            typeof this.props.handleAddToUser === 'function' && (
+              <div className="item add" title="Додати собі" onClick={this.onAdd}></div>
             )
           }
         </div>
@@ -116,7 +115,7 @@ MusicItem.propTypes = {
   picture: PropTypes.string,
   title: PropTypes.string,
   artist: PropTypes.string,
-  handleEditAudio: PropTypes.func,
+  handleAddToUser: PropTypes.func,
   handleChoseAudio: PropTypes.func.isRequired
 };
 

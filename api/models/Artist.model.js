@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const Schema = mongoose.Schema;
 
@@ -6,14 +7,25 @@ const ArtistSchema = new Schema({
 	_id: mongoose.Types.ObjectId,
 	name: {
 		type: String,
-		required: true
+		required: true,
+		unique: true
 	},
-	coverLink: {
-		type: String
-	},
+	coverLink: String,
+	facebookLink: String,
+	instagramLink: String,
+	soundcloudLink: String,
+	youtubeLink: String,
+	twitterLink: String,
+	otherLink: [ String ],
 	audio: [],
 	followers: [],
-	albums: []
-});
+	albums: [],
+	ownerId: {
+		type: Number,
+		required: true
+	}
+}, { timestamps: true });
 
-module.exports = mongoose.model('artist', ArtistSchema);
+ArtistSchema.plugin(uniqueValidator, { message: 'is already taken.' });
+
+module.exports = mongoose.model('Artist', ArtistSchema);

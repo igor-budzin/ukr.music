@@ -14,79 +14,59 @@ exports.createPlaylist = async (req, res, next) => {
   let currentUserId, title;
   let coverName = null;
 
+  const form = new multiparty.Form();
 
-
-const form = new multiparty.Form();
-
-form.on('error', (err) => { 
-  if(err) next(err);
-});
-
-
-form.on('field', (name, value) => {
-  switch(name) {
-    case 'currentUserId':
-      currentUserId = value;
-    break;
-
-    case 'title':
-      title = value;
-    break;
-  }
-});
-
-form.on('file', async (name, file) => {
-  
-  if(file.path) {
-    const data = fs.readFileSync(file.path);
-
-    const extArr = file.originalFilename.split('.');
-    coverName = `${playlistId}.${extArr[extArr.length - 1]}`;
-
-    fs.writeFileSync(path.resolve(coverFilesPath, coverName), data);
-  }
-
-  await User
-    .findOneAndUpdate({ id: currentUserId }, { $push: { playlist: playlistId } })
-    .catch(err => next(err));
-
-  const playlist = new Playlist({
-    _id: playlistId,
-    title,
-    ownerId: currentUserId,
-    cover: coverName
+  form.on('error', (err) => { 
+    if(err) next(err);
   });
 
-  await playlist.save()
-    .then(res => {
-      console.log('save')
-    })
-    .catch(err => next(err));
 
-  
-});
+  form.on('field', (name, value) => {
+    switch(name) {
+      case 'currentUserId':
+        currentUserId = value;
+      break;
 
-form.on('close', function() {
-  res.send({ "status": "true" });
-});
+      case 'title':
+        title = value;
+      break;
+    }
+  });
+
+  form.on('file', async (name, file) => {
+    
+    if(file.path) {
+      const data = fs.readFileSync(file.path);
+
+      const extArr = file.originalFilename.split('.');
+      coverName = `${playlistId}.${extArr[extArr.length - 1]}`;
+
+      fs.writeFileSync(path.resolve(coverFilesPath, coverName), data);
+    }
+
+  });
+
+  form.on('close', async () => {
+    await User
+      .findOneAndUpdate({ id: currentUserId }, { $push: { playlist: playlistId } })
+      .catch(err => next(err));
+
+    const playlist = new Playlist({
+      _id: playlistId,
+      title,
+      ownerId: currentUserId,
+      cover: coverName
+    });
+
+    await playlist.save()
+      .catch(err => next(err));
+
+    res.send({ "status": "true" });
+  });
 
 
-form.parse(req);
+  form.parse(req);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // res.json({ status: true });
 };
 
 exports.addToPlaylist = async (req, res, next) => {
@@ -97,8 +77,6 @@ exports.addToPlaylist = async (req, res, next) => {
     .findOne({ _id: mongoose.Types.ObjectId(audioId) })
     .then(response => durationTime = response.duration)
     .catch(err => next(err));
-
-
 
   await Playlist
     .findOneAndUpdate({ _id: mongoose.Types.ObjectId(playlistId) }, { 
@@ -121,6 +99,7 @@ exports.getPlaylists = async (req, res, next) => {
       title: '$title',
       cover: '$cover',
       audio: '$audio',
+      duration: '$duration',
       audioCount: { $size:"$audio" }
     })
     .then(response => {
@@ -145,17 +124,22 @@ exports.getPlaylistAudio = async (req, res, next) => {
 
   await Playlist
     .findById(req.params.id)
-    .then(response => playlist = response)
+    .then(response => {
+      playlist = response.audio.map(function(el) { return mongoose.Types.ObjectId(el) })
+      console.log(playlist)
+    })
     .catch(err => next(err));
 
-  if(playlist.audio) {
-    Audio
-      .paginate({ _id: { $in: playlist.audio }}, options)
+  if(playlist) {
+   await Audio
+      // .find({ _id: { $in: playlist.audio }}, '_id link title artists duration picture')
+      .paginate({ _id: { $in: playlist }}, options)
       .then(response => {
+        console.log(response)
         res.json({
           music: response.docs,
           page,
-          hasNextPage: playlist.audio.length > page * limit
+          hasNextPage: playlist.length > page * limit
         });
       })
       .catch(err => next(err));
@@ -171,6 +155,16 @@ exports.getPlaylistData = async (req, res, next) => {
       const audioCount = response.audio.length;
 
       res.json({ _id, title, privat, cover, duration, audioCount });
+    })
+    .catch(err => next(err));
+}
+
+exports.deletePlaylist = (req, res, next) => {
+  Playlist
+    .deleteOne({ _id: mongoose.Types.ObjectId(req.params.id) })
+    .then(response => {
+      console.log(response)
+      res.json({ status: true });
     })
     .catch(err => next(err));
 }

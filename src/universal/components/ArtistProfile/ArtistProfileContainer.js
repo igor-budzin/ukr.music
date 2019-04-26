@@ -13,61 +13,61 @@ import MusicSection from 'universal/components/Sections/MusicSection';
 import * as ArtistProfile from './ArtistProfileActions';
 
 const mapStateToProps = (state, props) => ({
-	name: state.ArtistProfileReducer.name
+  name: state.ArtistProfileReducer.name
 });
 
 const mapDispatchToProps = (dispatch, props) => bindActionCreators(ArtistProfile, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ArtistProfileContainer extends Component {
-	constructor(props, context) {
-		super(props, context);
+  constructor(props, context) {
+    super(props, context);
 
-		this.state = {
+    this.state = {
 
-		};
-	}
+    };
+  }
 
-	componentDidMount() {
-		this.props.getArtistData(this.props.locationParams.name);
-	}
+  componentDidMount() {
+    this.props.getArtistData(this.props.locationParams.name);
+  }
 
-	render() {
-		return (
-			<div className="artist-profile">
-				<div className="artist-cover"></div>
-				<main id="page" className="page clearfix">
+  render() {
+    return (
+      <div className="artist-profile">
+        <div className="artist-cover"></div>
+        <main id="page" className="page clearfix">
 
-					<div className="content">
+          <div className="content">
 
-						<div className="artist-title official"><span>{this.props.name}</span></div>
+            <div className="artist-title official"><span>{this.props.name}</span></div>
 
-						<MusicSection artistName={this.props.locationParams.name} limit="6" />
-						<AlbumsSection />
-						<TourSection />
+            {/*<MusicSection artistName={this.props.locationParams.name} limit="6" />*/}
+            <AlbumsSection />
+            <TourSection />
 
-					</div>
+          </div>
 
-					<div className="sidebar">
-						<div className="counts sidebar-wrapper">
-							<div className="col">
-								<span className="text">Підписалось</span>
-								<span className="count">20 400</span>
-							</div>
-							<div className="col">
-								<span className="text">Аудіофайлів</span>
-								<span className="count">120</span>
-							</div>
-						</div>
+          <div className="sidebar">
+            <div className="counts sidebar-wrapper">
+              <div className="col">
+                <span className="text">Підписалось</span>
+                <span className="count">20 400</span>
+              </div>
+              <div className="col">
+                <span className="text">Аудіофайлів</span>
+                <span className="count">120</span>
+              </div>
+            </div>
 
-						<div className="sidebar-wrapper">
-							<Button className="btn full">Підписатися</Button>
-						</div>
-					</div>
+            <div className="sidebar-wrapper">
+              <Button className="btn full">Підписатися</Button>
+            </div>
+          </div>
 
-					<NotificationContainer />
-				</main>
-			</div>
-		);
-	}
+          <NotificationContainer />
+        </main>
+      </div>
+    );
+  }
 }

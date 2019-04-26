@@ -13,7 +13,7 @@ import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContain
 // Actions
 
 const mapStateToProps = (state, props) => ({
-	currentUserName: state.AuthReducer.user.name
+	currentUserId: state.AuthReducer.user.id
 });
 
 const mapDispatchToProps = (dispatch, props) =>  bindActionCreators({}, dispatch);
@@ -43,9 +43,9 @@ export default class SettingstContainer extends Component {
 	};
 
 	handleCreateArtist = () => {
-		axios.post(`${API_URL}/createArtist`, {
+		axios.post(`${API_URL}/artist`, {
 			artistName: this.state.artistName,
-			currentUserName: this.props.currentUserName
+			currentUserId: this.props.currentUserId
 		})
 		.then(response => {
 			this.handleCloseModal();
@@ -86,6 +86,7 @@ export default class SettingstContainer extends Component {
 								overlayClassName="overlay"
 							>
 								<div className="title">
+									Створення виконавця
 									<div className="close" onClick={this.handleCloseModal}></div>
 								</div>
 									<div className="input-wrapper">

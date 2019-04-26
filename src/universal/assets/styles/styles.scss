@@ -17,6 +17,24 @@ body {
   color: #333;
   background-color: #f2f2f2;
 }
+b {
+  font-weight: bold;
+}
+div::-webkit-scrollbar {
+  width: 5px;
+}
+div::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+div::-webkit-scrollbar-thumb {
+  background: rgba(91, 136, 189, 0.4);
+  border-radius: 5px;
+  transition: background 200ms ease;
+}
+
+div::-webkit-scrollbar-thumb:hover {
+   background: rgba(91, 136, 189, 1);
+}
 .wrapper {
   margin: 0 auto;
   width: 1140px;
@@ -243,7 +261,7 @@ a {
       color: #5698ff;
     }
 
-    &.active:after  {
+    &.active:after {
       display: block;
       content: "";
       position: absolute;
@@ -256,95 +274,6 @@ a {
   }
 }
 
-.filters {
-  float: right;
-}
-.filter-dropdown {
-  position: relative;
-  float: left;
-  margin-left: 40px;
-}
-.filter-dropdown .link {
-  color: #a6a6a6;
-  font-family: 'Roboto', sans-serif;
-  position: relative;
-  z-index: 200;
-}
-.filter-dropdown .link .icon-dropdown {
-  width: 9px;
-  height: 6px;
-  display: inline-block;
-  background-image: url('../img/icons-common.png');
-  background-repeat: no-repeat;
-  background-position: -10px -10px;
-  float: right;
-  margin: 6px 0 0 4px;
-  z-index: 200;
-  position: relative;
-}
-.filter-dropdown .link:hover .icon-dropdown {background-position: -50px -10px;}
-.filter-dropdown.open .link .icon-dropdown {background-position: -20px 0px;}
-.filter-dropdown .link:hover {
-  color: #00b0eb;
-}
-.filter-dropdown > .bg {
-  position: absolute;
-  z-index: 101;
-  top: -15px;
-  right: -20px;
-  bottom: -10px;
-  left: -25px;
-  border-color: #ddd;
-  border-style: solid;
-  border-width: 1px 1px 0;
-  border-radius: 3px 3px 0 0;
-  background-color: #fff;
-  cursor: pointer;
-  visibility: hidden;
-}
-.filter-dropdown .dropdown-content {
-  display: none;
-  top: 25px;
-  width: auto;
-  right: -20px;
-  position: absolute;
-  border-radius: 3px 0 3px 3px;
-  background: #fff;
-  padding: 20px;
-  border: 1px solid #ddd;
-  box-shadow: 0 3px 10px 0px rgba(0, 0, 0, 0.05);
-  z-index: 100;
-}
-.filter-dropdown.open .dropdown-content {
-  display: table;
-}
-.filter-dropdown.open .bg {
-  visibility: visible;
-}
-.filter-dropdown .dropdown-content ul {
-  margin: 0;
-  padding: 0;
-  width: 140px;
-  display: table-cell;
-}
-.filter-dropdown .dropdown-content ul li {
-  margin: 0 0 10px 0;
-  width: 140px;
-}
-.filter-dropdown .dropdown-content ul li:last-child {
-  margin: 0;
-}
-.filter-dropdown .dropdown-content .filter-link {
-  font-size: 14px;
-  color: #333;
-}
-.filter-dropdown .dropdown-content .filter-link:hover,
-.filter-dropdown .dropdown-content .filter-link.active {
-  color: #00b0eb;
-}
-.filter-dropdown.open .link {
-  color: #333;
-}
 .filter-hr {
   height: 0;
   margin: 30px 0;
@@ -542,13 +471,12 @@ a {
     cursor: pointer;
   }
 
-  .edit {
-    background-image: url('../img/play-controls/edit.svg');
-    background-size: 16px;
+  .add {
+    background-image: url('../img/add-song.svg');
+    background-size: 15px;
     background-position: center;
     background-repeat: no-repeat;
     margin: 14px 5px;
-    
   }
 
   .add-to-playlist {
@@ -736,7 +664,6 @@ a {
       height: 40px;
       line-height: 40px;
       color: #fff;
-      margin-bottom: 20px;
       border-radius: 3px;
       background-repeat: no-repeat;
       background-size: 30px;
@@ -1212,47 +1139,46 @@ a {
       }
     }
   }
+}
 
-  // Найближчий тур
-  &.tour {
-    .event {
-      height: 40px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      font-family: 'Roboto Condensed';
-      font-size: 18px;
+// Найближчий тур
+.tour {
+  .event {
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: 'Roboto Condensed';
+    font-size: 18px;
 
-      &:nth-child(even) {
-        background-color: lighten(#e9f2ff, 1.5%);
-      }
+    &:nth-child(odd) {
+      background-color: lighten(#e9f2ff, 1.5%);
+    }
 
-      &:hover {
-        background-color: darken(#e9f2ff, 0.5%);
-      }
+    &:hover {
+      background-color: darken(#e9f2ff, 0.5%);
+    }
 
-      .date {
-        width: 160px;
-        flex-grow: 0;
-        text-align: center;
-      }
-      .city {
-        padding: 0 10px;
-        flex: 5 1 auto;
-      }
-      .ticket {
-        padding-right: 10px;
-        a {
-          color: #ff4838;
-          &:hover {
-            text-decoration: underline;
-          }
+    .date {
+      width: 160px;
+      flex-grow: 0;
+      text-align: center;
+    }
+    .city {
+      padding: 0 10px;
+      flex: 5 1 auto;
+    }
+    .ticket {
+      padding-right: 10px;
+      a {
+        color: #ff4838;
+        &:hover {
+          text-decoration: underline;
         }
       }
     }
   }
 }
-
 
 // Альбоми
 .albums {
@@ -1646,6 +1572,7 @@ a {
   border-radius: 2px;
   position: relative;
   padding-top: 60px;
+  width: 400px;
 
   .title {
     border-radius: 2px 2px 0 0;
@@ -1671,6 +1598,13 @@ a {
       right: 20px;
       top: 14px;
       cursor: pointer;
+    }
+  }
+
+  .desc {
+    p {
+      line-height: 20px;
+      font-family: 'Roboto';
     }
   }
 
@@ -1730,11 +1664,6 @@ a {
       }
     }
 
-
-    .desc {
-      width: 100%;
-      float: left;
-    }
   }
 
   &.create-playlist {
@@ -1864,14 +1793,61 @@ a {
 }
 
 
+.playlist-list__modal {
+  width: 400px;
+}
 .playlist-list {
+  max-height: calc(100vh - 400px);
+  overflow-y: scroll;
+  padding-right: 1px;
+  min-height: 300px;
+
   .playlist-item {
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
     margin-bottom: 2px;
     cursor: pointer;
-    padding: 0 20px;
+    padding: 4px;
     border-radius: 3px;
+    position: relative;
+
+    .cover {
+      width: 42px;
+      height: 42px;
+      border-radius: 3px;
+      margin-right: 10px;
+      float: left;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: lighten(#d5e6ff, 2%);
+      background-size: cover;
+      
+      &.empty {
+        background-image: url('../img/playlist.svg');
+        background-size: 18px;
+      }
+    }
+
+    .playlist-title {
+      line-height: 43px;
+      display: inline-block;
+      float: left;
+    }
+
+    .audioCount {
+      position: absolute;
+      right: 8px;
+      top: 11px;
+      font-size: 12px;
+      font-family: 'Roboto';
+    }
+
+    .audioDuration {
+      position: absolute;
+      right: 8px;
+      bottom: 11px;
+      font-size: 12px;
+      font-family: 'Roboto';
+    }
 
     &:hover {
       background-color: darken(#e9f2ff, 8%);
@@ -1915,6 +1891,14 @@ a {
 
   .options {
     position: absolute;
-    bottom: 3px;
+    bottom: 0px;
+  }
+}
+
+.delete-playlist__modal {
+  width: 500px;
+
+  .button {
+    margin-left: 10px;
   }
 }

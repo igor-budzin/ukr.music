@@ -22,34 +22,34 @@ window.audioInstance.muted = localStorage.getItem('isMuted') !== null ? stringTo
 
 
 if(localStorage.jwtToken) {
-	setAuthToken(localStorage.jwtToken);
-	const decoded = jwt_decode(localStorage.jwtToken);
-	store.dispatch(setCurrentUser(decoded.userData));
+  setAuthToken(localStorage.jwtToken);
+  const decoded = jwt_decode(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(decoded.userData));
 
-	const currentTime = Date.now() / 1000;
-	if(decoded.exp < currentTime) {
-		store.dispatch(logoutUser());
-	}
+  const currentTime = Date.now() / 1000;
+  if(decoded.exp < currentTime) {
+    store.dispatch(logoutUser());
+  }
 }
 
 const renderApp = Component => {
-	render(
-		<AppContainer>
-			<Provider store={store}>
-				<Component history={history} />
-			</Provider>
-		</AppContainer>,
-		document.getElementById('root')
-	);
+  render(
+    <AppContainer>
+      <Provider store={store}>
+        <Component history={history} />
+      </Provider>
+    </AppContainer>,
+    document.getElementById('root')
+  );
 }
 
 renderApp(App);
 
 // Hot reload
 if (module.hot) {
-	module.hot.accept('./containers/AppContainer.js', () => {
-		const nextApp = require('./containers/AppContainer.js');
-		renderApp(nextApp);
-	});
+  module.hot.accept('./containers/AppContainer.js', () => {
+    const nextApp = require('./containers/AppContainer.js');
+    renderApp(nextApp);
+  });
 }
 

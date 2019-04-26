@@ -7,7 +7,7 @@ export default class TourSection extends Component {
 
 	render() {
 		return (
-			<div className="profile-section tour">
+			<div className="section tour">
 				<div className="title">
 					<span>Найближчий тур</span>
 

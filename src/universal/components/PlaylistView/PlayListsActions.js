@@ -27,3 +27,19 @@ export function getPlaylistData(playlistId) {
     }
   }
 }
+
+export function deletePlaylist({ playlistId, callback }) {
+  return {
+    typePrefix: 'DELETE_PLAYLIST',
+    endpoint: `playlist/${playlistId}`,
+    method: 'delete',
+    data: {},
+    handleSuccess: response => {
+      if(typeof callback === 'function') callback(response.data);
+    },
+    handleError: error => {
+      console.log('handleError');
+      console.log(error);
+    }
+  }
+}

@@ -38,7 +38,7 @@ export default class Header extends Component {
 							<li><Link to={`/profile/${this.props.currentUserId}`}>Музика</Link></li>
 							<li><a href="#">Афіша</a></li>
 							<li><a href="#">Блог</a></li>
-							<li><a href="#">Контакти</a></li>
+							<li><Link to="/contact">Контакти</Link></li>
 						</ul>
 					</div>
 					<div className="item-right">

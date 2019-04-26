@@ -107,8 +107,8 @@ export default class SidebarContainer extends Component {
             <Link to="/update" className="link update">Оновлення</Link>
             <Link to={`../stats/${this.props.currentUserId}`} className="link stats">Статистика</Link>
             <Link to="/settings" className="link settings">Налаштування</Link>
-            {
-              this.props.artistList.length ? <div className="divider"></div> : null
+
+            {this.props.artistList.length > 0 && <div className="divider"></div>
             }
             {
               this.props.artistList.map(item => {

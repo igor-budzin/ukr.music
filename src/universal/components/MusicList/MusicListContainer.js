@@ -153,27 +153,27 @@ class MusicListContainer extends Component {
 
         <div className="content">
 
-        <div style={{"margin": "0 0 30px 0"}}>
-          <SearchField />
-        </div>
+          <div style={{"margin": "0 0 30px 0"}}>
+            <SearchField />
+          </div>
 
-        <ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
-          {
-            this.props.audioList && this.props.audioList.length > 0 ?
-            <PlayListFull
-              currentId={this.props.currentMusic._id}
-              playlist={this.props.audioList}
-              handleChoseAudio={this.props.handleChoseAudio}
-              handleEditAudio={this.handleEditAudio}
-              handleGetPlaylists={this.handleGetPlaylists}
-              isPlaying={this.props.isPlaying}
-              isLoading={this.props.isLoading}
-              hasNextPage={this.props.hasNextPage}
-              loadNextPage={this.getPageData}
-              isNextPageLoading={false}
-            /> : <div></div>
-          }
-        </ReactPlaceholder>
+          <ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
+            {
+              this.props.audioList && this.props.audioList.length > 0 ?
+              <PlayListFull
+                currentId={this.props.currentMusic._id}
+                playlist={this.props.audioList}
+                handleChoseAudio={this.props.handleChoseAudio}
+                handleEditAudio={this.handleEditAudio}
+                handleGetPlaylists={this.handleGetPlaylists}
+                isPlaying={this.props.isPlaying}
+                isLoading={this.props.isLoading}
+                hasNextPage={this.props.hasNextPage}
+                loadNextPage={this.getPageData}
+                isNextPageLoading={false}
+              /> : <div></div>
+            }
+          </ReactPlaceholder>
         </div>
 
 

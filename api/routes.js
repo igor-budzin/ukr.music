@@ -20,7 +20,6 @@ module.exports = (router, socket) => {
   require('./routes/login.route')(router); // Авторизація
 
   require('./routes/static/image.route')(router); // Зображення з кореню
-  require('./routes/static/albumCover.route')(router); // Обкладинка альбому
 
   require('./routes/getMusic.route')(router); // Список треків
   require('./routes/getAudioData.route')(router); // Інформація про трек
@@ -29,11 +28,6 @@ module.exports = (router, socket) => {
   require('./routes/getUserFollows.route')(router); // Список користувачів на яких підписаний юзер
   require('./routes/followUser.route')(router); // Підписується на користувача
 
-  require('./routes/createArtist.route')(router); // Створює нового виконавця
-  require('./routes/getArtistData.route')(router); // Інформація про виконавця
-
-  require('./routes/getArtistMusicList.route')(router);
-  require('./routes/getArtistList.route')(router);
 
   /*------------------------------------------------------------*/
 
@@ -41,9 +35,8 @@ module.exports = (router, socket) => {
 
   require('./routes/files/uploadAudioFiles.route')(router, socket); // Завантаження аудіофайлів
   require('./routes/files/getAudioFile.route')(router); // Аудіофайл
-  require('./routes/files/getAudioCover.route')(router); // Обкладинка треку
 
   require('./routes/playlist/playlist.route')(router);
-
   require('./routes/cover/cover.route')(router);
+  require('./routes/artist/artist.route')(router);
 };

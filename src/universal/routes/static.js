@@ -15,3 +15,5 @@ export { default as SettingsPage } from 'universal/pages/SettingsPage.js';
 
 export { default as MusicListPage } from 'universal/pages/MusicListPage.js';
 export { default as PlaylistViewPage } from 'universal/pages/PlaylistViewPage.js';
+
+export { default as ContactPage } from 'universal/pages/ContactPage.js';

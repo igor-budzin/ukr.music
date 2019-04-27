@@ -9,8 +9,10 @@ const initialState = {
   followersCount: 0,
   canUserFollow: null,
   login: null,
-  name: null
+  name: null,
+  artistList: []
 };
+
 export default function visibleUserDataReducer(state = initialState, action) {
   switch (action.type) {
   case REQUEST_GET_USERDATA: {
@@ -24,6 +26,16 @@ export default function visibleUserDataReducer(state = initialState, action) {
   case REQUEST_GET_USERDATA_ERROR: {
     return state;
   }
+
+  case 'GET_ARTIST_LIST_BY_USER_REQUEST':
+    return state;
+
+  case 'GET_ARTIST_LIST_BY_USER_SUCCESS':
+    console.log(action.payload)
+    return Object.assign({}, state, action.payload);
+
+  case 'GET_ARTIST_LIST_BY_USER_ERROR':
+    return state;
 
   default:
     return state;

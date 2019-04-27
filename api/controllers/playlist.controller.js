@@ -126,7 +126,6 @@ exports.getPlaylistAudio = async (req, res, next) => {
     .findById(req.params.id)
     .then(response => {
       playlist = response.audio.map(function(el) { return mongoose.Types.ObjectId(el) })
-      console.log(playlist)
     })
     .catch(err => next(err));
 

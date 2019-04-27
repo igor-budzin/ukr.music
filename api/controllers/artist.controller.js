@@ -11,12 +11,19 @@ exports.getArtists = (req, res, next) => {
 }
 
 exports.getArtistsByUser = async (req, res, next) => {
-  const artistArray = [];
+  let artistArray = [];
 
   await User
-    .find({ id: req.query.id }, 'artist')
-    .then(result => res.json(result))
+    .findOne({ id: req.params.id }, 'artists')
+    .then(result => {
+      artistArray = result.artists.map(item => mongoose.Types.ObjectId(item))
+    })
     .catch(err => next(err));
+
+  await Artist
+    .find({ _id: { $in: artistArray } })
+    .then(result => res.json({ artistList: result }))
+    .catch(next);
 }
 
 exports.getArtistData = (req, res, next) => {

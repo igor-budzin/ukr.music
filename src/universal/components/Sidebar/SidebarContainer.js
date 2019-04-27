@@ -9,9 +9,8 @@ import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-place
 // Components
 import Button from '../Commons/Button';
 // Actions
-import * as visibleUserDataActions from './visibleUserDataActions';
+import { getVisibleUserData, getArtistsByUser } from './visibleUserDataActions';
 import { followUser } from 'universal/components/Followers/followListActions';
-import { getArtistList } from 'universal/components/ArtistProfile/ArtistProfileActions';
 
 const mapStateToProps = (state, props) => ({
   currentUserName: state.AuthReducer.user.name,
@@ -19,13 +18,13 @@ const mapStateToProps = (state, props) => ({
   followersCount: state.visibleUserDataReducer.followersCount,
   audioCount: state.visibleUserDataReducer.audioCount,
   canFollowUser: state.visibleUserDataReducer.canFollowUser,
-  artistList: state.artistListReducer.artistList
+  artistList: state.visibleUserDataReducer.artistList
 });
 
 const mapDispatchToProps = (dispatch, props) => bindActionCreators({
-  ...visibleUserDataActions,
+  getVisibleUserData,
+  getArtistsByUser,
   followUser,
-  getArtistList
 }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -48,7 +47,7 @@ export default class SidebarContainer extends Component {
     .then(response => {
       if(this.mounted) this.setState({ dataReady: true });
     });
-    // this.props.getArtistList(this.props.currentUserId);
+    this.props.getArtistsByUser(this.props.currentUserId);
   }
 
 
@@ -108,21 +107,18 @@ export default class SidebarContainer extends Component {
             <Link to={`../stats/${this.props.currentUserId}`} className="link stats">Статистика</Link>
             <Link to="/settings" className="link settings">Налаштування</Link>
 
-            {this.props.artistList.length > 0 && <div className="divider"></div>
-            }
-            {
-              this.props.artistList.map(item => {
-                return (
-                  <Link
-                    key={item._id}
-                    to={`/artist/${item.id}`}
-                    className="link"
-                  >
-                    {item.name}
-                  </Link>
-                )
-              })
-            }
+            {this.props.artistList.length > 0 && <div className="divider"></div>}
+            {this.props.artistList.map(artist => {
+              return (
+                <Link
+                  key={artist._id}
+                  to={`/artist/${artist._id}`}
+                  className="link"
+                >
+                  {artist.name}
+                </Link>
+              )
+              })}
           </div>
         </div>
       </div>

@@ -29,13 +29,17 @@ export default class ArtistProfileContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.getArtistData(this.props.locationParams.name);
+    // this.props.getArtistData(this.props.locationParams.name);
   }
 
   render() {
     return (
       <div className="artist-profile">
-        <div className="artist-cover"></div>
+        <div className="artist-cover">
+          {/*<div className="default-cover"><span>the hardkiss</span></div>*/}
+          <img src="http://localhost:8080/api/cover/artist/epolets.jpg/horizontal" className="cover-horizontal"/>
+          <div className="edit-cover"><span>Змінити</span></div>
+        </div>
         <main id="page" className="page clearfix">
 
           <div className="content">

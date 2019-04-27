@@ -37,3 +37,12 @@ export function getVisibleUserData(currentUserId, visibleUserId) {
 
   }
 }
+
+export function getArtistsByUser(id) {
+  return {
+    typePrefix: "GET_ARTIST_LIST_BY_USER",
+    endpoint: `artist/user/${id}`,
+    method: 'get',
+    data: {}
+  }
+}

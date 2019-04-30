@@ -50,7 +50,7 @@ class HomeContainer extends Component {
               isPlaying={this.props.isPlaying}
               isLoading={this.props.isLoading}
               currentId={this.props.currentMusic._id}
-              fullListLink="popular"
+              fullListLink={`musiclist/popular`}
             />
             
           </div>

@@ -90,8 +90,6 @@ export default class LoginContainer extends Component {
               <Button
                 typeButton="submit"
                 className="btn facebook"
-                isLoading={this.props.isLoginLoading}
-                onClick={this.handleSubmitLog}
               >
                 Facebook
               </Button>
@@ -101,8 +99,6 @@ export default class LoginContainer extends Component {
               <Button
                 typeButton="submit"
                 className="btn telegram"
-                isLoading={this.props.isLoginLoading}
-                onClick={this.handleSubmitLog}
               >
                 Telegram
               </Button>

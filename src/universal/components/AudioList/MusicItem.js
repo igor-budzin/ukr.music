@@ -5,16 +5,20 @@ import { formatSeconds } from 'universal/utils';
 import { API_URL } from '../../../global.config';
 import PropTypes from 'prop-types';
 
+import InfinityLoader from 'universal/components/Commons/InfinityLoader';
+
 export default class MusicItem extends Component {
   onClick = () => {
-    this.props.handleChoseAudio({
-      _id: this.props._id,
-      link: this.props.link,
-      title: this.props.title,
-      artists: this.props.artist,
-      duration: this.props.duration,
-      picture: this.props.picture
-    });
+    if(typeof this.props.handleChoseAudio === 'function') {
+      this.props.handleChoseAudio({
+        _id: this.props._id,
+        link: this.props.link,
+        title: this.props.title,
+        artists: this.props.artist,
+        duration: this.props.duration,
+        picture: this.props.picture
+      });
+    }
   }
 
   onAddToPlaylist = event => {
@@ -72,7 +76,7 @@ export default class MusicItem extends Component {
             picture && coverStyle.backgroundImage !== undefined ? null : 'empty')
           }
           style={coverStyle.backgroundImage !== undefined ? coverStyle : null}>
-            <div className="loader">{musicLoader}</div>
+            <div className="loader">{<InfinityLoader style={{'width': '78px', 'marginLeft': '-17px', 'marginTop': '3px'}} />}</div>
             <div className="bars">
               <div className="bar"></div>
               <div className="bar"></div>
@@ -92,12 +96,13 @@ export default class MusicItem extends Component {
           )
         }
         <div className="audio-row-options">
-          <div className="item add-to-playlist" title="Додати в плейлист" onClick={this.onAddToPlaylist}></div>
-          {
-            typeof this.props.handleAddToUser === 'function' && (
-              <div className="item add" title="Додати собі" onClick={this.onAdd}></div>
-            )
-          }
+          {typeof this.props.handleGetPlaylists === 'function' && (
+            <div className="item add-to-playlist" title="Додати в плейлист" onClick={this.onAddToPlaylist}></div>
+          )}
+          
+          {typeof this.props.handleAddToUser === 'function' && (
+            <div className="item add" title="Додати собі" onClick={this.onAdd}></div>
+          )}
         </div>
       </div>
     );
@@ -116,7 +121,7 @@ MusicItem.propTypes = {
   title: PropTypes.string,
   artist: PropTypes.string,
   handleAddToUser: PropTypes.func,
-  handleChoseAudio: PropTypes.func.isRequired
+  handleChoseAudio: PropTypes.func
 };
 
 const svgLoaderStyle = {

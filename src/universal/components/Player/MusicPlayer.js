@@ -35,7 +35,7 @@ export default class MusicPlayer extends Component {
 
 		let style = {};
 		if(picture) {
-			style = { "backgroundImage": `url(${API_URL}/getAudioCover/${picture})` };
+			style = { "backgroundImage": `url(${API_URL}/cover/audio/${picture})` };
 		}
 
 		return (

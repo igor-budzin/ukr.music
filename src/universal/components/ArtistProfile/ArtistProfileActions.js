@@ -1,7 +1,19 @@
-import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: 'https://localhost:8080/api/',
-  headers: {'Access-Control-Allow-Origin': '*'}
-});
 
+export function getArtistData(id) {
+  return {
+    typePrefix: "GET_ARTIST_DATA",
+    endpoint: `artist/${id}`,
+    method: 'get',
+    data: {}
+  }
+}
+
+export function getArtistAudio(id) {
+  return {
+    typePrefix: "GET_ARTIST_AUDIO_LIST",
+    endpoint: `artist/audio/${id}`,
+    method: 'get',
+    data: {}
+  }
+}

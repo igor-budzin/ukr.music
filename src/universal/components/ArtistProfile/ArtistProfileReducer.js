@@ -1,30 +1,32 @@
-import { 
-	REQUEST_GET_ARTIST_DATA,
-	REQUEST_GET_ARTIST_DATA_SUCCESS,
-	REQUEST_GET_ARTIST_DATA_ERROR
-} from '../../redux/consts';
 
 const initialState = {
-	name: null,
-	coverLink: null,
-	audioCount: 0,
-	followersCount: 0
+  artist: {},
+  artistAudioList: []
 };
 
 export default function ArtistProfileReducer(state = initialState, action) {
-	switch(action.type) {
-		case REQUEST_GET_ARTIST_DATA:
-			return state;
+  switch(action.type) {
+    case 'GET_ARTIST_DATA_REQUEST':
+      return state;
 
-		case REQUEST_GET_ARTIST_DATA_SUCCESS:
-			return Object.assign({}, state, {...action.payload});
+    case 'GET_ARTIST_DATA_ERROR':
+      return state;
 
-		case REQUEST_GET_ARTIST_DATA_ERROR:
-			return state ;
+    case 'GET_ARTIST_DATA_SUCCESS':
+      return Object.assign({}, state, action.payload);
 
-		default:
-			return state;
-	}
+    case 'GET_ARTIST_AUDIO_LIST_REQUEST':
+      return state;
+
+    case 'GET_ARTIST_AUDIO_LIST_ERROR':
+      return state;
+
+    case 'GET_ARTIST_AUDIO_LIST_SUCCESS':
+      return Object.assign({}, state, action.payload);
+
+    default:
+      return state;
+  }
 }
 
 

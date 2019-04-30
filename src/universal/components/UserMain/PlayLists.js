@@ -167,10 +167,7 @@ export default class PlayLists extends Component {
                     <div className="btn-add-image"></div>
                   </div>
                   <img
-                    src={
-                      this.state.coverImage ? this.state.coverImage :
-                      "http://localhost:8080/api/albumCover/thehardkiss-album.jpg"
-                    }
+                    src={this.state.coverImage && this.state.coverImage}
                     id="cover-image"
                   />
                   <input

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const Artist = require('../models/Artist.model');
+const Audio = require('../models/Audio.model');
 const User = require('../models/user.model');
 
 exports.getArtists = (req, res, next) => {
@@ -22,16 +23,40 @@ exports.getArtistsByUser = async (req, res, next) => {
 
   await Artist
     .find({ _id: { $in: artistArray } })
-    .then(result => res.json({ artistList: result }))
+    .then(result => res.json({ 'artistList': result }))
     .catch(next);
 }
 
 exports.getArtistData = (req, res, next) => {
-  
+  Artist
+    .findById(req.params.id)
+    .select('-audio -albums')
+    .then(result => {
+      if(result) return res.json({ artist: result });
+      return res.status(204).end();
+    })
+    .catch(next);
 }
 
-exports.getArtistAudio = (req, res, next) => {
-  
+exports.getArtistAudio = async (req, res, next) => {
+  let audioArray = [];
+
+  await Artist
+    .findById(req.params.id)
+    .select('audio')
+    .then(result => {
+      if(result.audio.length) {
+        return audioArray = result.audio.map(item => mongoose.Types.ObjectId(item))
+      }
+
+      return res.status(204).end();
+    })
+    .catch(next);
+
+  await Audio
+    .find({ _id: { $in: audioArray } })
+    .then(result => res.json({ 'artistAudioList': result }))
+    .catch(next);
 }
 
 exports.getArtistAlbum = (req, res, next) => {

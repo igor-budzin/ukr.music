@@ -10,13 +10,19 @@ import AlbumsSection from 'universal/components/Sections/AlbumsSection';
 import TourSection from 'universal/components/Sections/TourSection';
 import MusicSection from 'universal/components/Sections/MusicSection';
 // Actions
-import * as ArtistProfile from './ArtistProfileActions';
+import { getArtistData, getArtistAudio } from './ArtistProfileActions';
 
-const mapStateToProps = (state, props) => ({
-  name: state.ArtistProfileReducer.name
+const mapStateToProps = state => ({
+  artist: state.ArtistProfileReducer.artist,
+  artistAudioList: state.ArtistProfileReducer.artistAudioList
 });
 
-const mapDispatchToProps = (dispatch, props) => bindActionCreators(ArtistProfile, dispatch);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    getArtistAudio,
+    getArtistData
+  }, dispatch);
+}
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ArtistProfileContainer extends Component {
@@ -24,31 +30,50 @@ export default class ArtistProfileContainer extends Component {
     super(props, context);
 
     this.state = {
-
+      
     };
   }
 
   componentDidMount() {
-    // this.props.getArtistData(this.props.locationParams.name);
+    const { getArtistData, getArtistAudio, locationParams } = this.props;
+
+    getArtistData(locationParams.id);
+    getArtistAudio(locationParams.id);
   }
 
   render() {
+    const { artist, artistAudioList, locationParams } = this.props;
+
     return (
       <div className="artist-profile">
         <div className="artist-cover">
-          {/*<div className="default-cover"><span>the hardkiss</span></div>*/}
-          <img src="http://localhost:8080/api/cover/artist/epolets.jpg/horizontal" className="cover-horizontal"/>
+          {artist.coverHorizontal ?
+            <img src={`http://localhost:8080/api/cover/artist/${artist.coverHorizontal}/horizontal`} className="cover-horizontal"/> :
+            <div className="default-cover"><span>{artist.name}</span></div>
+          }
           <div className="edit-cover"><span>Змінити</span></div>
         </div>
         <main id="page" className="page clearfix">
 
           <div className="content">
 
-            <div className="artist-title official"><span>{this.props.name}</span></div>
+            <div className="artist-title official">
+              <span>{artist.name}</span>
+              <a href="javascript: void(0);">Редагувати</a>
+            </div>
 
-            {/*<MusicSection artistName={this.props.locationParams.name} limit="6" />*/}
-            <AlbumsSection />
-            <TourSection />
+            {!locationParams.mode ? (
+              <Fragment>
+                <MusicSection
+                  title={"ТОП-треки"}
+                  data={artistAudioList}
+                  fullListLink={`audio/${locationParams.id}`}
+                />
+                <AlbumsSection />
+                <TourSection />
+              </Fragment>
+            ) : locationParams.mode}
+
 
           </div>
 

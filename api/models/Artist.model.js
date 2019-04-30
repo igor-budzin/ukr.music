@@ -10,7 +10,9 @@ const ArtistSchema = new Schema({
 		required: true,
 		unique: true
 	},
-	coverLink: String,
+	coverHorizontal: String,
+	coverDefault: String,
+	coverMini: String,
 	facebookLink: String,
 	instagramLink: String,
 	soundcloudLink: String,

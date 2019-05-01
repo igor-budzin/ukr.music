@@ -49,7 +49,7 @@ export default class SettingstContainer extends Component {
     })
     .then(response => {
       this.handleCloseModal();
-      this.props.history.push(`/artist/${response.data.name}`); 
+      this.props.history.push(`/artist/${response.data.artistAlias}`); 
     })
     .catch(err => { console.log(err) })
   };

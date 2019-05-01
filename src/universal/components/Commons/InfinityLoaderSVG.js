@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-const InfinityLoader = props => {
+const InfinityLoaderSVG = props => {
   const wrapperStyle = props.style ? props.style : {};
 
   const svgLoaderStyle = {
@@ -20,4 +20,4 @@ const InfinityLoader = props => {
   )
 }
 
-export default InfinityLoader;
+export default InfinityLoaderSVG;

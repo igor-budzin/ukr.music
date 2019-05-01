@@ -16,20 +16,18 @@ exports.getArtistsByUser = async (req, res, next) => {
 
   await User
     .findOne({ id: req.params.id }, 'artists')
-    .then(result => {
-      artistArray = result.artists.map(item => mongoose.Types.ObjectId(item))
-    })
+    .then(result => artistArray = result.artists)
     .catch(err => next(err));
 
   await Artist
-    .find({ _id: { $in: artistArray } })
-    .then(result => res.json({ 'artistList': result }))
+    .find({ alias: { $in: artistArray } })
+    .then(result => res.json({ 'artistList': result ? result : [] }))
     .catch(next);
 }
 
 exports.getArtistData = (req, res, next) => {
   Artist
-    .findById(req.params.id)
+    .findOne({ alias: req.params.alias })
     .select('-audio -albums')
     .then(result => {
       if(result) return res.json({ artist: result });
@@ -39,10 +37,18 @@ exports.getArtistData = (req, res, next) => {
 }
 
 exports.getArtistAudio = async (req, res, next) => {
+  const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+  const limit = req.query.limit ? parseInt(req.query.limit, 10) : 30;
   let audioArray = [];
 
+  const options = {
+    sortBy: req.query.sortBy ? { [req.query.sortBy]: -1 } : { date: -1 },
+    page,
+    limit
+  };
+
   await Artist
-    .findById(req.params.id)
+    .findOne({ alias: req.params.alias })
     .select('audio')
     .then(result => {
       if(result.audio.length) {
@@ -54,8 +60,8 @@ exports.getArtistAudio = async (req, res, next) => {
     .catch(next);
 
   await Audio
-    .find({ _id: { $in: audioArray } })
-    .then(result => res.json({ 'artistAudioList': result }))
+    .paginate(audioArray.lenght > 0 ? { _id: { $in: audioArray } } : {}, options)
+    .then(result => res.json({ 'artistAudioList': result.docs }))
     .catch(next);
 }
 
@@ -67,18 +73,21 @@ exports.createArtist = async (req, res, next) => {
   const { artistName, currentUserId } = req.body;
   const artistId = new mongoose.Types.ObjectId();
 
+  const artistAlias = `${artistName.replace(/ /g, '_')}_${Date.now()}`;
+
   await User
-    .findOneAndUpdate({ id: currentUserId }, { $push: { artists: artistId } })
+    .findOneAndUpdate({ id: currentUserId }, { $push: { artists: artistAlias } })
     .catch(err => next(err));
 
   const artist = new Artist({
     _id: artistId,
+    alias: artistAlias,
     name: artistName,
     ownerId: parseInt(currentUserId, 10)
   })
 
   await artist
     .save()
-    .then(result => res.json({ status: true }))
+    .then(result => res.json({ status: true, artistAlias }))
     .catch(err => next(err));
 }

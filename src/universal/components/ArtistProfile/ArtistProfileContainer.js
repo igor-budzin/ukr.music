@@ -4,22 +4,25 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NotificationContainer, NotificationManager } from "react-light-notifications";
 import SlickSlider from "react-slick";
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 // Components
 import Button from '../Commons/Button';
 import AlbumsSection from 'universal/components/Sections/AlbumsSection';
 import TourSection from 'universal/components/Sections/TourSection';
 import MusicSection from 'universal/components/Sections/MusicSection';
+import ArtistAudio from './ArtistAudio';
 // Actions
-import { getArtistData, getArtistAudio } from './ArtistProfileActions';
+import { getArtistData, getArtistAudioPart } from './ArtistProfileActions';
 
 const mapStateToProps = state => ({
   artist: state.ArtistProfileReducer.artist,
-  artistAudioList: state.ArtistProfileReducer.artistAudioList
+  artistAudioListPart: state.ArtistProfileReducer.artistAudioListPart
 });
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-    getArtistAudio,
+    getArtistAudioPart,
     getArtistData
   }, dispatch);
 }
@@ -35,14 +38,14 @@ export default class ArtistProfileContainer extends Component {
   }
 
   componentDidMount() {
-    const { getArtistData, getArtistAudio, locationParams } = this.props;
+    const { getArtistData, getArtistAudioPart, locationParams } = this.props;
 
-    getArtistData(locationParams.id);
-    getArtistAudio(locationParams.id);
+    getArtistData(locationParams.alias);
+    getArtistAudioPart(locationParams.alias);
   }
 
   render() {
-    const { artist, artistAudioList, locationParams } = this.props;
+    const { artist, artistAudioListPart, locationParams } = this.props;
 
     return (
       <div className="artist-profile">
@@ -58,6 +61,8 @@ export default class ArtistProfileContainer extends Component {
           <div className="content">
 
             <div className="artist-title official">
+              {locationParams.mode && <Link className="btn-back" to={`../${artist.alias}`}></Link>}
+
               <span>{artist.name}</span>
               <a href="javascript: void(0);">Редагувати</a>
             </div>
@@ -66,13 +71,20 @@ export default class ArtistProfileContainer extends Component {
               <Fragment>
                 <MusicSection
                   title={"ТОП-треки"}
-                  data={artistAudioList}
-                  fullListLink={`audio/${locationParams.id}`}
+                  data={artistAudioListPart}
+                  fullListLink={`audio/${locationParams.alias}`}
                 />
                 <AlbumsSection />
                 <TourSection />
               </Fragment>
-            ) : locationParams.mode}
+            ) :
+            (
+              <ArtistMode
+                mode={locationParams.mode}
+                artistAlias={locationParams.alias}
+              />
+            )
+          }
 
 
           </div>
@@ -98,5 +110,23 @@ export default class ArtistProfileContainer extends Component {
         </main>
       </div>
     );
+  }
+}
+
+const ArtistMode = props => {
+  switch(props.mode) {
+    case 'audio':
+      return (
+        <ArtistAudio artistAlias={props.artistAlias} />
+      );
+
+    case 'album':
+      return "album";
+
+    case 'tour':
+      return "tour";
+
+    default:
+      return <Redirect to="/404" />;
   }
 }

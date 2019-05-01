@@ -4,10 +4,10 @@ const passport = require('passport');
 module.exports = router => {
   router
     .get('/artist', controller.getArtists)
-    .get('/artist/:id', controller.getArtistData)
+    .get('/artist/:alias', controller.getArtistData)
     .get('/artist/user/:id', controller.getArtistsByUser)
-    .get('/artist/audio/:id', controller.getArtistAudio)
-    .get('/artist/album/:id', controller.getArtistAlbum)
+    .get('/artist/audio/:alias', controller.getArtistAudio)
+    .get('/artist/album/:alias', controller.getArtistAlbum)
     .post('/artist', passport.authenticate('jwt', { session: false }), controller.createArtist)
 
     // .get('/playlist', controller.getPlaylists)

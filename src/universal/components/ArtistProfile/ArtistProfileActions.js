@@ -9,11 +9,31 @@ export function getArtistData(id) {
   }
 }
 
-export function getArtistAudio(id) {
+export function getArtistAudioPart(alias, page = 1, sortBy = 'listenCount') {
+  return {
+    typePrefix: "GET_ARTIST_AUDIO_LIST_PART",
+    endpoint: `artist/audio/${alias}`,
+    method: 'get',
+    data: {
+      page,
+      sortBy,
+      limit: 8
+    }
+  }
+}
+
+export function getArtistAudio({ alias, callback, page = 1 }) {
   return {
     typePrefix: "GET_ARTIST_AUDIO_LIST",
-    endpoint: `artist/audio/${id}`,
+    endpoint: `artist/audio/${alias}`,
     method: 'get',
-    data: {}
+    data: {
+      params: {
+        page
+      }
+    },
+    handleSuccess: response => {
+      if(typeof callback === 'function') callback();
+    }
   }
 }

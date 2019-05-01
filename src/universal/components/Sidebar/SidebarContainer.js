@@ -112,7 +112,7 @@ export default class SidebarContainer extends Component {
               return (
                 <Link
                   key={artist._id}
-                  to={`/artist/${artist._id}`}
+                  to={`/artist/${artist.alias}`}
                   className="link"
                 >
                   {artist.name}

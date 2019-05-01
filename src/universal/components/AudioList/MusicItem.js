@@ -5,7 +5,7 @@ import { formatSeconds } from 'universal/utils';
 import { API_URL } from '../../../global.config';
 import PropTypes from 'prop-types';
 
-import InfinityLoader from 'universal/components/Commons/InfinityLoader';
+import InfinityLoaderSVG from 'universal/components/Commons/InfinityLoaderSVG';
 
 export default class MusicItem extends Component {
   onClick = () => {
@@ -76,7 +76,7 @@ export default class MusicItem extends Component {
             picture && coverStyle.backgroundImage !== undefined ? null : 'empty')
           }
           style={coverStyle.backgroundImage !== undefined ? coverStyle : null}>
-            <div className="loader">{<InfinityLoader style={{'width': '78px', 'marginLeft': '-17px', 'marginTop': '3px'}} />}</div>
+            <div className="loader">{<InfinityLoaderSVG style={{'width': '78px', 'marginLeft': '-17px', 'marginTop': '3px'}} />}</div>
             <div className="bars">
               <div className="bar"></div>
               <div className="bar"></div>

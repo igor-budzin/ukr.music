@@ -12,16 +12,15 @@ import * as RouteMap from '../routes/static.js';
 // This is used in production for code splitting via `wepback.config.server.js`
 // import * as RouteMap from 'universal/routes/async.js';
 
-const PrivateRoute = ({ component: Component, isAuthenticated, location, ...rest }) => {
+const PrivateRoute = ({ component: Component, isAuthenticated, location, prevPath, ...rest }) => {
   if(location.pathname !== '/login') {
     return (
-      <Route {...rest} render={props => {
+      <Route prevPath={prevPath} {...rest} render={props => {
           return (
             isAuthenticated ?
-            (<Component {...props} location={location} />) :
+            (<Component {...props} prevPath={prevPath} location={location} />) :
             (<Redirect to={{pathname: '/login', state: { from: props.location }}} />)
           )
-
         }}
       />
     )
@@ -55,16 +54,16 @@ export default class Routes extends Component {
           atActive={{ opacity: 1 }}
           className="switch-wrapper"
         >
-          <PrivateRoute exact path="/" component={RouteMap.HomePage} {...this.props} />
-          <PrivateRoute exact path='/profile/:id' component={RouteMap.UserMainPage} {...this.props} />
-          <PrivateRoute exact path='/upload' component={RouteMap.UploadMusicPage} {...this.props} />
-          <PrivateRoute exact path='/followers/:id' component={RouteMap.FollowListPage} {...this.props} />
-          <PrivateRoute exact path='/settings' component={RouteMap.SettingsPage} {...this.props} />
-          <PrivateRoute exact path='/musiclist/:type' component={RouteMap.MusicListPage} {...this.props} />
-          <PrivateRoute exact path='/playlist/:id' component={RouteMap.PlaylistViewPage} {...this.props} />
-          <PrivateRoute exact path='/contact' component={RouteMap.ContactPage} {...this.props} />
-          <PrivateRoute exact path='/artist/:id' component={RouteMap.ArtistProfilePage} {...this.props} />
-          <PrivateRoute exact path='/artist/:mode/:id' component={RouteMap.ArtistProfilePage} {...this.props} />
+          <PrivateRoute exact path="/" component={RouteMap.HomePage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/profile/:id' component={RouteMap.UserMainPage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/upload' component={RouteMap.UploadMusicPage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/followers/:id' component={RouteMap.FollowListPage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/settings' component={RouteMap.SettingsPage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/musiclist/:type' component={RouteMap.MusicListPage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/playlist/:id' component={RouteMap.PlaylistViewPage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/contact' component={RouteMap.ContactPage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/artist/:alias' component={RouteMap.ArtistProfilePage} {...this.props} {...this.state} />
+          <PrivateRoute exact path='/artist/:mode/:alias' component={RouteMap.ArtistProfilePage} {...this.props} {...this.state} />
 
           <Route exact path='/login' component={RouteMap.LoginPage} {...this.props} />
           <Route exact path='/register' component={RouteMap.RegisterPage} {...this.props} />

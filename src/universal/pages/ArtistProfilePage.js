@@ -5,13 +5,16 @@ import ArtistProfileContainer from 'universal/components/ArtistProfile/ArtistPro
 import Header from 'universal/components/Header';
 
 export default class ArtistProfilePage extends Component {
-	render() {
-		return (
-			<div className="wrapper">
-				<Header />
-				<ArtistProfileContainer locationParams={this.props.match.params} />
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div className="wrapper">
+        <Header />
+        <ArtistProfileContainer
+          locationParams={this.props.match.params}
+          {...this.props}
+        />
+      </div>
+    );
+  }
 }
 

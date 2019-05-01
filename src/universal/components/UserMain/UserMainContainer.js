@@ -7,7 +7,7 @@ import ReactPlaceholder from 'react-placeholder';
 import api from 'universal/utils/api';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // Components
-import InfinityLoader from 'universal/components/Commons/InfinityLoader';
+import InfinityLoaderSVG from 'universal/components/Commons/InfinityLoaderSVG';
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
 import PlayListFull from 'universal/components/AudioList/PlayListFull';
 import EmptyPlayList from 'universal/components/AudioList/EmptyPlayList';
@@ -129,7 +129,7 @@ class UserProfileContainer extends Component {
               <ReactPlaceholder
                 showLoadingAnimation
                 ready={this.state.audioListReady}
-                customPlaceholder={<InfinityLoader style={{'marginTop': '40px', 'width': '240px'}} />}
+                customPlaceholder={<InfinityLoaderSVG style={{'marginTop': '40px', 'width': '240px'}} />}
               >
                 {
                   this.props.audioList && this.props.audioList.length > 0 ?

@@ -31,7 +31,6 @@ export default function visibleUserDataReducer(state = initialState, action) {
     return state;
 
   case 'GET_ARTIST_LIST_BY_USER_SUCCESS':
-    console.log(action.payload)
     return Object.assign({}, state, action.payload);
 
   case 'GET_ARTIST_LIST_BY_USER_ERROR':

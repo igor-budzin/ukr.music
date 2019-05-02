@@ -10,7 +10,7 @@ import { NotificationContainer, NotificationManager } from "react-light-notifica
 
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
-import PlayListFull from 'universal/components/AudioList/PlayListFull';
+import AudioListFull from 'universal/components/AudioList/AudioListFull';
 import Button from 'universal/components/Commons/Button';
 // Actions
 import { getPlaylistAudio, getPlaylistData, deletePlaylist } from './PlayListsActions';
@@ -131,7 +131,7 @@ class PlayListView extends Component {
           <ReactPlaceholder showLoadingAnimation ready={this.state.playlistReady} customPlaceholder={musicLoader}>
              {
               (music && music.length > 0) &&
-              <PlayListFull
+              <AudioListFull
                 currentId={this.props.currentMusic._id}
                 playlist={music}
                 handleChoseAudio={this.onChoseAudio}

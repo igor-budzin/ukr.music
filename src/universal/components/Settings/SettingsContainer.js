@@ -96,7 +96,10 @@ export default class SettingstContainer extends Component {
                   <div className="input-wrapper">
                     <label htmlFor="artist-name">Назва виконавця</label>
                     <input type="text" className="input" id="artist-name" onChange={e => this.setState({ artistName: e.target.value })} />
+                    <p className="sub-text">Назву виконавця неможливо буде змінити</p>
                   </div>
+
+                  <div className="devider"></div>
 
                   <div className="input-wrapper">
                     <Button className="red" onClick={this.handleCreateArtist}>Створити</Button>

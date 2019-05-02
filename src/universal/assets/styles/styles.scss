@@ -1048,6 +1048,18 @@ a {
       }
     }
   }
+
+  .admin-add-link {
+    position: absolute;
+    top: -61px;
+    right: 0;
+    cursor: pointer;
+    color: #ff4838;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .section {
@@ -1781,6 +1793,76 @@ a {
       width: 100%;
     }
   }
+
+  &.edit-cover-modal {
+    width: 600px;
+
+    .cover {
+      &.horizontal {
+        width: 560px;
+        height: 117px;
+        background-color: lighten(#d5e6ff, 2%);
+        position: relative;
+
+        img {
+          width: 560px;
+          height: 117px;
+        }
+      }
+
+      &:hover {
+        .edit-cover {
+          opacity: 1;
+        }
+      }
+
+      .default-cover {
+        position: relative;
+        height: 100%;
+
+        span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 26px;
+          font-weight: 700;
+          color: #7fb0f7;
+          font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+          text-align: center;
+          letter-spacing: 2px;
+          text-shadow: 3px 2px 2px rgba(127, 176, 247, 0.26);
+          text-transform: capitalize;
+        }
+      }
+
+      .edit-cover {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 10;
+        opacity: 0;
+        cursor: pointer;
+        transition: opacity 200ms ease;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        -webkit-user-select: none;
+
+        span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #fff;
+          font-size: 26px;
+        }
+      }
+    }
+  }
 }
 
 .overlay {
@@ -1789,7 +1871,7 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.25);
   z-index: 10;
 }
 

@@ -1,8 +1,15 @@
 import React, { Component, PureComponent } from 'react';
 import MusicItem from './MusicItem';
-import { List, InfiniteLoader, WindowScroller, CellMeasurer, CellMeasurerCache } from "react-virtualized";
+import PropTypes from 'prop-types';
+import {
+  List,
+  InfiniteLoader,
+  WindowScroller,
+  CellMeasurer,
+  CellMeasurerCache
+} from "react-virtualized";
 
-export default class PlayListFull extends PureComponent {
+export default class AudioListFull extends PureComponent {
   constructor() {
     super();
 
@@ -12,7 +19,6 @@ export default class PlayListFull extends PureComponent {
       defaultWidth: 622,
       defaultHeight: 65
     });
-
   }
 
   componentWillReceiveProps(){
@@ -30,20 +36,15 @@ export default class PlayListFull extends PureComponent {
       >
         <div style={style}>
           <MusicItem
-            handleChoseAudio={this.props.handleChoseAudio}
+            onChoseAudio={this.props.onChoseAudio}
             handleAddToUser={this.props.handleAddToUser}
             handleGetPlaylists={this.props.handleGetPlaylists}
             currentId={this.props.currentId}
             isPlaying={this.props.isPlaying}
             isLoading={this.props.isLoading}
-            _id={this.props.playlist[index]._id}
-            link={this.props.playlist[index].link}
             key={key}
-            artist={this.props.playlist[index].artists}
-            title={this.props.playlist[index].title}
-            picture={this.props.playlist[index].picture}
-            duration={this.props.playlist[index].duration}
-            mini={this.props.mini}
+            audio={this.props.audioList[index]}
+            mini={false}
           />
         </div>
       </CellMeasurer>
@@ -52,12 +53,9 @@ export default class PlayListFull extends PureComponent {
 
   render() {
     const rowHeight = this.props.mini ? 45 : 57;
-    const size = this.props.playlist.length;
+    const size = this.props.audioList.length;
     const loadMoreRows = this.props.isNextPageLoading ? () => {} : this.props.loadNextPage;
-    // const loadMoreRows = () => { console.log('111111111111') };
     const isRowLoaded = ({ index }) => !this.props.hasNextPage || index < size;
-    // const isRowLoaded = ({ index }) => false;
-    // const isRowLoaded = ({index}) => { console.log('2222222222222222') }
     const rowCount = this.props.hasNextPage ? size + 1 : size
 
     return (
@@ -96,4 +94,10 @@ export default class PlayListFull extends PureComponent {
   }
 }
 
-
+AudioListFull.propTypes = {
+  onChoseAudio: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  currentId: PropTypes.string.isRequired,
+  audioList: PropTypes.array.isRequired
+};

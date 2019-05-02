@@ -9,7 +9,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // Components
 import InfinityLoaderSVG from 'universal/components/Commons/InfinityLoaderSVG';
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
-import PlayListFull from 'universal/components/AudioList/PlayListFull';
+import AudioListFull from 'universal/components/AudioList/AudioListFull';
 import EmptyPlayList from 'universal/components/AudioList/EmptyPlayList';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
@@ -133,14 +133,14 @@ class UserProfileContainer extends Component {
               >
                 {
                   this.props.audioList && this.props.audioList.length > 0 ?
-                  <PlayListFull
+                  <AudioListFull
                     currentId={this.props.currentMusic._id}
-                    playlist={this.props.audioList}
-                    handleChoseAudio={this.onChoseAudio}
-                    handleAddToUser={this.handleAddToUser}
-                    handleGetPlaylists={this.props.handleGetPlaylists}
                     isPlaying={this.props.isPlaying}
                     isLoading={this.props.isLoading}
+                    audioList={this.props.audioList}
+                    onChoseAudio={this.onChoseAudio}
+                    handleAddToUser={this.handleAddToUser}
+                    handleGetPlaylists={this.props.handleGetPlaylists}
                     hasNextPage={this.props.hasNextPage}
                     loadNextPage={this.getPageData}
                     isNextPageLoading={false}

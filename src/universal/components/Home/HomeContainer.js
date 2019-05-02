@@ -45,7 +45,7 @@ class HomeContainer extends Component {
             <MusicSection
               title="Набувають популярності"
               data={this.props.audioList}
-              handleChoseAudio={this.props.handleChoseAudio}
+              onChoseAudio={audioData => this.props.handleChoseAudio(audioData, this.props.audioList)}
               handleGetPlaylists={this.props.handleGetPlaylists}
               isPlaying={this.props.isPlaying}
               isLoading={this.props.isLoading}

@@ -36,6 +36,7 @@ class Html extends Component {
 
 				<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,600,600i,700&amp;subset=cyrillic" rel="stylesheet" />
 				<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,600,600i,700&amp;subset=cyrillic" rel="stylesheet" />
+				<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,700,800&amp;subset=cyrillic" rel="stylesheet" />
 			</head>
 			<body>
 				<script dangerouslySetInnerHTML={{__html: initialState}} />

@@ -27,13 +27,8 @@ const MusicSection = props => {
                 currentId={props.currentId}
                 isPlaying={props.isPlaying}
                 isLoading={props.isLoading}
-                _id={item._id}
-                link={item.link}
-                artist={item.artists}
-                title={item.title}
-                picture={item.picture}
-                duration={item.duration}
-                handleChoseAudio={props.handleChoseAudio}
+                audio={item}
+                onChoseAudio={props.onChoseAudio}
                 handleGetPlaylists={props.handleGetPlaylists}
               />
             )
@@ -48,5 +43,8 @@ export default MusicSection;
 MusicSection.propTypes = {
   title: PropTypes.string,
   data: PropTypes.array.isRequired,
-  handleChoseAudio: PropTypes.func
+  isPlaying: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  currentId: PropTypes.string.isRequired,
+  onChoseAudio: PropTypes.func.isRequired
 };

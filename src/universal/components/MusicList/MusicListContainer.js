@@ -9,7 +9,7 @@ import api from 'universal/utils/api';
 import { Link } from 'react-router-dom';
 // Components
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
-import PlayListFull from 'universal/components/AudioList/PlayListFull';
+import AudioListFull from 'universal/components/AudioList/AudioListFull';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 import SearchField from 'universal/components/SearchField';
 // Actions
@@ -160,10 +160,10 @@ class MusicListContainer extends Component {
           <ReactPlaceholder showLoadingAnimation ready={this.state.audioListReady} customPlaceholder={musicLoader}>
             {
               this.props.audioList && this.props.audioList.length > 0 ?
-              <PlayListFull
+              <AudioListFull
                 currentId={this.props.currentMusic._id}
-                playlist={this.props.audioList}
-                handleChoseAudio={this.props.handleChoseAudio}
+                audioList={this.props.audioList}
+                onChoseAudio={audioData => this.props.handleChoseAudio(audioData, this.props.audioList)}
                 handleEditAudio={this.handleEditAudio}
                 handleGetPlaylists={this.handleGetPlaylists}
                 isPlaying={this.props.isPlaying}

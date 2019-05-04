@@ -1060,6 +1060,43 @@ a {
       text-decoration: underline;
     }
   }
+
+  .info {
+    font-family: 'Roboto';
+
+    & > div {
+      margin-bottom: 20px;
+    }
+
+    .list {
+      .list-item {
+        @extend .clearfix;
+        margin-bottom: 10px;
+
+        .key {
+          font-weight: bold;
+          margin-right: 5px;
+          display: inline-block;
+          float: left;
+        }
+        .wrap {
+          float: left;
+
+          .value {
+            margin-bottom: 5px;
+          }
+        }
+        .value {
+          display: block;
+        }
+
+      }
+    }
+
+    .short-description {
+      line-height: 120%;
+    }
+  }
 }
 
 .section {
@@ -1534,6 +1571,52 @@ a {
         background-image: url('../img/menu/users.svg');
         background-size: 22px;
         background-position: left 10px center;
+      }
+      &.info {
+        background-image: url('../img/menu/info.svg');
+        background-size: 22px;
+        background-position: left 10px center;
+      }
+    }
+  }
+
+  .social-link {
+    padding: 0 10px;
+
+    .link {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-left: 15px;
+      background-image: url('../img/social/artist-link/googlechrome.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: filter 200ms ease;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &.instagram {
+        background-image: url('../img/social/artist-link/instagram.svg');
+      }
+      &.youtube {
+        background-image: url('../img/social/artist-link/youtube.svg');
+      }
+      &.twitter {
+        background-image: url('../img/social/artist-link/twitter.svg');
+      }
+      &.telegram {
+        background-image: url('../img/social/artist-link/telegram.svg');
+      }
+      &.facebook {
+        background-image: url('../img/social/artist-link/facebook.svg');
+      }
+      &.soundcloud {
+        background-image: url('../img/social/artist-link/soundcloud.svg');
+      }
+      &.share {
+        background-image: url('../img/social/artist-link/share.svg');
       }
     }
   }
@@ -2102,3 +2185,8 @@ a {
 
 
 
+.tooktip {
+  span {
+    font-family: 'Open Sans';
+  }
+}

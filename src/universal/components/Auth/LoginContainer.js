@@ -12,7 +12,7 @@ import * as AuthAction from './AuthActions';
 
 const mapStateToProps = state => ({
   currentUserId: state.AuthReducer.user.id,
-  isLoginLoading: state.AuthReducer.isLoginLoading,
+  isGoogleLoginLoading: state.AuthReducer.isLoginLoading,
   errors: state.AuthReducer.errors
 });
 
@@ -79,7 +79,7 @@ export default class LoginContainer extends Component {
               <Button
                 typeButton="submit"
                 className="btn google"
-                isLoading={this.props.isLoginLoading}
+                isLoading={this.props.isGoogleLoginLoading}
                 onClick={this.handleSubmitLog}
               >
                 Google

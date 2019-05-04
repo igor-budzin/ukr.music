@@ -1,0 +1,138 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files\Yarn\bin\yarn.js add react-photo-gallery
+
+PATH: 
+  C:\Users\Igor\Desktop\cmder\bin;C:\Users\Igor\Desktop\cmder\vendor\bin;C:\Users\Igor\Desktop\cmder\vendor\conemu-maximus5\ConEmu\Scripts;C:\Users\Igor\Desktop\cmder\vendor\conemu-maximus5;C:\Users\Igor\Desktop\cmder\vendor\conemu-maximus5\ConEmu;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Users\Igor\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs\;C:\Program Files\Yarn\bin\;%DASHLANE_DLL_DIR%;C:\Users\Igor\AppData\Local\Programs\Git\cmd;C:\php-5.6;C:\Users\Igor\AppData\Local\ComposerSetup\bin;C:\Users\Igor\AppData\Roaming\Composer\vendor\bin;C:\Users\Igor\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Igor\AppData\Roaming\npm;C:\Users\Igor\AppData\Local\Yarn\bin;C:\Users\Igor\AppData\Local\Programs\Git\cmd;C:\Users\Igor\AppData\Local\Programs\Git\mingw32\bin;C:\Users\Igor\AppData\Local\Programs\Git\usr\bin;C:\Users\Igor\Desktop\cmder
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  10.15.3
+
+Platform: 
+  win32 ia32
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Code\music\node_modules\node-sass\vendor\win32-ia32-64\binding.node'
+
+npm manifest: 
+  {
+  	"name": "ukr-music",
+  	"version": "1.0.0",
+  	"description": "",
+  	"main": "index.js",
+  	"scripts": {
+  		"dev": "cross-env NODE_ENV=development node ./src/server/server.babel.js",
+  		"prod": "cross-env NODE_PATH=./src cross-env NODE_ENV=production node ./src/server/server.babel.js",
+  		"build": "npm run build:client && npm run build:server",
+  		"build:server": "cross-env NODE_ENV=production webpack --config ./webpack/server.babel.js",
+  		"build:client": "cross-env NODE_ENV=production webpack --config ./webpack/client.babel.js",
+  		"api": "nodemon --exec cross-env NODE_ENV=development node ./api/server.js --watch api"
+  	},
+  	"keywords": [
+  		"react",
+  		"redux",
+  		"hot-module-reloading",
+  		"server-side-rendering",
+  		"hmr",
+  		"ssr",
+  		"webpack"
+  	],
+  	"author": "Igor Budzinskyi <igor.budzin95@gmail.com>",
+  	"license": "MIT",
+  	"devDependencies": {
+  		"assets-webpack-plugin": "^3.5.1",
+  		"autoprefixer": "^6.7.7",
+  		"babel-loader": "^6.4.1",
+  		"babel-plugin-add-module-exports": "^0.2.1",
+  		"babel-plugin-import": "^1.8.0",
+  		"babel-plugin-transform-decorators-legacy": "^1.3.4",
+  		"babel-polyfill": "^6.23.0",
+  		"babel-preset-env": "^1.7.0",
+  		"babel-preset-es2015": "^6.24.0",
+  		"babel-preset-react": "^6.23.0",
+  		"babel-preset-stage-0": "^6.22.0",
+  		"babel-register": "^6.24.0",
+  		"css-loader": "^0.28.0",
+  		"extract-text-webpack-plugin": "^2.1.0",
+  		"file-loader": "^1.1.11",
+  		"node-sass": "^4.9.3",
+  		"react-hot-loader": "^3.0.0-beta.6",
+  		"redux-devtools-extension": "^2.13.5",
+  		"sass-loader": "^7.1.0",
+  		"style-loader": "^0.16.1",
+  		"uglifyjs-webpack-plugin": "^1.3.0",
+  		"url-loader": "^1.1.1",
+  		"webpack": "^2.3.3",
+  		"webpack-dev-middleware": "^1.10.1",
+  		"webpack-hot-middleware": "^2.18.0"
+  	},
+  	"dependencies": {
+  		"aws-sdk": "^2.395.0",
+  		"axios": "^0.18.0",
+  		"bcrypt-nodejs": "0.0.3",
+  		"bcryptjs": "^2.4.3",
+  		"body-parser": "^1.18.3",
+  		"browser-cookies": "^1.2.0",
+  		"classnames": "^2.2.6",
+  		"colors": "^1.1.2",
+  		"connect-multiparty": "^2.2.0",
+  		"cookie-parser": "^1.4.3",
+  		"cookie-session": "^2.0.0-beta.3",
+  		"cors": "^2.8.4",
+  		"express": "^4.15.2",
+  		"express-session": "^1.15.6",
+  		"flux-standard-action": "^2.0.3",
+  		"history": "^4.6.1",
+  		"id3-editor": "^1.0.0",
+  		"jsonwebtoken": "^8.5.1",
+  		"jwt-decode": "^2.2.0",
+  		"lodash.isequal": "^4.5.0",
+  		"mongoose": "^5.4.0",
+  		"mongoose-auto-increment": "^5.0.1",
+  		"mongoose-paginate": "^5.0.3",
+  		"mongoose-unique-validator": "^2.0.3",
+  		"morgan": "^1.9.1",
+  		"mp3-duration": "^1.1.0",
+  		"multiparty": "^4.2.1",
+  		"mysql": "^2.16.0",
+  		"passport": "^0.4.0",
+  		"passport-google-oauth20": "^2.0.0",
+  		"passport-google-token": "^0.1.2",
+  		"passport-jwt": "^4.0.0",
+  		"passport-local": "^1.0.0",
+  		"prop-types": "^15.6.2",
+  		"react": "next",
+  		"react-dom": "next",
+  		"react-dropzone": "^7.0.1",
+  		"react-images": "^0.5.19",
+  		"react-light-notifications": "^1.0.6",
+  		"react-modal": "^3.8.1",
+  		"react-placeholder": "^3.0.1",
+  		"react-rangeslider": "^2.2.0",
+  		"react-redux": "^5.0.3",
+  		"react-router": "^4.0.0",
+  		"react-router-dom": "^4.0.0",
+  		"react-router-redux": "^5.0.0-alpha.4",
+  		"react-router-transition": "^1.2.1",
+  		"react-select": "^2.3.0",
+  		"react-slick": "^0.23.2",
+  		"react-tabs": "^3.0.0",
+  		"react-tooltip": "^3.10.0",
+  		"react-virtualized": "^9.21.0",
+  		"redux": "^3.6.0",
+  		"redux-logger": "^3.0.6",
+  		"redux-thunk": "^2.3.0",
+  		"socket.io": "^2.2.0",
+  		"socket.io-client": "^2.2.0",
+  		"typed.js": "^2.0.10",
+  		"validator": "^10.9.0"
+  	}
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

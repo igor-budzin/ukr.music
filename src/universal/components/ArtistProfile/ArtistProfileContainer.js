@@ -7,6 +7,7 @@ import SlickSlider from "react-slick";
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import ReactModal from 'react-modal';
+import ReactTooltip from 'react-tooltip'
 // Components
 import Button from '../Commons/Button';
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
@@ -14,6 +15,7 @@ import AlbumsSection from 'universal/components/Sections/AlbumsSection';
 import TourSection from 'universal/components/Sections/TourSection';
 import MusicSection from 'universal/components/Sections/MusicSection';
 import ArtistAudio from './ArtistAudio';
+import ArtistInfo from './ArtistInfo';
 // Actions
 import { getArtistData, getArtistAudioPart } from './ArtistProfileActions';
 
@@ -98,30 +100,30 @@ class ArtistProfileContainer extends Component {
 
               <span>{artist.name}</span>
             </div>
-
-            {!locationParams.mode ? (
-              <Fragment>
-                <MusicSection
-                  title={"ТОП-треки"}
-                  data={artistAudioListPart}
-                  fullListLink={`audio/${locationParams.alias}`}
-                  currentId={this.props.currentMusic._id}
-                  isPlaying={this.props.isPlaying}
-                  isLoading={this.props.isLoading}
-                  onChoseAudio={audioData => handleChoseAudio(audioData, artistAudioListPart)}
+            <div style={{"position": 'relative'}}>
+              {!locationParams.mode && <a className="admin-add-link">Редагувати</a>}
+              {!locationParams.mode ? (
+                <Fragment>
+                  <MusicSection
+                    title={"ТОП-треки"}
+                    data={artistAudioListPart}
+                    fullListLink={`audio/${locationParams.alias}`}
+                    currentId={this.props.currentMusic._id}
+                    isPlaying={this.props.isPlaying}
+                    isLoading={this.props.isLoading}
+                    onChoseAudio={audioData => handleChoseAudio(audioData, artistAudioListPart)}
+                  />
+                  <AlbumsSection />
+                  <TourSection />
+                </Fragment>
+              ) :
+              (
+                <ArtistMode
+                  mode={locationParams.mode}
+                  artistAlias={locationParams.alias}
                 />
-                <AlbumsSection />
-                <TourSection />
-              </Fragment>
-            ) :
-            (
-              <ArtistMode
-                mode={locationParams.mode}
-                artistAlias={locationParams.alias}
-              />
-            )
-          }
-
+              )}
+            </div>
 
           </div>
 
@@ -137,8 +139,113 @@ class ArtistProfileContainer extends Component {
               </div>
             </div>
 
+            <div className="social-link sidebar-wrapper">
+              <a
+                href="https://www.instagram.com/the_hardkiss/"
+                target="_blank"
+                className="link instagram"
+                data-tip
+                data-for='tip-instagram'
+              ></a>
+              <ReactTooltip id='tip-instagram' effect='solid' className="tooktip">
+                <span>@the_hardkiss</span>
+              </ReactTooltip>
+
+              <a
+                href="https://www.youtube.com/user/THEHARDKISS"
+                target="_blank"
+                className="link youtube"
+                data-tip
+                data-for='tip-youtube'
+              ></a>
+              <ReactTooltip id='tip-youtube' effect='solid' className="tooktip">
+                <span>Офіційний YouTube канал</span>
+              </ReactTooltip>
+
+              <a
+                href="https://twitter.com/the_hardkiss"
+                target="_blank"
+                className="link twitter"
+                data-tip
+                data-for='tip-twitter'
+              ></a>
+              <ReactTooltip id='tip-twitter' effect='solid' className="tooktip">
+                <span>@the_hardkiss</span>
+              </ReactTooltip>
+
+              <a
+                href="https://t.me/the_hardkiss"
+                target="_blank"
+                className="link telegram"
+                data-tip
+                data-for='tip-telegram'
+              ></a>
+              <ReactTooltip id='tip-telegram' effect='solid' className="tooktip">
+                <span>@the_hardkiss</span>
+              </ReactTooltip>
+
+              <a
+                href="https://www.facebook.com/THEHARDKISS"
+                target="_blank"
+                className="link facebook"
+                data-tip
+                data-for='tip-facebook'
+              ></a>
+              <ReactTooltip id='tip-facebook' effect='solid' className="tooktip">
+                <span>THEHARDKISS</span>
+              </ReactTooltip>
+
+              <a
+                href="https://soundcloud.com/the_hardkiss"
+                target="_blank"
+                className="link soundcloud"
+                data-tip
+                data-for='tip-soundcloud'
+              ></a>
+              <ReactTooltip id='tip-soundcloud' effect='solid' className="tooktip">
+                <span>the_hardkiss</span>
+              </ReactTooltip>
+
+              <a
+                href="https://thehardkiss.com/"
+                target="_blank"
+                className="link"
+                data-tip
+                data-for='tip-site'
+              ></a>
+              <ReactTooltip id='tip-site' effect='solid' className="tooktip">
+                <span>Офіційний сайт</span>
+              </ReactTooltip>
+
+              <a
+                href="javascript: void(0);"
+                target="_blank"
+                className="link share"
+                data-tip
+                data-for='tip-share'
+              ></a>
+              <ReactTooltip id='tip-share' effect='solid' className="tooktip">
+                <span>Функція ще в розробці</span>
+              </ReactTooltip>
+
+            </div>
+
+            <div className="sidebar-link sidebar-wrapper">
+              <Link to={`info/${artist.alias}`} className="link info">Інформація про виконавця</Link>
+            </div>
+
             <div className="sidebar-wrapper">
               <Button className="btn full">Підписатися</Button>
+            </div>
+
+            <div className="sidebar-link sidebar-wrapper">
+              <Link to={`../profile/${this.props.currentUserId}`} className="link my">Мої треки</Link>
+              <Link to="../upload/" className="link upload">Завантажити аудіозаписи</Link>
+              <Link to="/recommend" className="link recommend">Рекомендації</Link>
+              <Link to={`../followers/${this.props.currentUserId}`} className="link follow">Слухаю їх</Link>
+              <Link to="/update" className="link update">Оновлення</Link>
+              <Link to={`../stats/${this.props.currentUserId}`} className="link stats">Статистика</Link>
+              <Link to="/settings" className="link settings">Налаштування</Link>
             </div>
           </div>
 
@@ -197,15 +304,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(withPlayerFunctional
 const ArtistMode = props => {
   switch(props.mode) {
     case 'audio':
-      return (
-        <ArtistAudio artistAlias={props.artistAlias} />
-      );
+      return <ArtistAudio artistAlias={props.artistAlias} />;
 
     case 'album':
       return "album";
 
     case 'tour':
       return "tour";
+
+    case 'info':
+      return <ArtistInfo artistAlias={props.artistAlias} />;
 
     default:
       return <Redirect to="/404" />;

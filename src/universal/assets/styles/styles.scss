@@ -151,15 +151,53 @@ a {
 .header-user-auth a:hover {
   color: #00b0eb;
 }
-.header-lang a {
-  color: #a6a6a6;
-  text-decoration: none;
-  padding: 17px;
-  display: inline-block;
+.header-lang {
+  position: relative;
+
+  &.active {
+    > a {
+      background-color: #fff;
+      color: #333;
+
+      &:hover {
+        color: #333;
+      }
+    }
+
+    .list-item {
+      display: block;
+    }
+  }
+
+  > a {
+    color: #a6a6a6;
+    text-decoration: none;
+    padding: 17px;
+    display: inline-block;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .list-item {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 2px 4px 4px 1px rgba(0, 0, 0, 0.12);
+    padding: 7px 15px;
+    top: 52px;
+    right: 0;
+    width: 150px;
+    z-index: 10;
+
+    .item {
+      line-height: 30px;
+      font-family: 'Roboto';
+    }
+  }
 }
-.header-lang a:hover {
-  color: #fff;
-}
+
 .header-search {
   transition: width 200ms ease;
   padding-left: 17px;
@@ -1575,7 +1613,7 @@ a {
       &.info {
         background-image: url('../img/menu/info.svg');
         background-size: 22px;
-        background-position: left 10px center;
+        background-position: left 10px top 8px;
       }
     }
   }
@@ -2188,5 +2226,89 @@ a {
 .tooktip {
   span {
     font-family: 'Open Sans';
+  }
+}
+
+
+.poll {
+  width: 100%;
+
+  .answer {
+    margin-bottom: 3px;
+    padding: 0 5px 0 10px;
+    height: 35px;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      background-color: lighten(#e9f2ff, 2%);
+    }
+
+    .percent, .progress {
+      display: none;
+    }
+
+    .checkbox {
+      top: 8px;
+      left: 10px;
+      margin-right: 10px;
+      position: absolute;
+    }
+
+    .label {
+      position: absolute;
+      font-size: 16px;
+      left: 37px;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      overflow: hidden;
+    }
+  }
+
+  &.answered {
+    .checkbox {
+      display: none;
+    }
+
+    .label {
+      font-size: 14px;
+      top: 7px;
+      left: 10px;
+      right: 60px;
+      transform: none;
+    }
+
+    .percent {
+      display: inline-block;
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .progress {
+      display: block;
+      position: absolute;
+      left: 10px;
+      right: 50px;
+      bottom: 5px;
+      width: 280px;
+
+      span {
+        background-color: #7bb1ff;
+        height: 3px;
+        width: 60%;
+        display: block;
+        border-radius: 3px;
+      }
+    }
   }
 }

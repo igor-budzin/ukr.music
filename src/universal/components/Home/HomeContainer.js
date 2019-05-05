@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 // Components
 import withPlayerFunctional from 'universal/HOC/withPlayerFunctional';
 import MusicSection from 'universal/components/Sections/MusicSection';
+import PollSection from 'universal/components/Sections/PollSection';
 import AlbumsSection from 'universal/components/Sections/AlbumsSection';
 import CollectionSection from 'universal/components/Sections/CollectionSection';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
@@ -52,7 +53,10 @@ class HomeContainer extends Component {
               currentId={this.props.currentMusic._id}
               fullListLink={`musiclist/popular`}
             />
-            
+          </div>
+
+          <div style={{"width": "300px", "float": "left"}}>
+            <PollSection />
           </div>
         </div>
 

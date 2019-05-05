@@ -52,15 +52,13 @@ exports.getArtistAudio = async (req, res, next) => {
     .select('audio')
     .then(result => {
       if(result.audio.length) {
-        return audioArray = result.audio.map(item => mongoose.Types.ObjectId(item))
+        audioArray = result.audio.map(item => mongoose.Types.ObjectId(item))
       }
-
-      return res.status(204).end();
     })
     .catch(next);
 
   await Audio
-    .paginate(audioArray.lenght > 0 ? { _id: { $in: audioArray } } : {}, options)
+    .paginate({ _id: { $in: audioArray } }, options)
     .then(result => res.json({ 'artistAudioList': result.docs }))
     .catch(next);
 }

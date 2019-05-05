@@ -1,0 +1,52 @@
+.checkbox-circle {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border-width: 1px;
+  border-style: solid;
+  position: relative;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+
+  span {
+    display: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.blue {
+    border-color: #7bb1ff;
+
+    span {
+      background-color: #7bb1ff;
+    }
+  }
+  &.orange {
+    border-color: #ff4838;
+
+    span {
+      background-color: #ff4838;
+    }
+  }
+
+  &.check {
+    span {
+      display: block;
+    }
+  }
+
+
+
+  input {
+    visibility: hidden;
+  }
+}

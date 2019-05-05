@@ -10,7 +10,7 @@ import App from './containers/AppContainer.js';
 // Redux
 import { Provider } from 'react-redux';
 import createStore from '../universal/redux/createStore.js';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory as createHistory } from 'history';
 
 const history = createHistory();
 const store = createStore(history);

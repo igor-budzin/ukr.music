@@ -5,20 +5,8 @@ import cn from 'classnames';
 import 'universal/assets/styles/commons/CheckboxCircle.scss';
 
 export default class CheckboxCircle extends Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-      check: false
-    }
-  }
-
-  onClick = () => {
-    this.setState({ check: !this.state.check })
-  }
-
   render() {
-    const { theme, className } = this.props;
+    const { theme, check, className, handleClick } = this.props;
 
     return (
       <div
@@ -26,9 +14,9 @@ export default class CheckboxCircle extends Component {
           className,
           'checkbox-circle',
           theme ? theme : 'blue',
-          { check: this.state.check }
+          { check: check }
         )}
-        onClick={this.onClick}
+        onClick={() =>  typeof handleClick === 'function' ? handleClick() : null}
       >
         <span></span>
       </div>
@@ -37,5 +25,7 @@ export default class CheckboxCircle extends Component {
 }
 
 CheckboxCircle.propTypes = {
-  theme: PropTypes.oneOf(['blue', 'orange'])
+  theme: PropTypes.oneOf(['blue', 'orange']),
+  check: PropTypes.bool,
+  handleClick: PropTypes.func
 };

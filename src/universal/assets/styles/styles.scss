@@ -2239,6 +2239,10 @@ a {
     height: 35px;
     border-radius: 3px;
     position: relative;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
     cursor: pointer;
     white-space: nowrap;
 
@@ -2255,7 +2259,7 @@ a {
     }
 
     .checkbox {
-      top: 8px;
+      top: 9px;
       left: 10px;
       margin-right: 10px;
       position: absolute;
@@ -2264,7 +2268,7 @@ a {
     .label {
       position: absolute;
       font-size: 16px;
-      left: 37px;
+      left: 36px;
       right: 10px;
       top: 50%;
       transform: translateY(-50%);

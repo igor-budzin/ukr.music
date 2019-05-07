@@ -7,6 +7,7 @@ import MusicItem from 'universal/components/AudioList/MusicItem';
 
 const CollectionSection = props => {
   const { label, label2 } = props;
+
   return (
     <div className="section collection">
       <div className="layer">

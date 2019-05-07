@@ -39,4 +39,7 @@ module.exports = (router, socket) => {
   require('./routes/playlist/playlist.route')(router);
   require('./routes/cover/cover.route')(router);
   require('./routes/artist/artist.route')(router);
+  require('./routes/user/user.route')(router);
+  require('./routes/collection/collection.route')(router);
+  require('./routes/audio/audio.route')(router);
 };

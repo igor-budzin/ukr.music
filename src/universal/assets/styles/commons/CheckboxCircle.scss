@@ -1,7 +1,7 @@
 .checkbox-circle {
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   border-width: 1px;
   border-style: solid;
@@ -42,11 +42,5 @@
     span {
       display: block;
     }
-  }
-
-
-
-  input {
-    visibility: hidden;
   }
 }

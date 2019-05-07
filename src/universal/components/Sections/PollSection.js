@@ -1,42 +1,62 @@
 // Libraries
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 // Components
 import CheckboxCircle from 'universal/components/Commons/CheckboxCircle';
 
-let answered = false;
+class PollSection extends Component {
+  constructor(props, context) {
+    super(props, context);
 
-const PollSection = props => {
-  return (
-    <div className={classNames({
-        section: true,
-        poll: true,
-        answered: answered
-      })}
-    >
-      <div className="title">
-        <span>{props.title ? props.title : 'Кращий трек 2018 року'}</span>
-        <Link className="link" to={`${props.fullListLink}`}>Всі</Link>
-      </div>
+    this.state = {
+      isLoading: false,
+      answered: false
+    }
+  }
 
-      <div className="body">
-        {
-          pollsAnswers.map(answer => {
-            return(
-              <div className="answer" key={answer.index} onClick={() => {answered = true}}>
-                <CheckboxCircle className="checkbox" />
-                <span className="label">{answer.name}</span>
-                <div className="percent">{answer.persent}%</div>
-                <div className="progress"><span></span></div>
-              </div>
-            )
-          })
-        }
+  handlePoll = id => {
+    this.setState({ answered: true })
+    console.log(id)
+  }
+
+  render() {
+    const { title, fullListLink } = this.props;
+
+    return (
+      <div className={classNames({
+          section: true,
+          poll: true,
+          answered: this.state.answered
+        })}
+      >
+        <div className="title">
+          <span>{title ? title : 'Кращий трек 2018 року'}</span>
+          <Link className="link" to={`${fullListLink}`}>Всі</Link>
+        </div>
+
+        <div className="body">
+          {
+            pollsAnswers.map(answer => {
+              return(
+                <div
+                  className="answer"
+                  key={answer.index}
+                  onClick={() => !this.state.answered ? this.handlePoll(answer.index) : null}
+                >
+                  <CheckboxCircle className="checkbox" />
+                  <span className="label">{answer.name}</span>
+                  <div className="percent">{answer.persent}%</div>
+                  <div className="progress"><span></span></div>
+                </div>
+              )
+            })
+          }
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default PollSection;

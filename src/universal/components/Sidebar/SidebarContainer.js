@@ -10,21 +10,17 @@ import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-place
 import Button from '../Commons/Button';
 // Actions
 import { getVisibleUserData, getArtistsByUser } from './visibleUserDataActions';
-import { followUser } from 'universal/components/Followers/followListActions';
 
 const mapStateToProps = (state, props) => ({
   currentUserName: state.AuthReducer.user.name,
   currentUserId: state.AuthReducer.user.id,
-  followersCount: state.visibleUserDataReducer.followersCount,
   audioCount: state.visibleUserDataReducer.audioCount,
-  canFollowUser: state.visibleUserDataReducer.canFollowUser,
   artistList: state.visibleUserDataReducer.artistList
 });
 
 const mapDispatchToProps = (dispatch, props) => bindActionCreators({
   getVisibleUserData,
-  getArtistsByUser,
-  followUser,
+  getArtistsByUser
 }, dispatch);
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -50,19 +46,10 @@ export default class SidebarContainer extends Component {
     this.props.getArtistsByUser(this.props.currentUserId);
   }
 
-
-
   componentWillUnmount() {
     this.mounted = false;
   }
 
-  handleFollow = () => {
-    this.props.followUser(this.props.currentUserId, this.props.locationParams.login);
-  };
-
-  handleUnfollow = () => {
-
-  };
 
   render() {
     return (
@@ -72,7 +59,7 @@ export default class SidebarContainer extends Component {
             <span className="text">Підписались</span>
             <span className="count">
               <ReactPlaceholder showLoadingAnimation ready={this.state.dataReady} customPlaceholder={countPlaceholder}>
-                {this.props.followersCount}
+                0
               </ReactPlaceholder>
             </span>
           </div>

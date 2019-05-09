@@ -8,13 +8,6 @@ import UserMainContainer from 'universal/components/UserMain/UserMainContainer';
 import Header from 'universal/components/Header';
 import Footer from 'universal/components/Footer';
 
-const mapStateToProps = (state, props) => ({
-	follows: state.followsReducer.follows
-});
-
-const mapDispatchToProps = (dispatch, props) => bindActionCreators({}, dispatch);
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class UserProfilePage extends Component {
 	render() {
 		return (
@@ -29,7 +22,6 @@ export default class UserProfilePage extends Component {
 						localionPath={this.props.match.path}
 					/>
 				</main>
-				{/*<Footer />*/}
 			</div>
 		);
 	}

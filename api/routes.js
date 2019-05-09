@@ -25,9 +25,6 @@ module.exports = (router, socket) => {
   require('./routes/getAudioData.route')(router); // Інформація про трек
 
   require('./routes/getUserData.route')(router); // Інформація про юзера (кількість треків і підписників)
-  require('./routes/getUserFollows.route')(router); // Список користувачів на яких підписаний юзер
-  require('./routes/followUser.route')(router); // Підписується на користувача
-
 
   /*------------------------------------------------------------*/
 
@@ -42,4 +39,5 @@ module.exports = (router, socket) => {
   require('./routes/user/user.route')(router);
   require('./routes/collection/collection.route')(router);
   require('./routes/audio/audio.route')(router);
+  require('./routes/poll/poll.route')(router);
 };

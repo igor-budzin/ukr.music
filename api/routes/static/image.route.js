@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const coverFilesPath = path.resolve(__root, '..', '..', 'files', 'collection');
+const coverFilesPath = path.resolve(__root, '..', '..', 'files', 'collection-cover');
 
 module.exports = (router) => {
 	router.get('/image/:link', (req, res) => {

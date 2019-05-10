@@ -34,13 +34,14 @@ exports.getAllPolls = (req, res, next) => {
   POST /poll
  */
 exports.createPoll = (req, res, next) => {
-  const { title, answer } = req.body;
-  const polld = new mongoose.Types.ObjectId();
+  const { title, answer, publish } = req.body;
+  const pollId = new mongoose.Types.ObjectId();
 
   const poll = new Poll({
     title,
     answer,
-    _id: polld,
+    publish,
+    _id: pollId,
     alias: translit({ preset: "uk" }).transform(title, "_") + '_' + Date.now()
   });
 

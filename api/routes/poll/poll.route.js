@@ -5,5 +5,6 @@ module.exports = router => {
   router
     .get('/poll', controller.getAllPolls)
     .post('/poll', controller.createPoll)
+    .delete('/poll/:alias', controller.deletePoll)
 
 }

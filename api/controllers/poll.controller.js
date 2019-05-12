@@ -51,3 +51,16 @@ exports.createPoll = (req, res, next) => {
     .catch(next);
 }
 
+/**
+  DELETE /poll/:id
+ */
+exports.deletePoll = (req, res, next) => {
+  const { alias } = this.query;
+
+  Poll
+    .deleteOne({ alias })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(next);
+}

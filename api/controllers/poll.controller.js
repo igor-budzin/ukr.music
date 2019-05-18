@@ -55,12 +55,31 @@ exports.createPoll = (req, res, next) => {
   DELETE /poll/:id
  */
 exports.deletePoll = (req, res, next) => {
-  const { alias } = this.query;
+  const { alias } = req.params;
 
   Poll
     .deleteOne({ alias })
     .then(result => {
-      console.log(result);
+      res.json({ status: true })
     })
     .catch(next);
+}
+
+/**
+  GET /poll/random
+ */
+exports.getRandomPoll = (req, res, next) => {
+  Poll
+    .count()
+    .exec((err, count) => {
+      const random = Math.floor(Math.random() * count);
+
+      Poll
+        .findOne()
+        .skip(random)
+        .then(result => {
+          res.json(result);
+        })
+        .catch(next);
+    })
 }

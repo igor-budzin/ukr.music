@@ -12,6 +12,7 @@ import CollectionSection from 'universal/components/Sections/CollectionSection';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 // Actions
 import { getMusicList } from 'universal/redux/actions/musicDataActions';
+import { getRandomPoll } from 'universal/redux/actions/poll/poll.actions';
 
 const mapStateToProps = state => ({
   audioList: state.getMusicReducer.music,
@@ -19,15 +20,21 @@ const mapStateToProps = state => ({
   currentMusic: state.controlMusicReducer.currentMusic,
   isPlaying: state.controlMusicReducer.isPlaying,
   isLoading: state.controlMusicReducer.isLoading,
+
+  randomPoll: state.pollReducer.randomPoll
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getMusicList }, dispatch);
+  return bindActionCreators({
+    getMusicList,
+    getRandomPoll
+  }, dispatch);
 };
 
 class HomeContainer extends Component {
   componentDidMount() {
     this.props.getMusicList({ limit: 8, sortBy: 'listenCount' });
+    this.props.getRandomPoll();
   }
 
   render() {
@@ -56,7 +63,9 @@ class HomeContainer extends Component {
           </div>
 
           <div style={{"width": "300px", "float": "left"}}>
-            <PollSection />
+            <PollSection
+              data={this.props.randomPoll}
+            />
           </div>
         </div>
 

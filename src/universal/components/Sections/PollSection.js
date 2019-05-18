@@ -16,13 +16,13 @@ class PollSection extends Component {
     }
   }
 
-  handlePoll = id => {
+  handlePoll = vote => {
     this.setState({ answered: true })
-    console.log(id)
+    console.log(id);
   }
 
   render() {
-    const { title, fullListLink } = this.props;
+    const { fullListLink, data } = this.props;
 
     return (
       <div className={classNames({
@@ -32,21 +32,21 @@ class PollSection extends Component {
         })}
       >
         <div className="title">
-          <span>{title ? title : 'Кращий трек 2018 року'}</span>
+          <span>{data && data.title}</span>
           <Link className="link" to={`${fullListLink}`}>Всі</Link>
         </div>
 
         <div className="body">
-          {
-            pollsAnswers.map(answer => {
+          {data &&
+            data.answer.map(answer => {
               return(
                 <div
                   className="answer"
-                  key={answer.index}
-                  onClick={() => !this.state.answered ? this.handlePoll(answer.index) : null}
+                  key={answer.id}
+                  onClick={() => this.handlePoll}
                 >
                   <CheckboxCircle className="checkbox" />
-                  <span className="label">{answer.name}</span>
+                  <span className="label">{answer.title}</span>
                   <div className="percent">{answer.persent}%</div>
                   <div className="progress"><span></span></div>
                 </div>
@@ -62,18 +62,5 @@ class PollSection extends Component {
 export default PollSection;
 
 PollSection.propTypes = {
-  // title: PropTypes.string,
-  // data: PropTypes.array.isRequired,
-  // isPlaying: PropTypes.bool.isRequired,
-  // isLoading: PropTypes.bool.isRequired,
-  // currentId: PropTypes.string.isRequired,
-  // onChoseAudio: PropTypes.func.isRequired
+  data: PropTypes.object.isRequired,
 };
-
-const pollsAnswers = [
-  { name: 'Detach - Bridges', persent: '50', index: '1' },
-  { name: 'Epolets - Казка', persent: '20', index: '2' },
-  { name: 'The Hardkiss - Forever More', persent: '15', index: '3' },
-  { name: 'Within Temptation - In the Middle of the Night', persent: '25', index: '4' },
-  { name: 'O.Torvald - Два нуль один вісім', persent: '7', index: '5' }
-]

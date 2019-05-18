@@ -8,3 +8,5 @@ export {default as ArtistProfileReducer} from '../../components/ArtistProfile/Ar
 export {default as musicDataReducer} from './musicDataReducer';
 export {default as playlistDataReducer} from '../../components/PlaylistView/PlayListsReducer';
 export {default as artistListReducer} from './artistListReducer';
+
+export {default as pollReducer} from './poll/poll.reducer';

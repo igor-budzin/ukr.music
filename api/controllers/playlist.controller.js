@@ -49,7 +49,7 @@ exports.createPlaylist = async (req, res, next) => {
   form.on('close', async () => {
     await User
       .findOneAndUpdate({ id: currentUserId }, { $push: { playlist: playlistId } })
-      .catch(err => next(err));
+      .catch(next);
 
     const playlist = new Playlist({
       _id: playlistId,
@@ -59,7 +59,7 @@ exports.createPlaylist = async (req, res, next) => {
     });
 
     await playlist.save()
-      .catch(err => next(err));
+      .catch(next);
 
     res.send({ "status": "true" });
   });

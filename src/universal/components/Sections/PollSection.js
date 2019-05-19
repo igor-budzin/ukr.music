@@ -7,43 +7,29 @@ import classNames from 'classnames';
 import CheckboxCircle from 'universal/components/Commons/CheckboxCircle';
 
 class PollSection extends Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-      isLoading: false,
-      answered: false
-    }
-  }
-
-  handlePoll = vote => {
-    this.setState({ answered: true })
-    console.log(id);
-  }
-
   render() {
-    const { fullListLink, data } = this.props;
+    const { fullListLink, poll, user } = this.props;
 
     return (
       <div className={classNames({
           section: true,
           poll: true,
-          answered: this.state.answered
+          answered: poll.answered
         })}
       >
         <div className="title">
-          <span>{data && data.title}</span>
+          <span>{poll && poll.title}</span>
           <Link className="link" to={`${fullListLink}`}>Всі</Link>
         </div>
 
         <div className="body">
-          {data &&
-            data.answer.map(answer => {
+          {poll.alias &&
+            poll.answer.map(answer => {
               return(
                 <div
                   className="answer"
                   key={answer.id}
-                  onClick={() => this.handlePoll}
+                  onClick={() => this.props.handlePollVote(poll.alias, answer.id, user.id)}
                 >
                   <CheckboxCircle className="checkbox" />
                   <span className="label">{answer.title}</span>
@@ -62,5 +48,7 @@ class PollSection extends Component {
 export default PollSection;
 
 PollSection.propTypes = {
-  data: PropTypes.object.isRequired,
+  poll: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  voting: PropTypes.bool.isRequired,
 };

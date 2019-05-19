@@ -52,7 +52,7 @@ exports.createPoll = (req, res, next) => {
 }
 
 /**
-  DELETE /poll/:id
+  DELETE /poll/:alias
  */
 exports.deletePoll = (req, res, next) => {
   const { alias } = req.params;
@@ -66,20 +66,37 @@ exports.deletePoll = (req, res, next) => {
 }
 
 /**
-  GET /poll/random
+  GET /poll/random/:user
  */
 exports.getRandomPoll = (req, res, next) => {
-  Poll
-    .count()
-    .exec((err, count) => {
-      const random = Math.floor(Math.random() * count);
+  const { user } = req.params;
 
-      Poll
-        .findOne()
-        .skip(random)
-        .then(result => {
-          res.json(result);
-        })
-        .catch(next);
+  Poll
+    .aggregate([
+      { $match: { "voters": { "$ne": user }}},
+      { $sample: { size: 1 }}
+    ])
+    .then(result => {
+      result[0].answered = false;
+      res.json(result[0]);
     })
+    .catch(next);
+}
+
+/**
+  POST /poll/vote
+ */
+exports.pollVote = (req, res, next) => {
+  const { alias, answer, user } = req.body;
+
+  Poll
+    .findOneAndUpdate(
+      { alias },
+      { $push: { voters: user }}
+    )
+    .then(result => {
+      result.answered = true;
+      res.json(result);
+    })
+    .catch(next);
 }

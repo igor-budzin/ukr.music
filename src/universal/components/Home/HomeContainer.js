@@ -12,7 +12,7 @@ import CollectionSection from 'universal/components/Sections/CollectionSection';
 import MusicPlayerContainer from 'universal/components/Player/MusicPlayerContainer';
 // Actions
 import { getMusicList } from 'universal/redux/actions/musicDataActions';
-import { getRandomPoll } from 'universal/redux/actions/poll/poll.actions';
+import { getRandomPoll, pollVote } from 'universal/redux/actions/poll/poll.actions';
 
 const mapStateToProps = state => ({
   audioList: state.getMusicReducer.music,
@@ -20,21 +20,28 @@ const mapStateToProps = state => ({
   currentMusic: state.controlMusicReducer.currentMusic,
   isPlaying: state.controlMusicReducer.isPlaying,
   isLoading: state.controlMusicReducer.isLoading,
+  user: state.AuthReducer.user,
 
-  randomPoll: state.pollReducer.randomPoll
+  randomPoll: state.pollReducer.randomPoll,
+  voting: state.pollReducer.voting
 });
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     getMusicList,
-    getRandomPoll
+    getRandomPoll,
+    pollVote
   }, dispatch);
 };
 
 class HomeContainer extends Component {
   componentDidMount() {
     this.props.getMusicList({ limit: 8, sortBy: 'listenCount' });
-    this.props.getRandomPoll();
+    this.props.getRandomPoll(this.props.user.id);
+  }
+
+  handlePollVote = (alias, answer, user) => {
+    this.props.pollVote(alias, answer, user);
   }
 
   render() {
@@ -64,7 +71,10 @@ class HomeContainer extends Component {
 
           <div style={{"width": "300px", "float": "left"}}>
             <PollSection
-              data={this.props.randomPoll}
+              poll={this.props.randomPoll}
+              user={this.props.user}
+              voting={this.props.voting}
+              handlePollVote={this.handlePollVote}
             />
           </div>
         </div>

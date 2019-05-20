@@ -29,7 +29,11 @@ const PollSchema = mongoose.Schema({
       default: 0
     }
   }],
-  voters: Array
+  voters: Array,
+  active: {
+    type: Boolean,
+    default: false
+  }
 });
 
 PollSchema.plugin(mongoosePaginate);

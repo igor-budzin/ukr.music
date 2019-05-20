@@ -72,15 +72,42 @@ exports.getRandomPoll = (req, res, next) => {
   const { user } = req.params;
 
   Poll
-    .aggregate([
-      { $match: { "voters": { "$ne": user }}},
-      { $sample: { size: 1 }}
-    ])
-    .then(result => {
-      result[0].answered = false;
-      res.json(result[0]);
-    })
-    .catch(next);
+    .countDocuments({ active: true })
+    .exec((err, count) => {
+      const random = Math.floor(Math.random() * count);
+      console.log(count)
+      Poll
+        .aggregate([
+          { $match: { active: true }},
+          { $skip: random },
+          { $limit: 1 },
+          { 
+            $project: {
+              "alias": "$alias",
+              "title": "$title",
+              "answer": "$answer",
+
+            }
+          }
+        ])
+        .then(result => {
+          console.log(result)
+          res.json(result[0]);
+        })
+    });
+
+  Poll
+    // .aggregate([
+    //   { $sample: { size: 1 }},
+    //   { $match: { "voters": { "$ne": user }}},
+      
+    // ])
+    // .then(result => {
+    //   result[0].answered = false;
+    //   console.log(result[0])
+    //   // res.json(result[0]);
+    // })
+    // .catch(next);
 }
 
 /**

@@ -1,7 +1,7 @@
 const initialState = {
   randomPoll: {},
   pollList: [],
-  voting: false
+  voting: false,
 };
 
 export default function pollReducer(state = initialState, action) {
@@ -27,8 +27,10 @@ export default function pollReducer(state = initialState, action) {
     case 'POLL_VOTE_SUCCESS':
       return Object.assign({},
         state,
-        voting: false,
-        randomPoll: action.payload
+        {
+          voting: false,
+          randomPoll: action.payload
+        }
       );
 
     case 'POLL_VOTE_ERROR':

@@ -75,55 +75,82 @@ exports.getRandomPoll = (req, res, next) => {
     .countDocuments({ active: true })
     .exec((err, count) => {
       const random = Math.floor(Math.random() * count);
-      console.log(count)
       Poll
         .aggregate([
           { $match: { active: true }},
           { $skip: random },
           { $limit: 1 },
-          { 
-            $project: {
-              "alias": "$alias",
-              "title": "$title",
-              "answer": "$answer",
-
+          { $project: {
+            "alias": "$alias",
+            "title": "$title",
+            "answer": "$answer",
+            "totalAnswersCount": "$totalAnswersCount",
+            "voted":{
+              $setIsSubset: [
+                [ parseInt(user, 10) ],
+                "$voters"
+              ]
             }
-          }
+          }}
         ])
         .then(result => {
-          console.log(result)
           res.json(result[0]);
         })
     });
-
-  Poll
-    // .aggregate([
-    //   { $sample: { size: 1 }},
-    //   { $match: { "voters": { "$ne": user }}},
-      
-    // ])
-    // .then(result => {
-    //   result[0].answered = false;
-    //   console.log(result[0])
-    //   // res.json(result[0]);
-    // })
-    // .catch(next);
 }
 
 /**
   POST /poll/vote
  */
-exports.pollVote = (req, res, next) => {
+exports.pollVote = async (req, res, next) => {
   const { alias, answer, user } = req.body;
+  let voted = false;
 
-  Poll
-    .findOneAndUpdate(
-      { alias },
-      { $push: { voters: user }}
-    )
+  await Poll
+    .aggregate([
+      { $match: { alias }},
+      { $project: {
+        "voted":{
+          $setIsSubset: [
+            [ parseInt(user, 10) ],
+            "$voters"
+          ]
+        }
+      }}
+    ])
     .then(result => {
-      result.answered = true;
-      res.json(result);
+      voted = result[0].voted;
     })
     .catch(next);
+    
+  if(!voted) {
+    Poll
+      .findOneAndUpdate(
+        {
+          alias,
+          "answer.id": parseInt(answer, 10)
+        },
+        {
+          $push: { voters: user },
+          $inc: {
+            "answer.$.count": 1,
+            "totalAnswersCount": 1
+          },
+
+        },
+        { new: true }
+      )
+      .then(result => {
+        res.json({
+          title: result.title,
+          alias: result.alias,
+          totalAnswersCount: result.totalAnswersCount,
+          answer: result.answer,
+          voted: true
+        });
+      })
+      .catch(next);
+  }
+  else next();
+
 }

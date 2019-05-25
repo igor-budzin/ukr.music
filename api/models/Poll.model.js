@@ -24,7 +24,7 @@ const PollSchema = mongoose.Schema({
       type: String,
       required: true
     },
-    persent: {
+    count: {
       type: Number,
       default: 0
     }
@@ -32,7 +32,11 @@ const PollSchema = mongoose.Schema({
   voters: Array,
   active: {
     type: Boolean,
-    default: false
+    default: true
+  },
+  totalAnswersCount: {
+    type: Number,
+    default: 0
   }
 });
 

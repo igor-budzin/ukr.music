@@ -23,7 +23,8 @@ const mapStateToProps = state => ({
   user: state.AuthReducer.user,
 
   randomPoll: state.pollReducer.randomPoll,
-  voting: state.pollReducer.voting
+  voting: state.pollReducer.voting,
+  pollReady: state.pollReducer.pollReady
 });
 
 const mapDispatchToProps = dispatch => {
@@ -74,6 +75,7 @@ class HomeContainer extends Component {
               poll={this.props.randomPoll}
               user={this.props.user}
               voting={this.props.voting}
+              pollReady={this.props.pollReady}
               handlePollVote={this.handlePollVote}
             />
           </div>

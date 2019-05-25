@@ -1160,7 +1160,7 @@ a {
     }
   }
 
-  .title {
+  & > .title {
     margin-bottom: 10px;
     border-bottom: 1px solid #eaeaea;
     padding-bottom: 10px;
@@ -2274,19 +2274,14 @@ a {
       transform: translateY(-50%);
       overflow: hidden;
     }
-  }
 
-  &.answered {
-    .checkbox {
-      display: none;
-    }
-
-    .label {
+    .title {
       font-size: 14px;
-      top: 7px;
+      top: 8px;
       left: 10px;
-      right: 60px;
-      transform: none;
+      right: 70px;
+      position: absolute;
+      overflow: hidden;
     }
 
     .percent {
@@ -2302,14 +2297,13 @@ a {
       display: block;
       position: absolute;
       left: 10px;
-      right: 50px;
+      right: 10px;
       bottom: 5px;
-      width: 280px;
 
       span {
         background-color: #7bb1ff;
         height: 3px;
-        width: 60%;
+        min-width: 1%;
         display: block;
         border-radius: 3px;
       }

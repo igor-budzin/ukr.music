@@ -139,7 +139,6 @@ class UserProfileContainer extends Component {
                     isLoading={this.props.isLoading}
                     audioList={this.props.audioList}
                     onChoseAudio={this.onChoseAudio}
-                    handleAddToUser={this.handleAddToUser}
                     handleGetPlaylists={this.props.handleGetPlaylists}
                     hasNextPage={this.props.hasNextPage}
                     loadNextPage={this.getPageData}

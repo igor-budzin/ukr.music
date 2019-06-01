@@ -57,7 +57,6 @@ export default function withPlayerFunctional(PassedComponent) {
     }
 
     handleAddToPlaylist = playlistId => {
-      console.log('handleAddToPlaylist')
       api.request({
         method: 'put',
         path: '/playlist',
@@ -95,12 +94,15 @@ export default function withPlayerFunctional(PassedComponent) {
     }
 
     onCloseModalPlaylist = () => {
-      console.log('onCloseModalPlaylist')
       this.setState({
         isOpenModalPlaylist: false,
         dataPlaylist: [],
         idAudioForPlaylist: ''
       });
+    }
+
+    handleAddToUser = audioId => {
+      console.log(audioId);
     }
 
     render() {
@@ -112,6 +114,7 @@ export default function withPlayerFunctional(PassedComponent) {
             {...this.props}
             handleChoseAudio={this.handleChoseAudio}
             handleGetPlaylists={this.handleGetPlaylists}
+            handleAddToUser={this.handleAddToUser}
           />
 
           <ReactModal

@@ -28,6 +28,7 @@ const MusicSection = props => {
                 isPlaying={props.isPlaying}
                 isLoading={props.isLoading}
                 audio={item}
+                handleAddToUser={props.handleAddToUser}
                 onChoseAudio={props.onChoseAudio}
                 handleGetPlaylists={props.handleGetPlaylists}
               />
@@ -46,5 +47,6 @@ MusicSection.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   currentId: PropTypes.string.isRequired,
-  onChoseAudio: PropTypes.func.isRequired
+  onChoseAudio: PropTypes.func.isRequired,
+  handleAddToUser: PropTypes.func
 };

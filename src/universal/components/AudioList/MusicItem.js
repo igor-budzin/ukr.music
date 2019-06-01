@@ -14,19 +14,19 @@ export default class MusicItem extends Component {
 
   onAddToPlaylist = event => {
     event.stopPropagation();
-    const { handleGetPlaylists } = this.props;
+    const { handleGetPlaylists, audio } = this.props;
 
     if(typeof handleGetPlaylists === 'function') {
-      handleGetPlaylists(this.props._id);
+      handleGetPlaylists(audio._id);
     }
   }
 
-  onAdd = event => {
+  onAddToUser = event => {
     event.stopPropagation();
-    const { handleAddToUser } = this.props;
+    const { handleAddToUser, audio } = this.props;
 
     if(typeof handleAddToUser === 'function') {
-      handleAddToUser(this.props._id);
+      handleAddToUser(audio._id);
     }
   }
 
@@ -93,7 +93,7 @@ export default class MusicItem extends Component {
           )}
           
           {typeof this.props.handleAddToUser === 'function' && (
-            <div className="item add" title="Додати собі" onClick={this.onAdd}></div>
+            <div className="item add" title="Додати собі" onClick={this.onAddToUser}></div>
           )}
         </div>
       </div>

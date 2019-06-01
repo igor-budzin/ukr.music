@@ -75,7 +75,9 @@ exports.addToPlaylist = async (req, res, next) => {
 
   await Audio
     .findOne({ _id: mongoose.Types.ObjectId(audioId) })
-    .then(response => durationTime = response.duration)
+    .then(response => {
+      durationTime = response.duration
+    })
     .catch(err => next(err));
 
   await Playlist
@@ -108,35 +110,50 @@ exports.getPlaylists = async (req, res, next) => {
     .catch(err => next(err));
 };
 
+/**
+ * GET /playlist/audio/:id
+ */
 exports.getPlaylistAudio = async (req, res, next) => {
-  let playlist = {};
-  let countAudio = 0;
+  let playlist = [];
+  let duplicates = [];
   const page = req.query.page ? parseInt(req.query.page, 10) : 1;
   const limit = req.query.limit ? parseInt(req.query.limit, 10) : 30;
-  const responseData = {};
 
   const options = {
      select: '_id link title artists duration picture',
      sort: req.query.sortBy ? { [req.query.sortBy]: -1 } : { date: 1 },
      page,
-     limit
+     limit: limit > 30 ? 30 : limit
    };
 
   await Playlist
     .findById(req.params.id)
     .then(response => {
-      playlist = response.audio.map(function(el) { return mongoose.Types.ObjectId(el) })
+      playlist = response.audio.filter((item, index) => {
+        if(response.audio.indexOf(item) !== index) {
+          duplicates.push({ id: item, index });
+          --options.limit 
+        }
+        return response.audio.indexOf(item) === index;
+      });
+
+      playlist = playlist.map(el => mongoose.Types.ObjectId(el));
     })
     .catch(err => next(err));
 
   if(playlist) {
    await Audio
-      // .find({ _id: { $in: playlist.audio }}, '_id link title artists duration picture')
       .paginate({ _id: { $in: playlist }}, options)
       .then(response => {
-        console.log(response)
+        
+        resPlaylist = response.docs;
+
+        duplicates.forEach((item, i) => {
+          resPlaylist.splice(item.index, 0, response.docs.find(el => el._id == item.id));
+        });
+
         res.json({
-          music: response.docs,
+          music: resPlaylist,
           page,
           hasNextPage: playlist.length > page * limit
         });

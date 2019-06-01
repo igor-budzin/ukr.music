@@ -66,6 +66,7 @@ class HomeContainer extends Component {
               isPlaying={this.props.isPlaying}
               isLoading={this.props.isLoading}
               currentId={this.props.currentMusic._id}
+              handleAddToUser={this.props.handleAddToUser}
               fullListLink={`musiclist/popular`}
             />
           </div>

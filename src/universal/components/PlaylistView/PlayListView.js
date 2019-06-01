@@ -133,7 +133,7 @@ class PlayListView extends Component {
               (music && music.length > 0) &&
               <AudioListFull
                 currentId={this.props.currentMusic._id}
-                playlist={music}
+                audioList={music}
                 handleChoseAudio={this.onChoseAudio}
                 handleEditAudio={this.handleEditAudio}
                 handleGetPlaylists={this.handleGetPlaylists}

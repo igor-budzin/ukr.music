@@ -47,3 +47,25 @@ exports.getAudio = (req, res, next) => {
     .then(doc => res.json(doc))
     .catch(next);
 }
+
+/**
+ * POST /audio/user
+ */
+exports.addAudioToUser = async (req, res, next) => {
+  const { user, audio } = req.body;
+
+  await User
+    .findOneAndUpdate(
+      { id: user },
+      { $push: { audio }}
+    )
+    .catch(next);
+
+  Audio
+    .findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(audio) },
+      { $inc : { 'addCount': 1 }}
+    )
+    .then(result => res.json({ status: 'true' }))
+    .catch(next);
+}

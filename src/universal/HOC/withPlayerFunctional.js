@@ -12,7 +12,7 @@ import * as AudioActions from 'universal/redux/actions/controlMusicActions';
 const mapStateToProps = state => ({
   currentMusic: state.controlMusicReducer.currentMusic,
   isPlaying: state.controlMusicReducer.isPlaying,
-  currentUserId: state.AuthReducer.user.id,
+  currentUser: state.AuthReducer.user,
 });
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -77,11 +77,10 @@ export default function withPlayerFunctional(PassedComponent) {
     }
 
     handleGetPlaylists = id => {
-      console.log('handleGetPlaylists')
       api.request({
         path: '/playlist',
         data: {
-          userId: this.props.currentUserId
+          userId: this.props.currentUser.id
         },
         handleSuccess: data => {
           this.setState({
@@ -102,7 +101,17 @@ export default function withPlayerFunctional(PassedComponent) {
     }
 
     handleAddToUser = audioId => {
-      console.log(audioId);
+      api.request({
+        method: 'post',
+        path: '/audio/user',
+        data: {
+          user: this.props.currentUser.id,
+          audio: audioId
+        },
+        handleSuccess: (response, status) => {
+          console.log(response, status)
+        }
+      });
     }
 
     render() {

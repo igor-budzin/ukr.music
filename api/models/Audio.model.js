@@ -8,10 +8,7 @@ const audioSchema = mongoose.Schema({
 	title: String,
 	artists: String,
 	album: String,
-	year: {
-		type: Number,
-		min: 1970
-	},
+	year: Number,
 	genre: String,
 	duration: Number,
 	picture: String,
@@ -20,6 +17,10 @@ const audioSchema = mongoose.Schema({
 		default: Date.now
 	},
 	listenCount: {
+		type: Number,
+		default: 0,
+	},
+	addCount: {
 		type: Number,
 		default: 0,
 	}

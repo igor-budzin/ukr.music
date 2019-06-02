@@ -5,4 +5,5 @@ module.exports = router => {
   router
     .get('/audio', controller.getAllAudio)
     .get('/audio/:id', controller.getAudio)
+    .post('/audio/user', controller.addAudioToUser)
 }

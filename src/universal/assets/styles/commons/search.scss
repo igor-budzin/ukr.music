@@ -1,0 +1,110 @@
+.search-wrapper {
+  display: block;
+  position: relative;
+
+  .search-input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #becff5;
+    padding: 0 100px 0 20px;
+    font-size: 16px;
+    outline: none;
+    font-family: 'Roboto';
+    border-radius: 3px;
+    background-image: url('../../img/search.svg');
+    background-repeat: no-repeat;
+    background-position: left 20px center;
+    background-size: 16px;
+    padding-left: 56px;
+
+    &:focus {
+      border-color: darken(#becff5, 4%);
+    }
+  }
+
+  .autocomplete {
+    background-color: #fff;
+    padding: 5px 0;
+    margin-top: 2px;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
+    border: 1px solid #becff5;
+    border-radius: 3px;
+
+    .search-item {
+      height: 52px;
+      cursor: pointer;
+      padding: 6px 10px;
+      display: flex;
+
+      &:hover {
+        background-color: #e9f2ff;
+      }
+
+      &.audio .cover {
+        background-image: url('../../img/quaver.svg');
+        background-size: 20px;
+      }
+
+      &.artist .cover {
+        background-image: url('../../img/artist.svg');
+        background-size: 20px;
+      }
+
+      &.album .cover {
+        background-image: url('../../img/album.svg');
+        background-size: 25px;
+      }
+
+      &.search {
+        background-image: url('../../img/search.svg');
+        background-repeat: no-repeat;
+        background-position: left 24px center;
+        background-size: 16px;
+        height: 36px;
+        
+        .title {
+          margin-top: 0;
+          line-height: 26px;
+          padding-left: 52px;
+        }
+      }
+
+      &.active {
+        background-color: lighten(#e9f2ff, 1%);
+      }
+
+      .description {
+        line-height: 16px;
+      }
+
+      .cover {
+        width: 40px;
+        height: 40px;
+        flex: 0 0 40px;
+        background-color: #d5e6ff;
+        border-radius: 3px;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 10px;
+      }
+
+      .title {
+        width: 100%;
+        font-size: 16px;
+        margin-top: 5px;
+        font-family: 'Roboto';
+      }
+
+      .sub-title {
+        width: 100%;
+        font-size: 13px;
+        font-family: 'Roboto';
+        font-weight: 400;
+      }
+    }
+  }
+}
